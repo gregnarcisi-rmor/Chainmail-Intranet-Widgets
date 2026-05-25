@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: transparent; color: #e0e0e0; }
+        .header-container {
+            background: linear-gradient(145deg, #111111, #0a0a0a);
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        .header-container::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.05), transparent);
+            transform: skewX(-20deg); animation: shine 6s infinite;
+        }
+        @keyframes shine { 100% { left: 200%; } }
+        
+        .dept-info { display: flex; flex-direction: column; gap: 8px; }
+        .dept-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #888; font-weight: 600; }
+        .dept-title { font-size: 2.2rem; font-weight: 800; margin: 0; background: linear-gradient(90deg, #fff, #e0e0e0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .human-lead { font-size: 1rem; color: #c5a059; font-family: 'JetBrains Mono', monospace; display: flex; align-items: center; gap: 10px; }
+        
+        .agent-card {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 8px;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .pulse-ring {
+            width: 12px; height: 12px; border-radius: 50%; background: #c5a059;
+            box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.7); animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            70% { box-shadow: 0 0 0 10px rgba(197, 160, 89, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0); }
+        }
+        .agent-details { display: flex; flex-direction: column; }
+        .agent-title { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        .agent-name { font-size: 1.1rem; font-weight: 600; color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <div class="dept-info">
+            <span class="dept-label">Command Center</span>
+            <h1 class="dept-title">Operations (COO)</h1>
+            <span class="human-lead">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                HUMAN LEAD: G. Narcisi
+            </span>
+        </div>
+        <div class="agent-card">
+            <div class="pulse-ring"></div>
+            <div class="agent-details">
+                <span class="agent-title">Agentic Co-Pilot Assigned</span>
+                <span class="agent-name">Antigravity (DeepMind Architecture)</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chainmail AI Workspace</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #E2E8F0;
+        }
+
+        .ai-container {
+            background: linear-gradient(135deg, #020617, #0B1120);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #F8FAFC;
+            margin: 0;
+        }
+
+        .link-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .ai-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-card:hover {
+            background: rgba(212, 175, 55, 0.05);
+            border-color: rgba(212, 175, 55, 0.5);
+            transform: translateX(4px);
+        }
+
+        .ai-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: #D4AF37;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .ai-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 900;
+            color: #F8FAFC;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-desc {
+            font-size: 11px;
+            color: #94A3B8;
+            margin: 0;
+            letter-spacing: 0.05em;
+        }
+
+        .launch-icon {
+            color: #D4AF37;
+        }
+    </style>
+</head>
+<body>
+
+<div class="ai-container">
+    <div class="header">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
+            <path d="M12 22a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2z"></path>
+            <path d="M22 12a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2z"></path>
+            <path d="M2 12a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z"></path>
+            <circle cx="12" cy="12" r="4"></circle>
+        </svg>
+        <h2 class="title">Secure AI Comm-Link</h2>
+    </div>
+
+    <div class="link-grid">
+        <!-- REPLACE THE HREF BELOW WITH YOUR NOTEBOOK LLM URL -->
+        <a href="YOUR_NOTEBOOK_LLM_URL_HERE" target="_blank" class="ai-card">
+            <div class="card-content">
+                <h3 class="card-title">Chainmail NotebookLM</h3>
+                <p class="card-desc">Access internal knowledge base and document synthesis.</p>
+            </div>
+            <svg class="launch-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+        </a>
+
+        <!-- REPLACE THE HREF BELOW WITH YOUR GOOGLE GEM URL -->
+        <a href="YOUR_GOOGLE_GEM_URL_HERE" target="_blank" class="ai-card">
+            <div class="card-content">
+                <h3 class="card-title">COO Google Gem</h3>
+                <p class="card-desc">Direct interface to the Chief Operating Officer AI Persona.</p>
+            </div>
+            <svg class="launch-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

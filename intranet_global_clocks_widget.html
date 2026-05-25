@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chainmail Global Clocks</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Inter:wght@400;700;900&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #E2E8F0;
+        }
+
+        .clocks-container {
+            background: #020617;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .clock-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .clock-item:last-child {
+            border-right: none;
+        }
+
+        .clock-label {
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #D4AF37;
+        }
+
+        .clock-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 700;
+            color: #F8FAFC;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="clocks-container">
+    <div class="clock-item">
+        <span class="clock-label">Pacific (PST)</span>
+        <span class="clock-time" id="time-pst">00:00:00</span>
+    </div>
+    <div class="clock-item">
+        <span class="clock-label">Headquarters (EST)</span>
+        <span class="clock-time" id="time-est" style="color: #10B981; text-shadow: 0 0 10px rgba(16,185,129,0.3);">00:00:00</span>
+    </div>
+    <div class="clock-item">
+        <span class="clock-label">Server (UTC)</span>
+        <span class="clock-time" id="time-utc">00:00:00</span>
+    </div>
+</div>
+
+<script>
+    function updateClocks() {
+        const now = new Date();
+        
+        const optionsPST = { timeZone: 'America/Los_Angeles', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        const optionsEST = { timeZone: 'America/New_York', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        const optionsUTC = { timeZone: 'UTC', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+
+        document.getElementById('time-pst').textContent = now.toLocaleTimeString('en-US', optionsPST);
+        document.getElementById('time-est').textContent = now.toLocaleTimeString('en-US', optionsEST);
+        document.getElementById('time-utc').textContent = now.toLocaleTimeString('en-US', optionsUTC);
+    }
+
+    setInterval(updateClocks, 1000);
+    updateClocks();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chainmail Operations Ledger Widget</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #E2E8F0;
+        }
+
+        .ledger-container {
+            background: #020617;
+            border: 1px solid #1E293B;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            overflow: hidden;
+        }
+
+        .ledger-header {
+            background: #0F172A;
+            padding: 16px 24px;
+            border-bottom: 1px solid #1E293B;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .title {
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #F8FAFC;
+            margin: 0;
+        }
+
+        .metric-pill {
+            background: rgba(212, 175, 55, 0.1);
+            color: #D4AF37;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 700;
+            margin-left: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 24px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #64748B;
+            border-bottom: 1px solid #1E293B;
+            background: #0B1120;
+        }
+
+        td {
+            padding: 16px 24px;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            color: #CBD5E1;
+        }
+
+        tr:hover td {
+            background: rgba(255,255,255,0.01);
+        }
+
+        .hash {
+            font-family: 'JetBrains Mono', monospace;
+            color: #D4AF37;
+            font-size: 12px;
+        }
+
+        .node-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-verified { background: rgba(16, 185, 129, 0.1); color: #10B981; }
+        .status-pending { background: rgba(245, 158, 11, 0.1); color: #F59E0B; }
+    </style>
+</head>
+<body>
+
+<div class="ledger-container">
+    <div class="ledger-header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+        </svg>
+        <h2 class="title">Operations & Nodes</h2>
+        <div class="metric-pill">TICKETS_CLOSED: 3</div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ticket / Hash</th>
+                <th>Operation</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="hash">OPS-201</td>
+                <td>Executive Intranet Pivot & Firebase Webhook Routing</td>
+                <td><span class="node-status status-verified">DONE</span></td>
+            </tr>
+            <tr>
+                <td class="hash">UI-103</td>
+                <td>BallParks Initiative Live Map Layer Injection</td>
+                <td><span class="node-status status-verified">DONE</span></td>
+            </tr>
+            <tr>
+                <td class="hash">NODE_ALB_JAX</td>
+                <td>Albert's Field (Jacksonville) Hardware Registration</td>
+                <td><span class="node-status status-pending">PENDING_DVN</span></td>
+            </tr>
+            <tr>
+                <td class="hash">v_grid_8a7f...</td>
+                <td>Universal IoT Architecture Refactor</td>
+                <td><span class="node-status status-verified">MERGED</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

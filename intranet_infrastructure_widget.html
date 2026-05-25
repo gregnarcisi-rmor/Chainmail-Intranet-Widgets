@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chainmail Infrastructure Status</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #E2E8F0;
+        }
+
+        .infra-container {
+            background: #020617;
+            border: 1px solid #1E293B;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #F8FAFC;
+            margin: 0;
+        }
+
+        .live-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #10B981;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 6px 12px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .live-link-btn:hover {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10B981;
+            transform: translateY(-1px);
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .service-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .service-name {
+            font-size: 13px;
+            font-weight: 900;
+            color: #F8FAFC;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-up {
+            background-color: #10B981;
+            box-shadow: 0 0 10px rgba(16,185,129,0.5);
+        }
+
+        .spend-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .spend-label {
+            font-size: 10px;
+            color: #64748B;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .spend-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 700;
+            color: #D4AF37;
+        }
+
+        .spend-value.active {
+            color: #ef4444; /* Red for active spend */
+        }
+        
+        .metric-details {
+            font-size: 10px;
+            color: #94A3B8;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="infra-container">
+    <div class="header">
+        <div class="title-group">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line>
+            </svg>
+            <h2 class="title">Infrastructure & Deployments</h2>
+        </div>
+        <!-- REPLACE THE HREF WITH YOUR ACTUAL VERCEL DEPLOYMENT LINK -->
+        <a href="YOUR_VERCEL_APP_LINK_HERE" target="_blank" class="live-link-btn">
+            View Live Build
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+    </div>
+
+    <div class="service-grid">
+        <!-- Vercel -->
+        <div class="service-card">
+            <div class="service-header">
+                <div class="service-name">
+                    <div class="status-dot status-up"></div>
+                    Vercel Edge
+                </div>
+                <span class="metric-details">Production Build</span>
+            </div>
+            <div class="spend-container">
+                <span class="spend-label">Current Spend</span>
+                <!-- The .35 spend the user mentioned -->
+                <span class="spend-value active">$0.35</span>
+            </div>
+        </div>
+
+        <!-- Firebase -->
+        <div class="service-card">
+            <div class="service-header">
+                <div class="service-name">
+                    <div class="status-dot status-up"></div>
+                    Firebase Base
+                </div>
+                <span class="metric-details">Auth & Firestore</span>
+            </div>
+            <div class="spend-container">
+                <span class="spend-label">Current Spend</span>
+                <span class="spend-value">$0.00</span>
+            </div>
+        </div>
+
+        <!-- Render -->
+        <div class="service-card">
+            <div class="service-header">
+                <div class="service-name">
+                    <div class="status-dot status-up"></div>
+                    Render Compute
+                </div>
+                <span class="metric-details">Node API Services</span>
+            </div>
+            <div class="spend-container">
+                <span class="spend-label">Current Spend</span>
+                <span class="spend-value">$0.00</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

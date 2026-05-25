@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chainmail Treasury Dashboard - Bootstrapped</title>
+    <!-- Chart.js for dramatic visual representation -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #E2E8F0;
+        }
+
+        .dashboard-container {
+            background: linear-gradient(180deg, #020617, #0B1120);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 40px rgba(212, 175, 55, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #D4AF37;
+            margin: 0;
+        }
+
+        .subtitle {
+            font-size: 11px;
+            color: #10B981;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .subtitle::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #10B981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10B981;
+        }
+
+        .burn-rate {
+            text-align: right;
+        }
+
+        .burn-label {
+            font-size: 10px;
+            color: #64748B;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin: 0 0 4px 0;
+        }
+
+        .burn-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px;
+            font-weight: 700;
+            color: #10B981;
+            margin: 0;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Detailed Breakdown Table */
+        .breakdown-container {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #64748B;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.2);
+        }
+
+        td {
+            padding: 12px 16px;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            color: #CBD5E1;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .td-amount {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: #10B981;
+            text-align: right;
+        }
+
+        .td-category {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: #E2E8F0;
+        }
+
+        .td-desc {
+            color: #94A3B8;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        .color-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <div class="header">
+        <div class="title-group">
+            <h2 class="title">Treasury Active Ledger</h2>
+            <p class="subtitle">Operating in Bootstrapped Mode</p>
+        </div>
+        <div class="burn-rate">
+            <p class="burn-label">Current Monthly Burn</p>
+            <p class="burn-value">$0.00</p>
+        </div>
+    </div>
+
+    <!-- The chart is hidden since everything is $0, but we leave the structure for future scaling -->
+    <div class="breakdown-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Resource / Strategy</th>
+                    <th style="text-align: right;">Current Spend</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="td-category"><div class="color-dot" style="background:#D4AF37"></div> Geospatial</div>
+                    </td>
+                    <td>
+                        NOAA / NWS Public APIs
+                        <div class="td-desc">Utilizing free governmental weather grids instead of paid XWeather API</div>
+                    </td>
+                    <td class="td-amount">$0.00</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="td-category"><div class="color-dot" style="background:#3b82f6"></div> Infrastructure</div>
+                    </td>
+                    <td>
+                        Firebase / Google Cloud (Spark Plan)
+                        <div class="td-desc">Operating entirely within free-tier limits for hosting and database</div>
+                    </td>
+                    <td class="td-amount">$0.00</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="td-category"><div class="color-dot" style="background:#10B981"></div> Core AI</div>
+                    </td>
+                    <td>
+                        Local & Free-Tier AI Routing
+                        <div class="td-desc">Leveraging open-source models and Gemini free tier allocations</div>
+                    </td>
+                    <td class="td-amount">$0.00</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="td-category"><div class="color-dot" style="background:#8b5cf6"></div> Treasury Gas</div>
+                    </td>
+                    <td>
+                        Arbitrum Sepolia Testnet
+                        <div class="td-desc">Testing smart contracts with free testnet ETH</div>
+                    </td>
+                    <td class="td-amount">$0.00</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="td-category"><div class="color-dot" style="background:#64748b"></div> Hardware IoT</div>
+                    </td>
+                    <td>
+                        Existing Network Sync
+                        <div class="td-desc">Connecting user's existing Ambient hardware (Zero new Capex)</div>
+                    </td>
+                    <td class="td-amount">$0.00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

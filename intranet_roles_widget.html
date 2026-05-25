@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chainmail Operational Guidelines</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #E2E8F0;
+        }
+
+        .roles-container {
+            background: #020617;
+            border: 1px solid #1E293B;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #F8FAFC;
+            margin: 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: #0F172A;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.1);
+            border-color: #D4AF37;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #D4AF37;
+        }
+
+        .role-name {
+            font-size: 15px;
+            font-weight: 900;
+            color: #F8FAFC;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .role-desc {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #94A3B8;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .access-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: transparent;
+            color: #D4AF37;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 8px 16px;
+            border: 1px solid #D4AF37;
+            border-radius: 4px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .access-btn:hover {
+            background: #D4AF37;
+            color: #020617;
+        }
+    </style>
+</head>
+<body>
+
+<div class="roles-container">
+    <div class="header">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <h2 class="title">Chainmail Operational Guidelines</h2>
+    </div>
+
+    <div class="grid">
+        <!-- Chief Executive Officer -->
+        <div class="card">
+            <h3 class="role-name">Chief Executive Officer (CEO)</h3>
+            <p class="role-desc">Strategic vision, capital allocation, and enterprise valuation growth. Leads funding rounds and global partnerships.</p>
+            <a href="https://github.com/Chainmail-Holdings/Chainmail-Enterprise" target="_blank" class="access-btn">
+                View Doctrine
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+        </div>
+
+        <!-- Chief Operating Officer -->
+        <div class="card">
+            <h3 class="role-name">Chief Operating Officer (COO)</h3>
+            <p class="role-desc">Day-to-day scaling, vendor relations, and infrastructure optimization. Manages the transition to full-time status.</p>
+            <a href="https://github.com/Chainmail-Holdings/Chainmail-Enterprise" target="_blank" class="access-btn">
+                View Doctrine
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+        </div>
+
+        <!-- Chief Risk Officer -->
+        <div class="card">
+            <h3 class="role-name">Chief Risk Officer (CRO)</h3>
+            <p class="role-desc">Enterprise risk, regulatory compliance (SLIP+/ELANY), and solvency capital preservation. Leads DOAH/Audit defense.</p>
+            <a href="https://github.com/Chainmail-Holdings/Chainmail-Enterprise" target="_blank" class="access-btn">
+                View Doctrine
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+        </div>
+        
+        <!-- Lead Actuary AI -->
+        <div class="card">
+            <h3 class="role-name">Lead Actuary AI</h3>
+            <p class="role-desc">Executes real-time pricing and ALR modeling using ingested SERFF data and state pool rate filings.</p>
+            <a href="https://github.com/Chainmail-Holdings/Chainmail-Enterprise" target="_blank" class="access-btn">
+                View Doctrine
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+        </div>
+
+        <!-- Ingestion Agent -->
+        <div class="card">
+            <h3 class="role-name">Forensic Meteorology AI</h3>
+            <p class="role-desc">Zero-guessing policy analysis of IoT telemetry vs. NWS public consensus. Flags anomalies instantly.</p>
+            <a href="https://github.com/Chainmail-Holdings/Chainmail-Enterprise" target="_blank" class="access-btn">
+                View Doctrine
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+        </div>
+
+        <!-- Integrity Officers -->
+        <div class="card">
+            <h3 class="role-name">Integrity Officers</h3>
+            <p class="role-desc">Human-in-the-Loop claims arbitration. Mandated by NY law to review and execute any adverse claim denials.</p>
+            <a href="https://github.com/Chainmail-Holdings/Chainmail-Enterprise" target="_blank" class="access-btn">
+                View Doctrine
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
