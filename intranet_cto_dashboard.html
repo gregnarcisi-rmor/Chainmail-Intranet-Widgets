@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTO Engineering & Security Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #94A3B8;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .widget-panel {
+            background: #020617; /* Jet Obsidian Background */
+            border: 1px solid #1E293B; /* Slate Border */
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .panel-title {
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #F8FAFC;
+            margin: 0;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-size: 11px;
+            color: #475569;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: #F8FAFC;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .value-cyan { color: #06b6d4; }
+        .value-green { color: #10b981; }
+        .value-rose { color: #f43f5e; }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-up { background-color: #10b981; box-shadow: 0 0 8px rgba(16,185,129,0.5); }
+        .status-warn { background-color: #f59e0b; box-shadow: 0 0 8px rgba(245,158,11,0.5); }
+
+        svg { stroke: #38bdf8; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    
+    <!-- API Key Lifecycles -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <h2 class="panel-title">API Key Lifecycles</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Gemini API Key</span>
+            <span class="data-value value-green">Active (Expires in 28d)</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Google Maps SDK</span>
+            <span class="data-value value-green">Active (Never Expires)</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Sentry Integration</span>
+            <span class="data-value">Active (Rotated 2d ago)</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Key Vault Sync</span>
+            <span class="data-value"><div class="status-dot status-up"></div> Operational</span>
+        </div>
+    </div>
+
+    <!-- Sentry Error Telemetry -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <h2 class="panel-title">Sentry Error Telemetry</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Event Count (24h)</span>
+            <span class="data-value">12 events</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Error Rate</span>
+            <span class="data-value value-green">0.02%</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Unresolved Issues</span>
+            <span class="data-value value-rose">0</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Telemetry Feed</span>
+            <span class="data-value"><div class="status-dot status-up"></div> Connected</span>
+        </div>
+    </div>
+
+    <!-- Active Worker Node Health -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+            <h2 class="panel-title">Active Worker Node Health</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Node-01 (Nexus Core)</span>
+            <span class="data-value"><div class="status-dot status-up"></div> 98.4% CPU</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Node-02 (Quant Brain)</span>
+            <span class="data-value"><div class="status-dot status-up"></div> 99.1% CPU</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Node-03 (Vigilance Grid)</span>
+            <span class="data-value"><div class="status-dot status-up"></div> 97.9% CPU</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Clustering Mode</span>
+            <span class="data-value value-cyan">Highly Available</span>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

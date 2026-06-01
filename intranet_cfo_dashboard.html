@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFO Treasury & Reinsurance Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #E2E8F0;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .widget-panel {
+            background: #0f172a; /* Slate background */
+            border: 1px solid #ef4444; /* Crimson border accent */
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .panel-title {
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #f8fafc;
+            margin: 0;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: #F1F5F9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .value-crimson { color: #ef4444; }
+        .value-emerald { color: #10b981; }
+        .value-amber { color: #f59e0b; }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-secured { background-color: #10b981; box-shadow: 0 0 8px rgba(16,185,129,0.5); }
+        .status-active { background-color: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,0.5); }
+
+        svg { stroke: #ef4444; }
+        .panel-header.emerald svg { stroke: #10b981; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    
+    <!-- Reinsurance Limits -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <h2 class="panel-title">Reinsurance Limits</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Aggregate Layer A</span>
+            <span class="data-value value-crimson">$15,000,000</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Retention Threshold</span>
+            <span class="data-value">$2,500,000</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Attachment Point</span>
+            <span class="data-value">CAT 2 Landfall</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Status</span>
+            <span class="data-value"><div class="status-dot status-secured"></div> Bound & Active</span>
+        </div>
+    </div>
+
+    <!-- Paymaster Reserves -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12" y2="18.01"></line><line x1="12" y1="6" x2="12" y2="18"></line><line x1="16" y1="12" x2="16" y2="12.01"></line><line x1="8" y1="12" x2="8" y2="12.01"></line></svg>
+            <h2 class="panel-title">Paymaster Reserves</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Operating Liquidity</span>
+            <span class="data-value value-emerald">$1,245,000 USD</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Escrow Lockbox</span>
+            <span class="data-value value-emerald">$850,000 USD</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Yield Reserves</span>
+            <span class="data-value">4.85% APY Slate</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Liquidity Status</span>
+            <span class="data-value"><div class="status-dot status-secured"></div> Fully Liquid</span>
+        </div>
+    </div>
+
+    <!-- Finance Operations -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            <h2 class="panel-title">Finance Ops</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Daily Payout Cap</span>
+            <span class="data-value">$500,000 USD</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Daily Burn Velocity</span>
+            <span class="data-value value-amber">$12,450 / day</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Underwriting ITV</span>
+            <span class="data-value">No Deficit</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Compliance Gateway</span>
+            <span class="data-value"><div class="status-dot status-secured"></div> Passing</span>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
