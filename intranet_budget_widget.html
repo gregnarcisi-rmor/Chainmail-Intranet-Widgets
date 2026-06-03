@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chainmail Treasury Dashboard - Active Run-Rate</title>
-    <!-- Chart.js for dramatic visual representation -->
+    <title>Chainmail Treasury Dashboard - Active Run-Rate & Actual Spends</title>
+    <!-- Chart.js for premium data visual representation -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700;900&display=swap');
         
         body, html {
             margin: 0;
@@ -92,12 +92,102 @@
             text-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
         }
 
-        .chart-container {
+        /* Tabs Styling */
+        .tabs-container {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 8px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #64748B;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: #CBD5E1;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .tab-btn.active {
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .tab-content {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .tab-content.active {
+            display: flex;
+        }
+
+        /* Chart container */
+        .chart-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        @media (min-width: 600px) {
+            .chart-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .chart-wrapper {
             position: relative;
-            height: 250px;
-            width: 100%;
+            height: 180px;
             display: flex;
             justify-content: center;
+            align-items: center;
+        }
+
+        .chart-legend-custom {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #94A3B8;
+        }
+
+        .legend-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .legend-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: #CBD5E1;
         }
 
         /* Detailed Breakdown Table */
@@ -105,12 +195,13 @@
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid rgba(255,255,255,0.05);
             border-radius: 8px;
-            overflow: hidden;
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 500px;
         }
 
         th {
@@ -130,6 +221,7 @@
             font-size: 12px;
             border-bottom: 1px solid rgba(255,255,255,0.02);
             color: #CBD5E1;
+            vertical-align: middle;
         }
 
         tr:last-child td {
@@ -143,7 +235,7 @@
         .td-amount {
             font-family: 'JetBrains Mono', monospace;
             font-weight: 700;
-            color: #10B981;
+            color: #D4AF37;
             text-align: right;
         }
 
@@ -167,6 +259,62 @@
             border-radius: 50%;
             flex-shrink: 0;
         }
+
+        /* Dynamic badges */
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-it { background: rgba(212, 175, 55, 0.1); color: #D4AF37; border: 1px solid rgba(212, 175, 55, 0.2); }
+        .badge-alc { background: rgba(59, 130, 246, 0.1); color: #3B82F6; border: 1px solid rgba(59, 130, 246, 0.2); }
+        .badge-mktg { background: rgba(236, 72, 153, 0.1); color: #EC4899; border: 1px solid rgba(236, 72, 153, 0.2); }
+        
+        .badge-recurring { background: rgba(139, 92, 246, 0.1); color: #8B5CF6; border: 1px solid rgba(139, 92, 246, 0.2); }
+        .badge-onetime { background: rgba(16, 185, 129, 0.1); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .badge-event { background: rgba(245, 158, 11, 0.1); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.2); }
+
+        .badge-yes { background: rgba(16, 185, 129, 0.1); color: #10B981; }
+        .badge-pending { background: rgba(245, 158, 11, 0.1); color: #F59E0B; }
+
+        /* Loader & Status Styles */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            gap: 16px;
+            color: #94A3B8;
+        }
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            border-top-color: #D4AF37;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: #EF4444;
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -174,90 +322,444 @@
 <div class="dashboard-container">
     <div class="header">
         <div class="title-group">
-            <h2 class="title">Treasury Active Records</h2>
-            <p class="subtitle">Operating in Active Production Mode</p>
+            <h2 class="title" id="dashboard-title">Treasury Active Records</h2>
+            <p class="subtitle" id="dashboard-subtitle">Operating in Active Production Mode</p>
         </div>
         <div class="burn-rate">
-            <p class="burn-label">Current Monthly Burn</p>
-            <p class="burn-value">$1,090.00</p>
+            <p class="burn-label" id="summary-label">Current Monthly Burn</p>
+            <p class="burn-value" id="summary-value">$1,090.00</p>
         </div>
     </div>
 
-    <!-- The chart is hidden since everything is $0, but we leave the structure for future scaling -->
-    <div class="breakdown-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Resource / Strategy</th>
-                    <th style="text-align: right;">Current Spend</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="td-category"><div class="color-dot" style="background:#D4AF37"></div> Geospatial</div>
-                    </td>
-                    <td>
-                        XWeather API & Vexcel Imagery
-                        <div class="td-desc">Transitioned from trial to active commercial convective mapping and high-res imagery</div>
-                    </td>
-                    <td class="td-amount">$750.00</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="td-category"><div class="color-dot" style="background:#3b82f6"></div> Infrastructure</div>
-                    </td>
-                    <td>
-                        Firebase Blaze Plan & Cloud Run
-                        <div class="td-desc">Production compute scale, databases, and secure document storage bucket compute</div>
-                    </td>
-                    <td class="td-amount">$100.00</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="td-category"><div class="color-dot" style="background:#10B981"></div> Core AI</div>
-                    </td>
-                    <td>
-                        Gemini 1.5 Flash & 3.1 Pro APIs
-                        <div class="td-desc">Dynamic IoT request routing and human-in-the-loop (HITL) actuarial triggers</div>
-                    </td>
-                    <td class="td-amount">$65.00</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="td-category"><div class="color-dot" style="background:#8b5cf6"></div> Treasury Processing</div>
-                    </td>
-                    <td>
-                        Secure L2 Ledger sponsored gas
-                        <div class="td-desc">Active sponsored execution gas for ParametricPayoutEngine.sol smart contracts</div>
-                    </td>
-                    <td class="td-amount">$25.00</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="td-category"><div class="color-dot" style="background:#ec4899"></div> Claims Audit</div>
-                    </td>
-                    <td>
-                        ISO Verisk ClaimSearch API
-                        <div class="td-desc">Automated double-claim and fraud checking pipelines</div>
-                    </td>
-                    <td class="td-amount">$150.00</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="td-category"><div class="color-dot" style="background:#64748b"></div> Hardware IoT</div>
-                    </td>
-                    <td>
-                        Existing Network Sync
-                        <div class="td-desc">Connecting user's existing Ambient weather station hardware</div>
-                    </td>
-                    <td class="td-amount">$0.00</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Navigation Tabs -->
+    <div class="tabs-container">
+        <button type="button" class="tab-btn active" data-tab="forecast">Forecasted Run-Rate</button>
+        <button type="button" class="tab-btn" data-tab="actual">Actual Spends Ledger</button>
+    </div>
+
+    <!-- Tab 1: Forecasted Run-Rate -->
+    <div class="tab-content active" id="forecast-panel">
+        <div class="chart-section">
+            <div class="chart-wrapper">
+                <canvas id="forecastChart"></canvas>
+            </div>
+            <div class="chart-legend-custom" id="forecastLegend">
+                <!-- Legend injected here -->
+            </div>
+        </div>
+
+        <div class="breakdown-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Resource / Strategy</th>
+                        <th style="text-align: right;">Current Spend</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="td-category"><div class="color-dot" style="background:#D4AF37"></div> Geospatial</div>
+                        </td>
+                        <td>
+                            XWeather API & Vexcel Imagery
+                            <div class="td-desc">Transitioned from trial to active commercial convective mapping and high-res imagery</div>
+                        </td>
+                        <td class="td-amount">$750.00</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="td-category"><div class="color-dot" style="background:#3B82F6"></div> Infrastructure</div>
+                        </td>
+                        <td>
+                            Firebase Blaze Plan & Cloud Run
+                            <div class="td-desc">Production compute scale, databases, and secure document storage bucket compute</div>
+                        </td>
+                        <td class="td-amount">$100.00</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="td-category"><div class="color-dot" style="background:#10B981"></div> Core AI</div>
+                        </td>
+                        <td>
+                            Gemini 1.5 Flash & 3.1 Pro APIs
+                            <div class="td-desc">Dynamic IoT request routing and human-in-the-loop (HITL) trigger validation</div>
+                        </td>
+                        <td class="td-amount">$65.00</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="td-category"><div class="color-dot" style="background:#8B5CF6"></div> Treasury Processing</div>
+                        </td>
+                        <td>
+                            Secure L2 Ledger sponsored gas
+                            <div class="td-desc">Active sponsored execution gas for ParametricPayoutEngine.sol smart contracts</div>
+                        </td>
+                        <td class="td-amount">$25.00</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="td-category"><div class="color-dot" style="background:#EC4899"></div> Claims Audit</div>
+                        </td>
+                        <td>
+                            ISO Verisk ClaimSearch API
+                            <div class="td-desc">Automated double-claim and fraud checking pipelines</div>
+                        </td>
+                        <td class="td-amount">$150.00</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="td-category"><div class="color-dot" style="background:#64748b"></div> Hardware IoT</div>
+                        </td>
+                        <td>
+                            Existing Network Sync
+                            <div class="td-desc">Connecting user's existing Ambient weather station hardware</div>
+                        </td>
+                        <td class="td-amount">$0.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tab 2: Actual Spends (Google Sheets Sync) -->
+    <div class="tab-content" id="actual-panel">
+        <div class="chart-section">
+            <div class="chart-wrapper">
+                <canvas id="actualChart"></canvas>
+            </div>
+            <div class="chart-legend-custom" id="actualLegend">
+                <!-- Legend injected here -->
+            </div>
+        </div>
+
+        <div id="actual-loading" class="loading-container">
+            <div class="spinner"></div>
+            <span>Synchronizing live spend data with Google Sheets...</span>
+        </div>
+
+        <div id="actual-error" class="error-message" style="display: none;"></div>
+
+        <div class="breakdown-container" id="actual-table-container" style="display: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Dept</th>
+                        <th>Type</th>
+                        <th>Provider</th>
+                        <th>Product / Service</th>
+                        <th>Paid By</th>
+                        <th>Reimbursed?</th>
+                        <th style="text-align: right;">Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="actual-spend-rows">
+                    <!-- Dynamic rows injected here -->
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
+<script>
+    // Tab switching logic
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tab-content');
+    const dbTitle = document.getElementById('dashboard-title');
+    const dbSubtitle = document.getElementById('dashboard-subtitle');
+    const sumLabel = document.getElementById('summary-label');
+    const sumValue = document.getElementById('summary-value');
+
+    let forecastedTotal = 1090.00;
+    let actualTotal = 5182.09; // fallback total
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            panels.forEach(p => p.classList.remove('active'));
+
+            btn.classList.add('active');
+            const targetTab = btn.getAttribute('data-tab');
+            document.getElementById(`${targetTab}-panel`).classList.add('active');
+
+            if (targetTab === 'forecast') {
+                dbTitle.innerText = "Treasury Active Records";
+                dbSubtitle.innerText = "Operating in Active Production Mode";
+                sumLabel.innerText = "Current Monthly Burn";
+                sumValue.innerText = "$" + forecastedTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            } else {
+                dbTitle.innerText = "Actual Ledger Spends";
+                dbSubtitle.innerText = "Live Google Sheets Synchronized View";
+                sumLabel.innerText = "Total Spends Paid";
+                sumValue.innerText = "$" + actualTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+        });
+    });
+
+    // ── CHART 1: FORECAST RUN-RATE ──
+    const forecastCtx = document.getElementById('forecastChart').getContext('2d');
+    const forecastData = {
+        labels: ['Geospatial', 'Infrastructure', 'Core AI', 'Treasury', 'Claims Audit', 'Hardware IoT'],
+        datasets: [{
+            data: [750.00, 100.00, 65.00, 25.00, 150.00, 0.00],
+            backgroundColor: ['#D4AF37', '#3B82F6', '#10B981', '#8B5CF6', '#EC4899', '#64748B'],
+            borderWidth: 1,
+            borderColor: '#020617'
+        }]
+    };
+
+    const forecastChart = new Chart(forecastCtx, {
+        type: 'doughnut',
+        data: forecastData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    // Generate Forecast Custom Legend
+    const forecastLegendEl = document.getElementById('forecastLegend');
+    forecastData.labels.forEach((label, idx) => {
+        const value = forecastData.datasets[0].data[idx];
+        const color = forecastData.datasets[0].backgroundColor[idx];
+        
+        const legendItem = document.createElement('div');
+        legendItem.className = 'legend-item';
+        legendItem.innerHTML = `
+            <div class="legend-label">
+                <span class="legend-color" style="background: ${color}"></span>
+                <span>${label}</span>
+            </div>
+            <span class="legend-value">$${value.toFixed(2)}</span>
+        `;
+        forecastLegendEl.appendChild(legendItem);
+    });
+
+
+    // ── GOOGLE SHEETS LIVE DATA SYNC ──
+    // Sheets export URL
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/1NmD4WuI4LzYSeoyywUc4B9FGKo3CWzZaLc7Ng_ei3f4/export?format=csv&gid=1577421878';
+
+    // Fallback data in case of offline testing / CORS / Google network errors
+    const fallbackCSV = `Department,Expense Type,Provider,Product/Service,Trip Duration,Invoice Number,Invoice Date,Billing ID,Amount,Paid,Paid by,Reimbursed?,,Total Paid
+IT,Recurring,Google LLC,Google Suite,N/A,5480227076,"January 31, 2026",2296-0085-2455, $ 154.44 ,Yes,Jesse Benedick/Greg Narcisi,Pending,," $ 5,182.09 "
+IT,Recurring,Google LLC,Google Suite,N/A,5503275878,"February 28, 2026",2296-0085-2455, $ 165.60 ,Yes,Jesse Benedick/Greg Narcisi,Pending,,
+ALC,One-Time,Delaware Corporate Headquarters LLC,Delaware Address,N/A,WGHZ5984,"March 27, 2026",N/A, $ 98.00 ,Yes,Jesse Benedick,Pending,,
+ALC,One-Time,Clerky,Incorporation,N/A,,"March 6, 2026",40448k39, $ 819.00 ,Yes,Jesse Benedick/Greg Narcisi,Pending,,
+IT,Recurring,Google LLC,Google Suite,N/A,5527455406,"March 31, 2026",2296-0085-2455, $ 136.01 ,Yes,Jesse Benedick/Greg Narcisi,Pending,,
+Marketing,Conferences and Industry Events,Insurtech Connect (ITCVegas),Conference Ticket,N/A,N/A,"April 29, 2026",N/A, $ 995.00 ,Yes,Jesse Benedick,Pending,,
+Marketing,Conferences and Industry Events,Insurtech Connect (ITCVegas),Conference Ticket,N/A,N/A,"April 29, 2026",N/A, $ 995.00 ,Yes,Jeremy Metts,Pending,,
+IT,Recurring,Google LLC,Google Suite,N/A,5555907816,"April 30, 2026",2296-0085-2455, $ 129.60 ,Yes,Jesse Benedick/Greg Narcisi,Pending,,
+Marketing,Conferences and Industry Events,Scout Insurtech Event,Hotel/Airfare/Food/Uber,05/26-05/28,N/A,N/A,N/A, $ 721.46 ,Yes,Jesse Benedick,Pending,,
+Marketing,Conferences and Industry Events,Scout Insurtech Event,Hotel/Airfare/Food/Drive,05/26-05/29,N/A,N/A,N/A, $ 967.98 ,Yes,Greg Narcisi,Pending,,`;
+
+    let actualChart = null;
+
+    // CSV parser loop to handle commas inside quotes
+    function parseCSV(text) {
+        const lines = [];
+        const rows = text.split(/\r?\n/);
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i].trim();
+            if (!row) continue;
+            
+            const columns = [];
+            let insideQuote = false;
+            let entry = '';
+            for (let j = 0; j < row.length; j++) {
+                const char = row[j];
+                if (char === '"') {
+                    insideQuote = !insideQuote;
+                } else if (char === ',' && !insideQuote) {
+                    columns.push(entry.trim());
+                    entry = '';
+                } else {
+                    entry += char;
+                }
+            }
+            columns.push(entry.trim());
+            lines.push(columns);
+        }
+        return lines;
+    }
+
+    function processSpendData(csvText) {
+        try {
+            const parsed = parseCSV(csvText);
+            if (parsed.length <= 1) throw new Error("Empty or invalid CSV structure");
+            
+            // Header is parsed[0], data is parsed[1..n]
+            const rows = parsed.slice(1);
+            
+            let totalSum = 0;
+            const deptSpends = { 'IT': 0, 'ALC': 0, 'Marketing': 0 };
+            
+            const tbody = document.getElementById('actual-spend-rows');
+            tbody.innerHTML = ''; // clear
+            
+            rows.forEach((cols) => {
+                if (cols.length < 9) return; // invalid row
+                
+                const dept = cols[0];
+                const expType = cols[1];
+                const provider = cols[2];
+                const service = cols[3];
+                const date = cols[6].replace(/"/g, '');
+                
+                // Clean amount
+                const amtStr = cols[8].replace(/[$,\s"]/g, '');
+                const amount = parseFloat(amtStr) || 0;
+                
+                const paid = cols[9];
+                const paidBy = cols[10];
+                const reimbursed = cols[11];
+                
+                totalSum += amount;
+                
+                // Accumulate dept spends
+                const mappedDept = dept === 'Marketing' ? 'Marketing' : dept;
+                if (deptSpends[mappedDept] !== undefined) {
+                    deptSpends[mappedDept] += amount;
+                } else {
+                    deptSpends[dept] = amount;
+                }
+
+                // Append row
+                const tr = document.createElement('tr');
+                
+                // Department badge mapping
+                let deptClass = 'badge-it';
+                if (dept.toLowerCase() === 'alc') deptClass = 'badge-alc';
+                if (dept.toLowerCase().includes('market')) deptClass = 'badge-mktg';
+                
+                // Expense type badge mapping
+                let typeClass = 'badge-onetime';
+                if (expType.toLowerCase() === 'recurring') typeClass = 'badge-recurring';
+                if (expType.toLowerCase().includes('conf') || expType.toLowerCase().includes('event')) typeClass = 'badge-event';
+
+                // Reimbursed badge mapping
+                let reimbClass = 'badge-pending';
+                if (reimbursed.toLowerCase() === 'yes') reimbClass = 'badge-yes';
+
+                tr.innerHTML = `
+                    <td>${date}</td>
+                    <td><span class="badge ${deptClass}">${dept}</span></td>
+                    <td><span class="badge ${typeClass}">${expType.slice(0, 15)}</span></td>
+                    <td><strong>${provider}</strong></td>
+                    <td>${service}</td>
+                    <td style="font-size: 11px; color:#94A3B8;">${paidBy}</td>
+                    <td><span class="badge ${reimbClass}">${reimbursed}</span></td>
+                    <td class="td-amount">$${amount.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Update local totals
+            actualTotal = totalSum;
+            
+            // If actual tab is currently active, update header live value
+            const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
+            if (activeTab === 'actual') {
+                sumValue.innerText = "$" + actualTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+            // Draw/Update Actual Spend Chart
+            renderActualChart(deptSpends);
+            
+            // Hide loading, show table
+            document.getElementById('actual-loading').style.display = 'none';
+            document.getElementById('actual-table-container').style.display = 'block';
+
+        } catch (e) {
+            console.error("Data process error:", e);
+            showError("Failed to parse synchronised ledger: " + e.message);
+        }
+    }
+
+    function renderActualChart(deptData) {
+        const actualCtx = document.getElementById('actualChart').getContext('2d');
+        const labels = Object.keys(deptData);
+        const dataVals = Object.values(deptData);
+        
+        const chartData = {
+            labels: labels,
+            datasets: [{
+                data: dataVals,
+                backgroundColor: ['#D4AF37', '#3B82F6', '#EC4899'],
+                borderWidth: 1,
+                borderColor: '#020617'
+            }]
+        };
+
+        if (actualChart) {
+            actualChart.destroy();
+        }
+
+        actualChart = new Chart(actualCtx, {
+            type: 'doughnut',
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // Generate actual spends custom legend
+        const actualLegendEl = document.getElementById('actualLegend');
+        actualLegendEl.innerHTML = ''; // clear
+        labels.forEach((label, idx) => {
+            const value = dataVals[idx];
+            const color = chartData.datasets[0].backgroundColor[idx];
+            
+            const legendItem = document.createElement('div');
+            legendItem.className = 'legend-item';
+            legendItem.innerHTML = `
+                <div class="legend-label">
+                    <span class="legend-color" style="background: ${color}"></span>
+                    <span>${label}</span>
+                </div>
+                <span class="legend-value">$${value.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+            `;
+            actualLegendEl.appendChild(legendItem);
+        });
+    }
+
+    function showError(msg) {
+        const errorEl = document.getElementById('actual-error');
+        errorEl.innerText = msg;
+        errorEl.style.display = 'block';
+        
+        // Populate using fallback data so the screen is never blank
+        console.log("Loading fallback spend database...");
+        processSpendData(fallbackCSV);
+    }
+
+    // Initiate fetch
+    fetch(csvUrl)
+        .then(response => {
+            if (!response.ok) throw new Error("HTTP status " + response.status);
+            return response.text();
+        })
+        .then(text => {
+            console.log("Successfully synchronised with Google Sheet.");
+            processSpendData(text);
+        })
+        .catch(err => {
+            console.warn("Fetch failed, loading embedded cache fallback.", err);
+            showError("Using embedded spends cache (Google Sheets offline/CORS filter active)");
+        });
+
+</script>
 
 </body>
 </html>
