@@ -473,7 +473,7 @@
     const sumValue = document.getElementById('summary-value');
 
     let forecastedTotal = 1090.00;
-    let actualTotal = 5182.09; // fallback total
+    let actualTotal = 5178.57; // fallback total
 
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -548,7 +548,7 @@
 
     // Fallback data in case of offline testing / CORS / Google network errors
     const fallbackCSV = `Department,Expense Type,Provider,Product/Service,Trip Duration,Invoice Number,Invoice Date,Billing ID,Amount,Paid,Paid by,Reimbursed?,,Total Paid
-IT,Recurring,Google LLC,Google Suite,N/A,5480227076,"January 31, 2026",2296-0085-2455, \$ 154.44 ,Yes,Jesse Benedick/Greg Narcisi,Pending,," \$ 5,182.09 "
+IT,Recurring,Google LLC,Google Suite,N/A,5480227076,"January 31, 2026",2296-0085-2455, \$ 154.44 ,Yes,Jesse Benedick/Greg Narcisi,Pending,," \$ 5,178.57 "
 IT,Recurring,Google LLC,Google Suite,N/A,5503275878,"February 28, 2026",2296-0085-2455, \$ 165.60 ,Yes,Jesse Benedick/Greg Narcisi,Pending,,
 ALC,One-Time,Delaware Corporate Headquarters LLC,Delaware Address,N/A,WGHZ5984,"March 27, 2026",N/A, \$ 98.00 ,Yes,Jesse Benedick,Pending,,
 ALC,One-Time,Clerky,Incorporation,N/A,,"March 6, 2026",40448k39, \$ 819.00 ,Yes,Jesse Benedick/Greg Narcisi,Pending,,
@@ -557,7 +557,7 @@ Marketing,Conferences and Industry Events,Insurtech Connect (ITCVegas),Conferenc
 Marketing,Conferences and Industry Events,Insurtech Connect (ITCVegas),Conference Ticket,N/A,N/A,"April 29, 2026",N/A, \$ 995.00 ,Yes,Jeremy Metts,Pending,,
 IT,Recurring,Google LLC,Google Suite,N/A,5555907816,"April 30, 2026",2296-0085-2455, \$ 129.60 ,Yes,Jesse Benedick/Greg Narcisi,Pending,,
 Marketing,Conferences and Industry Events,Scout Insurtech Event,Hotel/Airfare/Food/Uber,05/26-05/28,N/A,N/A,N/A, \$ 721.46 ,Yes,Jesse Benedick,Pending,,
-Marketing,Conferences and Industry Events,Scout Insurtech Event,Hotel/Airfare/Food/Drive,05/26-05/29,N/A,N/A,N/A, \$ 967.98 ,Yes,Greg Narcisi,Pending,,`;
+Marketing,Conferences and Industry Events,Scout Insurtech Event,Hotel/Airfare/Food/Drive,05/26-05/29,N/A,N/A,N/A, \$ 964.46 ,Yes,Greg Narcisi,Pending,,`;
 
     let actualChart = null;
 
