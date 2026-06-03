@@ -71,5 +71,29 @@
             </div>
         </div>
     </div>
+    <script>
+        // Read the query parameters or hash to dynamically change titles
+        const params = new URLSearchParams(window.location.search);
+        const role = params.get('role') || window.location.hash.substring(1);
+        
+        if (role) {
+            const titleEl = document.querySelector('.dept-title');
+            const leadEl = document.querySelector('.human-lead');
+            
+            if (role.toLowerCase() === 'cto') {
+                titleEl.textContent = 'Technology (CTO)';
+                leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: J. Benedick';
+            } else if (role.toLowerCase() === 'cfo') {
+                titleEl.textContent = 'Finance (CFO)';
+                leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: G. Narcisi';
+            } else if (role.toLowerCase() === 'cio') {
+                titleEl.textContent = 'Information (CIO)';
+                leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: J. Metts';
+            } else if (role.toLowerCase() === 'coo') {
+                titleEl.textContent = 'Operations (COO)';
+                leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: G. Narcisi';
+            }
+        }
+    </script>
 </body>
 </html>
