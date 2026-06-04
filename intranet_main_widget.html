@@ -13,7 +13,23 @@
             background-color: transparent;
             font-family: 'Inter', sans-serif;
             color: #E2E8F0;
-            overflow: hidden;
+            overflow-y: auto;
+        }
+
+        /* Custom scrollbar styling for a premium look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 175, 55, 0.6);
         }
 
         .widget-container {
