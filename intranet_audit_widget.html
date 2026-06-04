@@ -108,7 +108,7 @@
             stroke-width: 12px;
             stroke-linecap: round;
             stroke-dasharray: 377; /* 2 * PI * r (r=60) */
-            stroke-dashoffset: 146.5; /* (100 - 61.15) / 100 * 377 */
+            stroke-dashoffset: 66; /* (100 - 82.5) / 100 * 377 */
             transform: rotate(-90deg);
             transform-origin: 50% 50%;
             filter: drop-shadow(0 0 8px var(--gold));
@@ -117,7 +117,7 @@
 
         @keyframes progress-load {
             from { stroke-dashoffset: 377; }
-            to { stroke-dashoffset: 146.5; }
+            to { stroke-dashoffset: 66; }
         }
 
         .progress-percentage {
@@ -355,11 +355,11 @@
                 <circle class="progress-circle-bg" cx="70" cy="70" r="60"></circle>
                 <circle class="progress-circle-bar" cx="70" cy="70" r="60"></circle>
             </svg>
-            <span class="progress-percentage">61.15%</span>
+            <span class="progress-percentage">82.5%</span>
         </div>
         <div class="progress-info">
-            <h3 class="progress-info-title">Production Hardening Released</h3>
-            <p class="progress-info-desc">Our codebase has transitioned from a mock-powered prototype to a secure, traced, and validated production-ready architecture. Firestore Security Rules and backend APM hooks are now fully active.</p>
+            <h3 class="progress-info-title">UX Simplification & KISS Architecture</h3>
+            <p class="progress-info-desc">Our codebase has implemented KISS Mode, guiding tech-naive users through property protection setup and direct settlement configurations while retaining high-fidelity telemetry, blockchain verification, and sensor tracking backend mechanisms.</p>
         </div>
     </div>
 
@@ -388,13 +388,23 @@
             </div>
 
             <!-- Phase 2 -->
-            <div class="timeline-item active">
+            <div class="timeline-item completed">
                 <div class="timeline-dot"></div>
                 <div class="timeline-header">
-                    <span class="timeline-phase">Phase 2: Production Hardening Deployment (Current)</span>
+                    <span class="timeline-phase">Phase 2: Production Hardening Deployment</span>
                     <span class="timeline-percent">61.15%</span>
                 </div>
                 <span class="timeline-detail">Secured client access rules via Firestore RLS, added server request-tracing (`X-Request-ID`), enabled active API rate limits, and established Sentry/APM-compatible error logging schemas.</span>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="timeline-item active">
+                <div class="timeline-dot"></div>
+                <div class="timeline-header">
+                    <span class="timeline-phase">Phase 3: UX Simplification & KISS Architecture (Current)</span>
+                    <span class="timeline-percent">82.5%</span>
+                </div>
+                <span class="timeline-detail">Deployed a global KISS Mode toggle, Onboarding Wizard, Plaid sandbox login integration, and live notification dropdown. Deployed final rendering bug fixes to Settlement and Settings hubs.</span>
             </div>
         </div>
     </div>
