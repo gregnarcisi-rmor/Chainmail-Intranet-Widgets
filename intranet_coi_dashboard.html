@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COI Claims & Risk Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #E2E8F0;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .widget-panel {
+            background: #020617; /* Jet Obsidian */
+            border: 1px solid #064e3b; /* Deep forest emerald accent */
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .panel-title {
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #F8FAFC;
+            margin: 0;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-size: 11px;
+            color: #94A3B8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: #E2E8F0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .value-teal { color: #2dd4bf; }
+        .value-emerald { color: #10b981; }
+        .value-rose { color: #f43f5e; }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-live { background-color: #10B981; box-shadow: 0 0 8px rgba(16,185,129,0.5); }
+        .status-syncing { background-color: #2dd4bf; box-shadow: 0 0 8px rgba(45,212,191,0.5); }
+
+        svg { stroke: #2dd4bf; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    
+    <!-- COI Executive Profile & Agent Workspace -->
+    <div class="widget-panel" style="grid-column: 1 / -1; border-color: #10b981;">
+        <div class="panel-header">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <h2 class="panel-title" style="font-size: 16px; color: #10b981;">COI Executive Profile & Agent Workspace</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+            <!-- Profile Info -->
+            <div style="background: rgba(255, 255, 255, 0.02); padding: 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <h3 style="margin-top: 0; color: #F8FAFC; font-size: 16px; margin-bottom: 4px;">Michael Barnett</h3>
+                <p style="font-size: 12px; color: #10b981; margin: 0 0 12px 0; font-weight: 700; text-transform: uppercase;">Chief of Insurance & Claims (COI)</p>
+                <div class="data-row"><span class="data-label">Email</span><span class="data-value" style="font-size:12px;">michael.barnett@chainmailsolutions.ai</span></div>
+                <div class="data-row"><span class="data-label">Phone</span><span class="data-value">(386) 589-2393</span></div>
+                <div class="data-row"><span class="data-label">Assigned Agent</span><span class="data-value value-teal">Vigilance Shield</span></div>
+            </div>
+            <!-- Job Responsibilities -->
+            <div style="background: rgba(255, 255, 255, 0.02); padding: 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <h4 style="margin-top: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #10b981;">Job Responsibilities</h4>
+                <ul style="font-size: 12px; color: #94A3B8; padding-left: 16px; margin: 8px 0 0 0; line-height: 1.6;">
+                    <li>Direct all insurance operations, claims validation guidelines, and forensic adjustment processes.</li>
+                    <li>Validate physical weather sensor deployments and cross-reference GRIB2 weather patterns.</li>
+                    <li>Oversee Special Investigation Unit (SIU) fraud prevention and geofence verification rules.</li>
+                </ul>
+            </div>
+            <!-- SME Review Checklist & Agent Collaboration -->
+            <div style="background: rgba(255, 255, 255, 0.02); padding: 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <h4 style="margin-top: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #10b981;">SME Review & Agent Workflow</h4>
+                <ul style="font-size: 12px; color: #94A3B8; padding-left: 16px; margin: 8px 0 0 0; line-height: 1.6;">
+                    <li><strong>Review:</strong> Approve/Deny complex claims anomalies flagged by Vigilance Shield.</li>
+                    <li><strong>Validate:</strong> Verify windstorm coordinates, geofences, and claimant photo metadata.</li>
+                    <li><strong>Collaborate:</strong> Review forensic meteorology logs and manage HI-TL claim arbitrations.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Claims Telemetry -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            <h2 class="panel-title">Claims Telemetry</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Ingestion Telemetry</span>
+            <span class="data-value value-emerald">99.8% Match</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Flagged Coordinates</span>
+            <span class="data-value value-emerald">0 Flags</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Resolution Latency</span>
+            <span class="data-value">&lt; 5m Average</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">DVN Saturation Validation</span>
+            <span class="data-value"><div class="status-dot status-live"></div> Complete</span>
+        </div>
+    </div>
+
+    <!-- Solvency Risk Limits -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <h2 class="panel-title">Solvency Risk Limits</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Primary Reserve Ratio</span>
+            <span class="data-value value-emerald">220% Covered</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Attachment Limit</span>
+            <span class="data-value">$2,500,000</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Probable Max Loss (PML)</span>
+            <span class="data-value">Passed (1-in-250 Yr)</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Solvency Stress Test</span>
+            <span class="data-value value-emerald">Robust</span>
+        </div>
+    </div>
+
+    <!-- Vigilance Shield Agent Status -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <h2 class="panel-title">Vigilance Shield Agent</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Fraud Monitoring</span>
+            <span class="data-value value-emerald">Active</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Rules Configuration</span>
+            <span class="data-value">CI >= 95% Bound</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">HITL Queue Latency</span>
+            <span class="data-value value-teal">0 Pending</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">API Ingestion Link</span>
+            <span class="data-value"><div class="status-dot status-syncing"></div> Connected</span>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

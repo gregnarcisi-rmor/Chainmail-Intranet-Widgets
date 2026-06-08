@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHRO Secure HR Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #E2E8F0;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .widget-panel {
+            background: #020617; /* Jet Obsidian */
+            border: 1px solid #451a03; /* Deep amber/bronze accent */
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .panel-title {
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #F8FAFC;
+            margin: 0;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-size: 11px;
+            color: #94A3B8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: #E2E8F0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .value-gold { color: #f59e0b; }
+        .value-emerald { color: #10b981; }
+        .value-bronze { color: #d97706; }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-live { background-color: #10B981; box-shadow: 0 0 8px rgba(16,185,129,0.5); }
+        .status-syncing { background-color: #f59e0b; box-shadow: 0 0 8px rgba(245,158,11,0.5); }
+
+        .badge-tbd {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        svg { stroke: #f59e0b; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    
+    <!-- CHRO Executive Profile & Agent Workspace -->
+    <div class="widget-panel" style="grid-column: 1 / -1; border-color: #d97706;">
+        <div class="panel-header">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <h2 class="panel-title" style="font-size: 16px; color: #f59e0b;">CHRO Executive Profile & Agent Workspace</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+            <!-- Profile Info -->
+            <div style="background: rgba(255, 255, 255, 0.02); padding: 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <h3 style="margin-top: 0; color: #F8FAFC; font-size: 16px; margin-bottom: 4px;">Crystal Settles</h3>
+                <p style="font-size: 12px; color: #f59e0b; margin: 0 0 12px 0; font-weight: 700; text-transform: uppercase;">Chief Human Resources Officer (CHRO)</p>
+                <div class="data-row"><span class="data-label">Email</span><span class="data-value" style="font-size:12px;">crystal.settles@chainmailsolutions.ai</span></div>
+                <div class="data-row"><span class="data-label">Phone</span><span class="data-value">(941) 343-7910</span></div>
+                <div class="data-row"><span class="data-label">Assigned Agent</span><span class="data-value value-gold">Identity_Access_Manager</span></div>
+            </div>
+            <!-- Job Responsibilities -->
+            <div style="background: rgba(255, 255, 255, 0.02); padding: 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <h4 style="margin-top: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #f59e0b;">Job Responsibilities</h4>
+                <ul style="font-size: 12px; color: #94A3B8; padding-left: 16px; margin: 8px 0 0 0; line-height: 1.6;">
+                    <li>Direct talent acquisition pipelines, organizational designs, and HR policy guidelines.</li>
+                    <li>Manage credentials authentication checklists, keys auditing, and team access levels.</li>
+                    <li>Oversee caseworkers onboarding programs and credentials logs verification.</li>
+                </ul>
+            </div>
+            <!-- SME Review Checklist & Agent Collaboration -->
+            <div style="background: rgba(255, 255, 255, 0.02); padding: 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <h4 style="margin-top: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #f59e0b;">SME Review & Agent Workflow</h4>
+                <ul style="font-size: 12px; color: #94A3B8; padding-left: 16px; margin: 8px 0 0 0; line-height: 1.6;">
+                    <li><strong>Review:</strong> Inspect security access logs and audit role structure directories.</li>
+                    <li><strong>Validate:</strong> Verify credential authentication statuses and background check clearances.</li>
+                    <li><strong>Collaborate:</strong> Configure Role-Based Access Control (RBAC) rules within Identity_Access_Manager.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Credentials Status -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+            <h2 class="panel-title">Credentials Access Status</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Active Cryptographic Keys</span>
+            <span class="data-value value-emerald">7 Active Keys</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">W3C Secure Identifiers (DIDs)</span>
+            <span class="data-value value-emerald">7 DIDs Verified</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Failed Access Events</span>
+            <span class="data-value">0 Fails</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Revocation Checks</span>
+            <span class="data-value"><div class="status-dot status-live"></div> Safe</span>
+        </div>
+    </div>
+
+    <!-- Roster Status -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+            <h2 class="panel-title">Roster Statistics</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Onboarded Executives</span>
+            <span class="data-value value-emerald">7 Onboarded</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Pipeline Candidates</span>
+            <span class="data-value value-gold">29 Pipeline (TBD)</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">L&D Manual Completion</span>
+            <span class="data-value">100% Complete</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Roster Compliance</span>
+            <span class="data-value value-emerald">Pass</span>
+        </div>
+    </div>
+
+    <!-- Identity Access Manager Status -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <h2 class="panel-title">Identity Access Agent</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">RBAC Policy status</span>
+            <span class="data-value value-emerald">Active</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Vault compliance</span>
+            <span class="data-value">100% Compliant</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Auditing Loop Status</span>
+            <span class="data-value value-gold">Active</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Last Auditing Loop</span>
+            <span class="data-value"><div class="status-dot status-syncing"></div> 5m ago</span>
+        </div>
+    </div>
+
+    <!-- Pipeline & TBD Candidates Database -->
+    <div class="widget-panel" style="grid-column: 1 / -1; border-color: #d97706;">
+        <div class="panel-header">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-3-3.87"></path><path d="M9 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path><path d="M21 21v-2c0-.64-.13-1.24-.37-1.79"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <h2 class="panel-title" style="font-size: 14px; color: #f59e0b;">Pipeline & TBD Candidates Database (Google Sheet Roster)</h2>
+        </div>
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px; color: #94A3B8; text-align: left;">
+                <thead>
+                    <tr style="border-bottom: 2px solid rgba(217, 119, 6, 0.3); color: #F8FAFC; text-transform: uppercase; font-size: 10px; letter-spacing: 0.1em;">
+                        <th style="padding: 12px 8px;">Candidate Name</th>
+                        <th style="padding: 12px 8px;">Target Roster Position</th>
+                        <th style="padding: 12px 8px;">Department Area</th>
+                        <th style="padding: 12px 8px;">Background / Alignments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Jenn Soest</td>
+                        <td style="padding: 10px 8px;">Director of AI, Data & Automation</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Technology</span></td>
+                        <td style="padding: 10px 8px;">AI Agent Architectures / Prompt Engineering</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Ara Aguilar</td>
+                        <td style="padding: 10px 8px;">ClaimCenter (Guidewire) Integration Owner</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Technology</span></td>
+                        <td style="padding: 10px 8px;">Legacy Guidewire claim center API interfaces</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Nishee Johnson</td>
+                        <td style="padding: 10px 8px;">Tech Infrastructure Lead</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Technology</span></td>
+                        <td style="padding: 10px 8px;">Bare-metal server configurations, dev hardware setup</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Dean Savage</td>
+                        <td style="padding: 10px 8px;">Equipment Logistics Lead</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Technology</span></td>
+                        <td style="padding: 10px 8px;">Weather station boxed array sourcing</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Rose Mazard</td>
+                        <td style="padding: 10px 8px;">Claims & Experience Lead</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Operations</span></td>
+                        <td style="padding: 10px 8px;">Claims administration, support desk ticketing</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Anthony Gochenouer</td>
+                        <td style="padding: 10px 8px;">Claims & Construction Lead</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Operations</span></td>
+                        <td style="padding: 10px 8px;">Construction adjustment estimates, builder SLAs</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Holly Johnson</td>
+                        <td style="padding: 10px 8px;">Claims Administrator</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Operations</span></td>
+                        <td style="padding: 10px 8px;">Standardized claims logging and adjuster coordination</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Trent McKinney</td>
+                        <td style="padding: 10px 8px;">Head of Agency</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Marketing</span></td>
+                        <td style="padding: 10px 8px;">Broker networks, agency acquisition, retail sales</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Beth Stake</td>
+                        <td style="padding: 10px 8px;">Learning & Development Specialist</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Human Resources</span></td>
+                        <td style="padding: 10px 8px;">Case manager onboarding manuals, agent training</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Dean Chung</td>
+                        <td style="padding: 10px 8px;">Quality & Experience Manager</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Quality</span></td>
+                        <td style="padding: 10px 8px;">Portal verification audits, caseworker oversight</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Barry Gilway</td>
+                        <td style="padding: 10px 8px;">Strategic Advisor - Insurance</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Advisory</span></td>
+                        <td style="padding: 10px 8px;">Former CEO of Citizens Property Insurance Corp (CPIC)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Bobby Ayers</td>
+                        <td style="padding: 10px 8px;">Advisor - Claims & Appraisal</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Advisory</span></td>
+                        <td style="padding: 10px 8px;">Claims adjusting and mediation manager</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Heath Clark</td>
+                        <td style="padding: 10px 8px;">Advisor - CAT Management</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Advisory</span></td>
+                        <td style="padding: 10px 8px;">Former CAT Manager, current AVP of claims operations</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px 8px; color: #F8FAFC; font-weight: bold;">Vivek Prasannan</td>
+                        <td style="padding: 10px 8px;">Strategic Advisor - Blockchain</td>
+                        <td style="padding: 10px 8px;"><span class="badge-tbd">Advisory</span></td>
+                        <td style="padding: 10px 8px;">Token launching models and Web3 mesh security staking</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

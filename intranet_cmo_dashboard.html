@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMO Marketing & Sales Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #E2E8F0;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .widget-panel {
+            background: #020617; /* Jet Obsidian */
+            border: 1px solid #3b0764; /* Amethyst deep accent */
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .panel-title {
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #F8FAFC;
+            margin: 0;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-size: 11px;
+            color: #94A3B8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: #E2E8F0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .value-purple { color: #c084fc; }
+        .value-emerald { color: #10b981; }
+        .value-amber { color: #f59e0b; }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-live { background-color: #10B981; box-shadow: 0 0 8px rgba(16,185,129,0.5); }
+        .status-syncing { background-color: #8b5cf6; box-shadow: 0 0 8px rgba(139,92,246,0.5); }
+
+        svg { stroke: #a78bfa; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    
+    <!-- CMO Executive Profile & Agent Workspace -->
+    <div class="widget-panel" style="grid-column: 1 / -1; border-color: #8b5cf6;">
+        <div class="panel-header">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <h2 class="panel-title" style="font-size: 16px; color: #a78bfa;">CMO Executive Profile & Agent Workspace</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+            <!-- Profile Info -->
+            <div style="background: rgba(255, 255, 255, 0.02); padding: 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <h3 style="margin-top: 0; color: #F8FAFC; font-size: 16px; margin-bottom: 4px;">Jeremy Metts</h3>
+                <p style="font-size: 12px; color: #a78bfa; margin: 0 0 12px 0; font-weight: 700; text-transform: uppercase;">Chief Marketing Officer (CMO)</p>
+                <div class="data-row"><span class="data-label">Email</span><span class="data-value" style="font-size:12px;">jeremy.metts@chainmailsolutions.ai</span></div>
+                <div class="data-row"><span class="data-label">Phone</span><span class="data-value">(904) 536-1013</span></div>
+                <div class="data-row"><span class="data-label">Assigned Agent</span><span class="data-value value-purple">LOI Converter</span></div>
+            </div>
+            <!-- Job Responsibilities -->
+            <div style="background: rgba(255, 255, 255, 0.02); padding: 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <h4 style="margin-top: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #a78bfa;">Job Responsibilities</h4>
+                <ul style="font-size: 12px; color: #94A3B8; padding-left: 16px; margin: 8px 0 0 0; line-height: 1.6;">
+                    <li>Establish strategic wholesale broker acquisition channels and retail agent distribution networks.</li>
+                    <li>Oversee educational and promotional outreach outlining parametric payout advantages.</li>
+                    <li>Standardize incoming broker communications and manage sales pipeline velocities.</li>
+                </ul>
+            </div>
+            <!-- SME Review Checklist & Agent Collaboration -->
+            <div style="background: rgba(255, 255, 255, 0.02); padding: 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <h4 style="margin-top: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #a78bfa;">SME Review & Agent Workflow</h4>
+                <ul style="font-size: 12px; color: #94A3B8; padding-left: 16px; margin: 8px 0 0 0; line-height: 1.6;">
+                    <li><strong>Review:</strong> Inspect and approve broker profiles generated by LOI Converter.</li>
+                    <li><strong>Validate:</strong> Verify Letter of Intent (LOI) submission authenticity and parameters.</li>
+                    <li><strong>Collaborate:</strong> Review campaign conversions and configure acquisition targets in agent flows.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Broker Onboarding Funnel -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <h2 class="panel-title">Broker Acquisition Funnel</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Active Letters of Intent (LOI)</span>
+            <span class="data-value value-purple">14 In Review</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Onboarding Profiles</span>
+            <span class="data-value value-emerald">8 Provisioned</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Onboarded Velocity</span>
+            <span class="data-value">88.5% Rate</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Pipeline Health</span>
+            <span class="data-value"><div class="status-dot status-live"></div> Strong</span>
+        </div>
+    </div>
+
+    <!-- Marketing Campaigns -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            <h2 class="panel-title">Campaign Performance</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Campaign ROI</span>
+            <span class="data-value value-emerald">14.2x Multiplier</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Cost per Lead (CPL)</span>
+            <span class="data-value">$42.10 USD</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Target Regions</span>
+            <span class="data-value">SE / Gulf Coast</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Lead Quality Score</span>
+            <span class="data-value value-emerald">94/100</span>
+        </div>
+    </div>
+
+    <!-- LOI Converter Agent Status -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <h2 class="panel-title">LOI Converter Agent</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">LOI Parser status</span>
+            <span class="data-value value-emerald">Operational</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Contracts Generated</span>
+            <span class="data-value">12 Contracts</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Auto-Provisioning</span>
+            <span class="data-value value-purple">Active (100%)</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Last Parser Ingest</span>
+            <span class="data-value"><div class="status-dot status-syncing"></div> 20m ago</span>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
