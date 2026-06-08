@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal & Compliance Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #E2E8F0;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .widget-panel {
+            background: #020617; /* Jet Obsidian Background */
+            border: 1px solid rgba(71, 85, 105, 0.3); /* Steel slate border */
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+        }
+
+        .panel-title {
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #F8FAFC;
+            margin: 0;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-size: 11px;
+            color: #94A3B8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: #F8FAFC;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .value-blue { color: #60A5FA; }
+        .value-emerald { color: #10B981; }
+        .value-yellow { color: #F59E0B; }
+        .value-rose { color: #F43F5E; }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-ok { background-color: #10B981; box-shadow: 0 0 8px rgba(16,185,129,0.5); }
+        .status-audit { background-color: #F59E0B; box-shadow: 0 0 8px rgba(245,158,11,0.5); }
+
+        .badge-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .badge-approved { background: rgba(16, 185, 129, 0.1); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .badge-review { background: rgba(245, 158, 11, 0.1); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.2); }
+        .badge-prep { background: rgba(96, 165, 250, 0.1); color: #60A5FA; border: 1px solid rgba(96, 165, 250, 0.2); }
+
+        svg { stroke: #60A5FA; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    
+    <!-- Legal Executive Profile & Agent Workspace -->
+    <div class="widget-panel" style="grid-column: 1 / -1;">
+        <div class="panel-header">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <h2 class="panel-title" style="font-size: 16px; color: #60A5FA;">Legal Executive Profile & Agent Workspace</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+            <!-- Profile Info -->
+            <div style="background: rgba(255, 255, 255, 0.02); padding: 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <h3 style="margin-top: 0; color: #F8FAFC; font-size: 16px; margin-bottom: 4px;">Greg Narcisi</h3>
+                <p style="font-size: 12px; color: #60A5FA; margin: 0 0 12px 0; font-weight: 700; text-transform: uppercase;">General Counsel (GC) - Interim</p>
+                <div class="data-row"><span class="data-label">Email</span><span class="data-value" style="font-size:12px;">greg.narcisi@chainmailsolutions.ai (Interim)</span></div>
+                <div class="data-row"><span class="data-label">Phone</span><span class="data-value">(843) 254-1131</span></div>
+                <div class="data-row"><span class="data-label">Assigned Co-Pilot</span><span class="data-value value-blue">Bureaucracy_Buster</span></div>
+            </div>
+            <!-- Job Responsibilities -->
+            <div style="background: rgba(255, 255, 255, 0.02); padding: 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <h4 style="margin-top: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #60A5FA;">Legal Mandate</h4>
+                <ul style="font-size: 12px; color: #94A3B8; padding-left: 16px; margin: 8px 0 0 0; line-height: 1.6;">
+                    <li>Oversee multi-state insurance filings (NY DFS, FL OIR, TX TDI) and regulatory tax compliance.</li>
+                    <li>Ensure NAIC explainability, algorithmic transparency, and bias mitigation protocols are certified.</li>
+                    <li>Monitor consumer privacy boundaries, geofence logging, and secure data handling standards.</li>
+                </ul>
+            </div>
+            <!-- Human-Agent Symbiosis -->
+            <div style="background: rgba(255, 255, 255, 0.02); padding: 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <h4 style="margin-top: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #60A5FA;">Agent Cooperation Workflow</h4>
+                <ul style="font-size: 12px; color: #94A3B8; padding-left: 16px; margin: 8px 0 0 0; line-height: 1.6;">
+                    <li><strong>Filing Generation:</strong> Interacts with Bureaucracy_Buster to automatically format state PCLR, EL1, or AG53 report structures.</li>
+                    <li><strong>Compliance Audit:</strong> Scans real-time regulatory tax allocations and geofencing limits.</li>
+                    <li><strong>Review loop:</strong> Signs off on draft regulatory packages before final state department submissions.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compliance Checklist Status -->
+    <div class="widget-panel">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <h2 class="panel-title">Compliance Checklist</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">NAIC Algorithmic Transparency</span>
+            <span class="data-value value-emerald"><div class="status-dot status-ok"></div> Certified</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Consumer Privacy geofence log</span>
+            <span class="data-value value-emerald"><div class="status-dot status-ok"></div> Passed</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Multi-State Premium Tax Rules</span>
+            <span class="data-value value-emerald"><div class="status-dot status-ok"></div> Compliant</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Audit Loop Status</span>
+            <span class="data-value">Continuous</span>
+        </div>
+    </div>
+
+    <!-- Regulatory Filings Registry -->
+    <div class="widget-panel" style="grid-column: 1 / span 2;">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <h2 class="panel-title">Regulatory Filings Registry</h2>
+        </div>
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px; color: #94A3B8; text-align: left;">
+                <thead>
+                    <tr style="border-bottom: 2px solid rgba(71, 85, 105, 0.3); color: #F8FAFC; text-transform: uppercase; font-size: 10px; letter-spacing: 0.1em;">
+                        <th style="padding: 10px 8px;">Filing ID</th>
+                        <th style="padding: 10px 8px;">Jurisdiction</th>
+                        <th style="padding: 10px 8px;">Filing Type</th>
+                        <th style="padding: 10px 8px;">Filing Date</th>
+                        <th style="padding: 10px 8px; text-align: right;">Filing Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 8px; color: #F8FAFC; font-weight: bold; font-family: 'JetBrains Mono', monospace;">NY-DFS-2026-PCLR</td>
+                        <td style="padding: 8px;">New York DFS</td>
+                        <td style="padding: 8px;">PCLR-1A (Product Premium structure)</td>
+                        <td style="padding: 8px;">May 15, 2026</td>
+                        <td style="padding: 8px; text-align: right;"><span class="badge-status badge-approved">Approved / Filed</span></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 8px; color: #F8FAFC; font-weight: bold; font-family: 'JetBrains Mono', monospace;">FL-OIR-2026-EL1</td>
+                        <td style="padding: 8px;">Florida OIR</td>
+                        <td style="padding: 8px;">EL1-CAT (Mesh CAT reserves ratio)</td>
+                        <td style="padding: 8px;">May 20, 2026</td>
+                        <td style="padding: 8px; text-align: right;"><span class="badge-status badge-approved">Approved / Filed</span></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 8px; color: #F8FAFC; font-weight: bold; font-family: 'JetBrains Mono', monospace;">TX-TDI-2026-AG53</td>
+                        <td style="padding: 8px;">Texas TDI</td>
+                        <td style="padding: 8px;">AG-53 Actuarial Reserves Spec</td>
+                        <td style="padding: 8px;">Jun 1, 2026</td>
+                        <td style="padding: 8px; text-align: right;"><span class="badge-status badge-review">In Review / Pending</span></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 8px; color: #F8FAFC; font-weight: bold; font-family: 'JetBrains Mono', monospace;">CA-CDI-2026-MESH</td>
+                        <td style="padding: 8px;">California CDI</td>
+                        <td style="padding: 8px;">Mesh-Staking Compliance specification</td>
+                        <td style="padding: 8px;">TBD</td>
+                        <td style="padding: 8px; text-align: right;"><span class="badge-status badge-prep">In Preparation</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Bureaucracy Buster compliance feed -->
+    <div class="widget-panel" style="grid-column: 1 / -1; border-color: rgba(71, 85, 105, 0.2);">
+        <div class="panel-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <h2 class="panel-title" style="color: #60A5FA;">Bureaucracy Buster Compliance feed logs</h2>
+        </div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03); max-height: 150px; overflow-y: auto;">
+            <div style="margin-bottom: 8px;"><span style="color: #60A5FA;">[2026-06-08 09:15:32] Compliance Check:</span> TX TDI AG-53 validation scan. Status: <span style="color: #F59E0B;">Pending review</span>. Reserves math matches requirements.</div>
+            <div style="margin-bottom: 8px;"><span style="color: #60A5FA;">[2026-06-08 11:22:11] Privacy Scan:</span> Consumer geofence logging verified. geofence boundary coordinates checked for FL/NY policies. No privacy breaches detected.</div>
+            <div style="margin-bottom: 0;"><span style="color: #60A5FA;">[2026-06-08 15:40:02] Prep Alert:</span> "CA CDI Mesh-Staking specification draft generated. Premium allocation mapping initialized under state regulations ruleset."</div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

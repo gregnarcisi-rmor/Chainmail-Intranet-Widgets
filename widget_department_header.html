@@ -110,6 +110,14 @@
                 titleEl.textContent = 'Customer Experience (CXO - Tentative)';
                 leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: E. Bullard (Tentative)';
                 agentEl.textContent = 'Product_Consumer_Agent';
+            } else if (roleKey === 'ceo') {
+                titleEl.textContent = 'Executive Office (CEO)';
+                leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: J. Benedick';
+                agentEl.textContent = 'Treasury Ledger Agent';
+            } else if (roleKey === 'legal' || roleKey === 'gc') {
+                titleEl.textContent = 'Legal & Compliance (GC)';
+                leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: G. Narcisi (Interim)';
+                agentEl.textContent = 'Bureaucracy Buster';
             }
         }
     </script>
