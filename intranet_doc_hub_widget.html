@@ -152,6 +152,29 @@
             color: var(--text-muted);
         }
 
+        .pdf-btn {
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .pdf-btn:hover {
+            background: var(--gold);
+            color: var(--bg-color);
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+
         .viewer-content {
             padding: 32px;
             overflow-y: auto;
@@ -226,6 +249,13 @@
 
         strong {
             color: #F8FAFC;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 30px 0;
         }
 
         /* Tables styling */
@@ -311,6 +341,77 @@
             font-size: 12px;
             color: #E2E8F0;
         }
+
+        /* Print Media Styles */
+        @media print {
+            body, html {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+            .sidebar, .viewer-header, .pdf-btn {
+                display: none !important;
+            }
+            .hub-container {
+                border: none !important;
+                box-shadow: none !important;
+                display: block !important;
+                height: auto !important;
+            }
+            .viewer {
+                background: transparent !important;
+                display: block !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+            .viewer-content {
+                padding: 0 !important;
+                overflow-y: visible !important;
+                height: auto !important;
+            }
+            .doc-section {
+                display: none !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                color: #000000 !important;
+            }
+            .doc-section.active {
+                display: block !important;
+            }
+            h2 {
+                color: #000000 !important;
+                border-bottom: 1px solid #000000 !important;
+            }
+            h3, strong {
+                color: #000000 !important;
+            }
+            table {
+                background: transparent !important;
+                border: 1px solid #000000 !important;
+                color: #000000 !important;
+            }
+            th {
+                background: #f1f5f9 !important;
+                color: #000000 !important;
+                border-bottom: 1px solid #000000 !important;
+            }
+            td {
+                border-bottom: 1px solid #e2e8f0 !important;
+                color: #000000 !important;
+            }
+            .alert-block {
+                background: #f8fafc !important;
+                border-left: 4px solid #475569 !important;
+                color: #000000 !important;
+            }
+            .alert-title {
+                color: #475569 !important;
+            }
+            .alert-content {
+                color: #000000 !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -345,6 +446,18 @@
                 <svg class="doc-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                 Full-Stack Gap Audit
             </li>
+            <li class="doc-item" onclick="showDoc('po-guide', 'Product Owner Guide', 'June 8, 2026')">
+                <svg class="doc-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                Product Owner Guide
+            </li>
+            <li class="doc-item" onclick="showDoc('pm-guide', 'Product Manager Guide', 'June 8, 2026')">
+                <svg class="doc-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                Product Manager Guide
+            </li>
+            <li class="doc-item" onclick="showDoc('pu-guide', 'Product User Guide', 'June 8, 2026')">
+                <svg class="doc-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Product User Guide
+            </li>
         </ul>
     </div>
 
@@ -352,7 +465,17 @@
     <div class="viewer">
         <div class="viewer-header">
             <h2 class="active-doc-title" id="active-title">Executive Briefing</h2>
-            <span class="doc-meta" id="active-meta">Last Updated: June 7, 2026</span>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <span class="doc-meta" id="active-meta">Last Updated: June 7, 2026</span>
+                <button class="pdf-btn" onclick="printDoc()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Export PDF
+                </button>
+            </div>
         </div>
         <div class="viewer-content">
             <!-- Executive Summary Document -->
@@ -559,6 +682,106 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Product Owner L&D Guide -->
+            <div id="po-guide" class="doc-section">
+                <p><em>A Learning & Development (L&D) Onboarding Manual for Product Visionaries.</em></p>
+                
+                <h2>1. Welcome to Chainmail!</h2>
+                <p>Hello and welcome! If you are reading this, you are taking on the role of a <strong>Product Owner</strong> within the Chainmail Ecosystem. Don't worry if you aren't deeply technical—this guide is written specifically to help you understand the "why" and "what" of our system without getting bogged down in code.</p>
+                <p>As a Product Owner, your job is to maximize the value of the Chainmail product. You are the visionary. You decide <em>what</em> needs to be built next to serve our mission.</p>
+                
+                <h2>2. Our Core Philosophy</h2>
+                <p>Before we talk about software, let's talk about our heart. Traditional insurance companies often look for any excuse to deny a claim. <strong>We do the exact opposite.</strong></p>
+                <p>Our philosophy is to <strong>embrace risk</strong>. We want to cover people in high-risk coastal and wildfire zones. Through our <strong>BallPark Initiative</strong>, our goal is to be a pillar of community support, ensuring that when disaster strikes, families get paid instantly. Your job is to make sure every feature we build aligns with this mission.</p>
+                
+                <h2>3. The Chainmail Ecosystem (The Big Picture)</h2>
+                <p>Think of Chainmail not as one app, but as a small city with five distinct neighborhoods:</p>
+                <ul>
+                    <li><strong>The Customer App:</strong> The storefront. Where users buy policies, view maps, and check coverage.</li>
+                    <li><strong>The Enterprise Dashboard:</strong> The command center. Where you and the administrators watch the system run.</li>
+                    <li><strong>The Nexus Core (Underwriting):</strong> The bouncer. Decides who gets a policy and for how much.</li>
+                    <li><strong>The Quant Brain (Finance):</strong> The vault manager. Makes sure we have enough money to pay claims.</li>
+                    <li><strong>The Vigilance Grid (Sensors):</strong> The weather station. Listens to IoT sensors to detect disasters.</li>
+                </ul>
+
+                <h2>4. Meet Your AI Workforce</h2>
+                <p>You aren't just managing human developers; you are managing four **AI Agents** that run the company day and night:</p>
+                <ul>
+                    <li><strong>The Underwriting Agent:</strong> Evaluates risk. If a customer lives in an extreme danger zone, it doesn't reject them! Instead, it offers them an "IoT Baseline" policy ($2,500 payout cap) to get their sensor data active.</li>
+                    <li><strong>The Claims Adjuster Agent:</strong> Reviews satellite and telemetry data. programmatically executes payouts instantly on proof, and routes anomalies to humans. It cannot autonomously deny a claim.</li>
+                    <li><strong>The Vigilance Oracle Agent:</strong> Watches global telemetry and readies banking rails to pay people before they even ask during severe storms.</li>
+                    <li><strong>The Quant Brain Actuary Agent:</strong> Monitors solvency, purchasing "reinsurance" automatically to protect cash pools.</li>
+                </ul>
+            </div>
+
+            <!-- Product Manager L&D Guide -->
+            <div id="pm-guide" class="doc-section">
+                <p><em>A Learning & Development (L&D) Operations Manual for Managers and Captains.</em></p>
+                
+                <h2>1. Welcome to the Engine Room!</h2>
+                <p>Welcome! As a <strong>Product Manager</strong>, you are the bridge between the visionary Product Owner and the engineering teams (and AI agents!) that actually build the system. If the Product Owner decides <em>where</em> the ship is going, you are the captain deciding <em>how</em> we get there safely and efficiently.</p>
+                
+                <h2>2. Understanding the Machine</h2>
+                <p>You don't need to write code, but you do need to understand how our five core components fit together:</p>
+                <ul>
+                    <li><strong>Customer App:</strong> The front door. It must look premium (Steel & Glass aesthetic) so customers trust us.</li>
+                    <li><strong>Enterprise Dashboard:</strong> Your primary tool. This is where you monitor the health of the system.</li>
+                    <li><strong>Nexus Core:</strong> This handles incoming customers and contains our Underwriting AI.</li>
+                    <li><strong>Quant Brain:</strong> This handles our money and contains our Actuary AI.</li>
+                    <li><strong>Vigilance Grid:</strong> This handles the weather data and contains our Oracle AI.</li>
+                </ul>
+
+                <h2>3. Managing the AI Workforce</h2>
+                <p>You manage a team of four autonomous AI Agents. You need to know their operational limits:</p>
+                <ul>
+                    <li><strong>Underwriting Agent:</strong> Evaluates new properties. You can inject "Carrier Rulesets" through the Enterprise dashboard to restrict risk limits in active storm paths.</li>
+                    <li><strong>Claims Verification Agent:</strong> Reviews photos and approves payouts. You monitor its confidence scores. If it routes too many claims to human review, prompt tuning is required.</li>
+                    <li><strong>Vigilance Oracle Agent:</strong> Watches telemetry feeds. You ensure API connections (like NOAA) are online.</li>
+                    <li><strong>Quant Brain Actuary Agent:</strong> Buys reinsurance. You monitor its spending limits.</li>
+                </ul>
+
+                <h2>4. Your Day-to-Day Execution</h2>
+                <ul>
+                    <li><strong>Jira Tracking:</strong> You organize work into Epics (e.g. "automated execution rules", "State Compliance"), breaking them down into tickets for developers.</li>
+                    <li><strong>Audit Logs:</strong> AI agents log every decision and its API cost. You inspect these to ensure safety and budget efficiency.</li>
+                    <li><strong>Protect the Philosophy:</strong> Ensure the system defaults to helping the customer, never blocking them, supporting the BallPark Initiative.</li>
+                </ul>
+            </div>
+
+            <!-- Product User L&D Guide -->
+            <div id="pu-guide" class="doc-section">
+                <p><em>A Learning & Development (L&D) Training Manual for Customer Service, Adjusters, and Admins.</em></p>
+                
+                <h2>1. Welcome to the Future of Insurance!</h2>
+                <p>Welcome to Chainmail Solutions! Whether you are a Customer Service Rep, an Enterprise Administrator, or a Claims Reviewer, this guide will show you how to use the Chainmail software. You don't need to be a programmer to use our system. The software does the heavy lifting for you!</p>
+                
+                <h2>2. What is Chainmail?</h2>
+                <p>Traditional insurance is slow. At Chainmail, we use <strong>Parametric Insurance</strong>. This means we have sensors (like weather stations) all over the country. If the sensor says the wind blew 150 MPH, we just pay the customer instantly. No waiting, no arguments. We do this to support our community (the BallPark Initiative).</p>
+                
+                <h2>3. How to Use the System (Your Role)</h2>
+                <h3>If you are an Enterprise Administrator</h3>
+                <p>You will spend your time in the <strong>Enterprise Dashboard</strong>:</p>
+                <ul>
+                    <li><strong>The Map:</strong> Live map of the US. Green dots are safe customers, red dots are customers in storm zones.</li>
+                    <li><strong>The AI Audit Tab:</strong> Watch exactly what the four AI agents are doing in real-time. If you see an anomaly, report it to the Product Manager.</li>
+                </ul>
+                
+                <h3>If you are a Claims Reviewer</h3>
+                <p>Most of the time, the AI Claims Adjuster approves payouts instantly. If it is confused (blurry photos, coordinate mismatch), it routes the claim to your <strong>Review Queue</strong>:</p>
+                <ol>
+                    <li>Log in and view the Review Queue.</li>
+                    <li>Check the AI's notes explaining the routing exception.</li>
+                    <li>Review the evidence. If it is valid, click <strong>Approve</strong>. Remember: we want to find ways to cover customers, not deny them.</li>
+                </ol>
+                
+                <h3>The "IoT Baseline" Feature (For Customer Support)</h3>
+                <p>If a customer calls saying they tried to buy a $500,000 policy but only got offered $2,500:</p>
+                <ul>
+                    <li>Explain that because they are in an **Extreme Risk Zone** (e.g. beachfront), our Underwriting AI cannot offer them the full amount immediately.</li>
+                    <li>Explain that we offered the **IoT Baseline Policy** instead ($2,500 of emergency cash) to get a weather sensor installed, gathering data to protect their neighborhood and qualify them for higher limits.</li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -588,6 +811,10 @@
         // Update titles
         document.getElementById('active-title').textContent = docTitle;
         document.getElementById('active-meta').textContent = 'Last Updated: ' + docMeta;
+    }
+
+    function printDoc() {
+        window.print();
     }
 </script>
 
