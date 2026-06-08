@@ -135,6 +135,103 @@ function parseCSVAndSum(csvText) {
   return totalSum;
 }
 
+// Custom Markdown-to-HTML converter
+function markdownToHtml(mdText) {
+  let html = mdText.replace(/\r\n/g, '\n');
+  
+  // Remove top title e.g. # Title
+  html = html.replace(/^#\s+.*$/m, '');
+  
+  // Headers: ### Subheader -> <h3>Subheader</h3>, ## Header -> <h2>Header</h2>
+  html = html.replace(/^###\s+(.*)$/gm, '<h3>$1</h3>');
+  html = html.replace(/^##\s+(.*)$/gm, '<h2>$1</h2>');
+  
+  // Bold: **text** -> <strong>text</strong>
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  
+  // Code inline: `code` -> <code>code</code>
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  
+  // Alerts: > [!NOTE] -> <div class="alert-block"><span class="alert-title">NOTE</span><p class="alert-content">...</p></div>
+  html = html.replace(/^>\s+\[!([A-Z]+)\]\s*\n((?:>\s+.*\n?)+)/gm, (match, type, content) => {
+    const cleanContent = content.replace(/^>\s*/gm, '').trim();
+    const alertClass = type.toLowerCase() === 'tip' || type.toLowerCase() === 'note' ? 'alert-green' : '';
+    return `<div class="alert-block \${alertClass}">\n    <span class="alert-title">\${type}</span>\n    <p class="alert-content">\${cleanContent}</p>\n</div>\n`;
+  });
+  
+  const lines = html.split('\n');
+  let inList = false;
+  let inOrderedList = false;
+  let inTable = false;
+  
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].trim();
+    
+    // Unordered lists
+    if (line.startsWith('* ') || line.startsWith('- ')) {
+      let content = line.substring(2);
+      let prefix = '';
+      if (!inList) {
+        prefix = '<ul>\n';
+        inList = true;
+      }
+      lines[i] = prefix + `    <li>\${content}</li>`;
+    } else if (inList && !line.startsWith('* ') && !line.startsWith('- ') && line !== '') {
+      lines[i] = '</ul>\n' + lines[i];
+      inList = false;
+    }
+    
+    // Ordered lists
+    const olMatch = line.match(/^\d+\.\s+(.*)/);
+    if (olMatch) {
+      let content = olMatch[1];
+      let prefix = '';
+      if (!inOrderedList) {
+        prefix = '<ol>\n';
+        inOrderedList = true;
+      }
+      lines[i] = prefix + `    <li>\${content}</li>`;
+    } else if (inOrderedList && !line.match(/^\d+\.\s+/) && line !== '') {
+      lines[i] = '</ol>\n' + lines[i];
+      inOrderedList = false;
+    }
+    
+    // Tables
+    if (line.startsWith('|')) {
+      const parts = line.split('|').map(p => p.trim()).filter((_, idx, arr) => idx > 0 && idx < arr.length - 1);
+      if (!inTable) {
+        inTable = true;
+        lines[i] = '<table>\n    <thead>\n        <tr>\n' + parts.map(p => `            <th>\${p}</th>`).join('\n') + '\n        </tr>\n    </thead>\n    <tbody>';
+      } else if (line.includes('---')) {
+        lines[i] = '';
+      } else {
+        lines[i] = '        <tr>\n' + parts.map(p => `            <td>\${p}</td>`).join('\n') + '\n        </tr>';
+      }
+    } else if (inTable && !line.startsWith('|')) {
+      lines[i] = '    </tbody>\n</table>\n' + lines[i];
+      inTable = false;
+    }
+    
+    // Wrap standard paragraphs
+    if (lines[i].trim() !== '' && 
+        !lines[i].trim().startsWith('<') && 
+        !inList && !inOrderedList && !inTable && 
+        !lines[i].trim().startsWith('</ul>') && 
+        !lines[i].trim().startsWith('</ol>') && 
+        !lines[i].trim().startsWith('</table>') &&
+        !lines[i].trim().startsWith('</div>')) {
+      lines[i] = `<p>\${lines[i]}</p>`;
+    }
+  }
+  
+  let result = lines.join('\n');
+  if (inList) result += '\n</ul>';
+  if (inOrderedList) result += '\n</ol>';
+  if (inTable) result += '\n    </tbody>\n</table>';
+  
+  return result;
+}
+
 // ── SYNC WORKFLOW ──
 async function runSync() {
   console.log(`[Sync] Starting Intranet widgets EOD sync at ${new Date().toISOString()}`);
@@ -232,6 +329,53 @@ async function runSync() {
     } else {
       console.log('[Sync] No new tickets to append to operations timeline.');
     }
+  }
+
+  // 4.5 Sync Markdown Documents to Document Hub
+  const docHubPath = path.join(WIDGETS_DIR, 'intranet_doc_hub_widget.html');
+  if (fs.existsSync(docHubPath)) {
+    let docHubHtml = fs.readFileSync(docHubPath, 'utf8');
+    const docMappings = [
+      { id: 'exec-summary', file: 'executive_summary.md', title: 'Executive Briefing' },
+      { id: 'onboarding-plan', file: 'shopify_storefront_onboarding_plan.md', title: 'Onboarding Plan' },
+      { id: 'rfq-spec', file: 'manufacturer_rfq_spec.md', title: 'Manufacturer RFQ' },
+      { id: 'ld-playbook', file: 'testing_onboarding_playbook.md', title: 'L&D Playbook' },
+      { id: 'gap-audit', file: 'full_stack_gap_audit.md', title: 'Full-Stack Audit' },
+      { id: 'po-guide', file: 'product_owner_guide.md', title: 'Product Owner Guide' },
+      { id: 'pm-guide', file: 'product_manager_guide.md', title: 'Product Manager Guide' },
+      { id: 'pu-guide', file: 'product_user_guide.md', title: 'Product User Guide' },
+      { id: 'api-security', file: 'API_Security_Guide.md', title: 'API Security Guide' },
+      { id: 'release-roadmap', file: 'app_store_release_roadmap.md', title: 'App Store Roadmap' },
+      { id: 'budget-plans', file: 'budget.md', title: 'Budget & Grant Plans' },
+      { id: 'actuarial-memo', file: 'actuarial_risk_memorandum.md', title: 'Actuarial Risk Memo' }
+    ];
+
+    const today = new Date();
+    const todayFormatted = today.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+    let updatedCount = 0;
+    for (const mapping of docMappings) {
+      const mdFilePath = path.join(ticketsDir, mapping.file);
+      if (fs.existsSync(mdFilePath)) {
+        const mdText = fs.readFileSync(mdFilePath, 'utf8');
+        const generatedHtml = markdownToHtml(mdText);
+        
+        // Match the <div id="[mapping.id]" class="doc-section...">...</div> block
+        const regex = new RegExp(`(<div id="${mapping.id}" class="doc-section[^"]*">)[\\s\\S]*?(</div>)`, 'i');
+        if (regex.test(docHubHtml)) {
+          docHubHtml = docHubHtml.replace(regex, `$1\n${generatedHtml}\n$2`);
+          
+          // Also update the onclick date in the sidebar:
+          // e.g. onclick="showDoc('exec-summary', 'Executive Briefing', 'June 7, 2026')"
+          const onclickRegex = new RegExp(`(onclick="showDoc\\('${mapping.id}',\\s*'${mapping.title}',\\s*')[^']+'\\)`, 'g');
+          docHubHtml = docHubHtml.replace(onclickRegex, `$1${todayFormatted}')`);
+          
+          updatedCount++;
+        }
+      }
+    }
+    fs.writeFileSync(docHubPath, docHubHtml, 'utf8');
+    console.log(`[Sync] Updated ${updatedCount} documents inside Document Hub.`);
   }
 
   // 5. Update intranet_main_widget.html (Status Feed)
