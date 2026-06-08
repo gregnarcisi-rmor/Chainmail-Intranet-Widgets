@@ -586,15 +586,15 @@
             <h1 class="hub-title">Document Hub</h1>
         </div>
         <ul class="doc-list">
-            <li class="doc-item active" onclick="showDoc('exec-summary', 'Executive Briefing', 'June 7, 2026')">
+            <li class="doc-item active" onclick="showDoc('exec-summary', 'Executive Briefing', 'June 8, 2026')">
                 <svg class="doc-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                 Executive Briefing
             </li>
-            <li class="doc-item" onclick="showDoc('onboarding-plan', 'Onboarding Plan', 'June 7, 2026')">
+            <li class="doc-item" onclick="showDoc('onboarding-plan', 'Onboarding Plan', 'June 8, 2026')">
                 <svg class="doc-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                 Shopify Onboarding Plan
             </li>
-            <li class="doc-item" onclick="showDoc('rfq-spec', 'Manufacturer RFQ', 'June 7, 2026')">
+            <li class="doc-item" onclick="showDoc('rfq-spec', 'Manufacturer RFQ', 'June 8, 2026')">
                 <svg class="doc-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                 Manufacturer RFQ Spec
             </li>
@@ -602,7 +602,7 @@
                 <svg class="doc-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 L&D Testing Playbook
             </li>
-            <li class="doc-item" onclick="showDoc('gap-audit', 'Full-Stack Audit', 'June 7, 2026')">
+            <li class="doc-item" onclick="showDoc('gap-audit', 'Full-Stack Audit', 'June 8, 2026')">
                 <svg class="doc-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                 Full-Stack Gap Audit
             </li>
@@ -660,151 +660,593 @@
         <div class="viewer-content">
             <!-- Executive Summary Document -->
             <div id="exec-summary" class="doc-section active">
-                <p>We have officially transitioned the <strong>Chainmail</strong> core ecosystem from a sandbox prototype into a <strong>100% production-ready infrastructure</strong>. All 13 layers of our "Full-Stack Production Reality" audit are now locked down, verified, and active.</p>
-                
-                <h2>1. Core Architecture Hardening Highlights</h2>
-                <ul>
-                    <li><strong>Live Geocoding & Address Validation:</strong> All mock validation constraints have been deleted. The application now queries live, secure Google Address Validation and Geocoding APIs, returning CASS-certified locations.</li>
-                    <li><strong>Database & RLS Hardening:</strong> Firestore Security Rules are locked. Write operations are restricted at the document level to enforce strict Attribute-Based Access Control (ABAC) based on Google OAuth IDs.</li>
-                    <li><strong>Centralized Logging & APM:</strong> Application telemetry is instrumented with unique tracing tags (<code>X-Request-ID</code>), routing structured JSON logs directly to centralized performance monitors (Sentry/APM) to track real-time errors.</li>
-                </ul>
 
-                <h2>2. Coworker Beta Testing Phase</h2>
-                <p>With the system hardened, we are launching the internal testing phase to onboarding select partners and team members to test the live platform under controlled conditions.</p>
-                <ol>
-                    <li><strong>Access & Authentication:</strong> Logins are authenticated securely via <strong>Google OAuth</strong>, automatically provisioning user profiles in Firestore under <code>/users/{uid}</code>.</li>
-                    <li><strong>Property Registration:</strong> Test users register their locations. The geocoder validates the address and returns exact coordinates.</li>
-                    <li><strong>Risk Underwriting:</strong> The Underwriting Agent evaluates regional hurricane history and generates a binding quote in under 2 minutes.</li>
-                    <li><strong>KISS/Expert Toggles:</strong> Testers toggle between KISS Mode (for clean property setup) and Expert Mode (for viewing historical wind charts and parametric curves).</li>
-                </ol>
 
-                <h2>3. Strategic E-Commerce Selection: Shopify Subdomain</h2>
-                <p>To distribute our white-labeled <strong>Sentinel</strong> weather sensors and automatically provision nodes on the parametric grid, we are launching a standalone Shopify storefront subdomain: <code>shop.chainmailsolutions.ai</code>.</p>
-                <div class="alert-block">
-                    <span class="alert-title">Why Shopify Subdomain?</span>
-                    <p class="alert-content">PCI-DSS and retail card security are fully outsourced to Shopify, isolating our core underwriting database from transaction liabilities. It natively supports secure checkout webhooks to trigger our node provisioning API routes instantly.</p>
-                </div>
+<h2>Our Vision</h2>
+<p>${lines[i]}</p>
+
+<h2>Ecosystem Architecture</h2>
+<p>${lines[i]}</p>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h2>Recent Milestones</h2>
+<ol>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ol>
+<h2>The Path Forward</h2>
+<p>${lines[i]}</p>
+
+</div>
             </div>
 
             <!-- Onboarding Plan Document -->
             <div id="onboarding-plan" class="doc-section">
-                <p>This document outlines the architecture for a custom Shopify storefront to sell <strong>Chainmail's</strong> white-label boxed IoT weather sensors and automate onboarding for new nodes joining the parametric insurance grid.</p>
 
-                <h2>1. Product Catalog Architecture</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>SKU</th>
-                            <th>Model Name</th>
-                            <th>Role in Parametric Grid</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>S-100</strong></td>
-                            <td>Sentinel Gateway Hub</td>
-                            <td>Central Wi-Fi receiver dongle. Uploads signed payload streams to ingestion APIs.</td>
-                            <td>$49.00 USD</td>
-                        </tr>
-                        <tr>
-                            <td><strong>S-700</strong></td>
-                            <td>Sentinel CAT-7 Array</td>
-                            <td>Solar-powered 7-in-1 array with ultrasonic wind speed and rain sensors. Zero moving parts.</td>
-                            <td>$199.00 USD</td>
-                        </tr>
-                        <tr>
-                            <td><strong>S-WH51</strong></td>
-                            <td>Sentinel Soil Probe</td>
-                            <td>Wireless capacitive soil sensor to evaluate flood saturation.</td>
-                            <td>$24.00 USD</td>
-                        </tr>
-                        <tr>
-                            <td><strong>S-WFC01</strong></td>
-                            <td>Sentinel Smart Valve</td>
-                            <td>Water timer valve. Auto-wets grounds on parametric dry-soil warnings (wildfire defense).</td>
-                            <td>$79.00 USD</td>
-                        </tr>
-                    </tbody>
-                </table>
 
-                <h2>2. Automated Onboarding Sequence</h2>
-                <ol>
-                    <li><strong>Checkout:</strong> Customer buys a Sentinel kit on the Shopify subdomain.</li>
-                    <li><strong>Webhook:</strong> Shopify posts an <code>order/paid</code> event containing customer and shipping address data to our API.</li>
-                    <li><strong>Geocoding:</strong> API verifies the webhook signature, calls Google Maps API for rooftop coordinates, and saves the property in Firestore as <code>PENDING_ACTIVATION</code>.</li>
-                    <li><strong>Key Generation:</strong> System generates a unique activation token, emailing a setup QR code to the customer.</li>
-                    <li><strong>Activation:</strong> When plugged in, the device sends telemetry to <code>/api/ingest/ecowitt</code>. Backend matches the token and MAC address, updating the state to <code>VERIFIED_NODE</code> and activating coverage.</li>
-                </ol>
-            </div>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>1. Product Catalog Architecture</h2>
+
+<p>${lines[i]}</p>
+
+<h3>Core Bundles & Hardware Specifications</h3>
+<ol>
+    <li>${content}</li>
+</ol>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+<ol>
+    <li>${content}</li>
+</ol>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+<ol>
+    <li>${content}</li>
+</ol>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+<ol>
+    <li>${content}</li>
+</ol>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+---
+
+<h2>2. Automated Network Onboarding Workflow</h2>
+
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+</code>`<code>
+
+<p>${lines[i]}</p>
+
+<h2>3. API Provisioning Endpoint Specifications</h2>
+
+<p>${lines[i]}</p>
+
+<h3>Endpoint: </code>POST /api/onboarding/provision<code></h3>
+<strong>Access Control:</strong> HMAC Signature verified using Shopify API Webhook Shared Secret.
+
+<p>${lines[i]}</p>
+</code>`<code>json
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+</code>`<code>
+
+<p>${lines[i]}</p>
+<ol>
+    <li>${content}</li>
+    <li>${content}</li>
+</ol>
+<ul>
+    <li>${content}</li>
+</ul>
+     </code>`<code>typescript
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+     </code>`<code>
+<ul>
+    <li>${content}</li>
+</ul>
+     </code>`<code>typescript
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+     </code>`<code>
+<ol>
+    <li>${content}</li>
+
+</ol>
+---
+
+<h2>4. UI/UX Storefront Integration</h2>
+
+<p>${lines[i]}</p>
+
+<h3>Theme Design System</h3>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h3>Custom Liquid Elements</h3>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+</div>
 
             <!-- RFQ Spec Document -->
             <div id="rfq-spec" class="doc-section">
-                <p>Technical RFQ specification sheet targeted for Shenzhen Fine Offset Electronics to configure and brand our custom hardware series.</p>
 
-                <h2>1. Custom Firmware Default Settings</h2>
-                <p>Gateways must be pre-flashed at the factory to target our Custom Ingestion API natively:</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Configuration Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Protocol Type</strong></td>
-                            <td>Ecowitt (HTTP POST, URL-encoded)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Server/IP</strong></td>
-                            <td><code>api.chainmailsolutions.ai</code></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Path</strong></td>
-                            <td><code>/api/ingest/ecowitt</code></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Port</strong></td>
-                            <td><code>443</code> (HTTPS / SSL Enabled)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Upload Interval</strong></td>
-                            <td>60 seconds</td>
-                        </tr>
-                    </tbody>
-                </table>
+<strong>Client:</strong> Chainmail Solutions Inc.  
+<strong>Target Partner:</strong> Shenzhen Fine Offset Electronics Co., Ltd.  
+<strong>Date:</strong> June 7, 2026  
+<strong>Document Ref:</strong> CM-HW-SPEC-2026-V1.0  
 
-                <h2>2. Custom Colorway & Enclosure Branding</h2>
-                <ul>
-                    <li><strong>S-100 Gateway:</strong> Silk-screened <strong>Chainmail Sentinel</strong> logo centered on the USB dongle casing.</li>
-                    <li><strong>S-700 Array:</strong> Silk-screened or engraved Chainmail shield emblem centered on the wind baffle fin.</li>
-                    <li><strong>Color Scheme:</strong> Dark Cobalt Blue (Pantone 295C) with Gold accent trim (Pantone 872C) representing the corporate brand color tokens.</li>
-                </ul>
+<p>${lines[i]}</p>
 
-                <div class="alert-block">
-                    <span class="alert-title">Factory Logging Requirement</span>
-                    <p class="alert-content">For every batch, the factory must supply a secure CSV file linking MAC Address, Serial Number, and a generated 32-character node activation token printed as a QR code insert inside the retail packaging.</p>
-                </div>
+<h2>1. Project Objective & Scope</h2>
+
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>2. Hardware Specifications & SKUs</h2>
+
+<p>${lines[i]}</p>
+
+<h3>SKU 1: Sentinel Gateway Hub (Model S-100)</h3>
+<p>${lines[i]}</p>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h3>SKU 2: Sentinel CAT-7 Outdoor Sensor Array (Model S-700)</h3>
+<p>${lines[i]}</p>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h3>SKU 3: Sentinel Soil Saturation Probe (Model S-WH51)</h3>
+<p>${lines[i]}</p>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+---
+
+<h2>3. Firmware Customization & Telemetry Protocol</h2>
+
+<p>${lines[i]}</p>
+
+<h3>Custom Server Configurations</h3>
+<p>${lines[i]}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>${p}</th>
+            <th>${p}</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="alert-block ${alertClass}">
+    <span class="alert-title">${type}</span>
+    <p class="alert-content">${cleanContent}</p>
+</div>
+
+<p>${lines[i]}</p>
+
+<h2>4. Branding & Industrial Design (White-Labeling)</h2>
+
+<p>${lines[i]}</p>
+
+<h3>Logo Placement & Colors</h3>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+---
+
+<h2>5. Out-of-Box Experience (OOBE) & Serial Mapping</h2>
+
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<table>
+    <thead>
+        <tr>
+            <th>${p}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+        </tr>
+    </tbody>
+</table>
++-------------------------------------------------------------+
+</code>`<code>
+
+<h3>Factory Logging Requirement</h3>
+<p>${lines[i]}</p>
+<ol>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ol>
+---
+
+<h2>6. Business Terms & RFQ Questions</h2>
+
+<p>${lines[i]}</p>
+
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+---
+
+<h3>RFQ Submission Instructions</h3>
+<p>${lines[i]}</p>
+<strong>Greg Narcisi</strong>  
+<p>${lines[i]}</p>
+</code>greg.narcisi@chainmailsolutions.ai`
+
+</div>
             </div>
 
             <!-- L&D Playbook Document -->
             <div id="ld-playbook" class="doc-section">
-                <p>Operational guidelines and testing protocols for coworkers joining the parametric insurance grid testing phase.</p>
 
-                <h2>1. Phased Sandbox Testing Roadmap</h2>
-                <ul>
-                    <li><strong>Phase A (Greg Only):</strong> Firebase Auth blocks all logins except Greg's credentials. Live address validation and coordinates drift tests are run in absolute isolation.</li>
-                    <li><strong>Phase B (Co-Founder Audit):</strong> Add co-founder credentials. Run mock checkout webhook triggers and multi-sig payouts.</li>
-                    <li><strong>Phase C (Department Sandbox):</strong> Access granted to Actuarial and Compliance teams, writing only to a sandboxed <code>/sandbox</code> folder in Firestore.</li>
-                    <li><strong>Phase D (Full Team Launch):</strong> General deployment to coworkers with Google OAuth roles.</li>
-                </ul>
 
-                <h2>2. System Fail-Safes & Error Handling</h2>
-                <div class="alert-block alert-green">
-                    <span class="alert-title">The Adverse Non-Automation Rule</span>
-                    <p class="alert-content">By base code design, the AI Agents cannot execute autonomous adverse claim actions (denials or cancellations) under NY/FL state laws. When a data mismatch occurs, the agent halts, flags the file, and hands it off to a licensed human Integrity Officer.</p>
-                </div>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>1. How Internal Testing Results Are Tabulated</h2>
+
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+</code>`<code>
+
+<ol>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+</ol>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+---
+
+<h2>2. What Happens When the System Hits an Error</h2>
+
+<p>${lines[i]}</p>
+
+<ol>
+    <li>${content}</li>
+</ol>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+<ol>
+    <li>${content}</li>
+</ol>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+<ol>
+    <li>${content}</li>
+
+</ol>
+---
+
+<h2>3. Job Code Testing Matrix</h2>
+
+<p>${lines[i]}</p>
+
+<h3>A. Executive Level (CEO / Strategic Oversight)</h3>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h3>B. Operations & Product Management (COO / PMs)</h3>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h3>C. Legal, Risk & Compliance (CRO / Regulatory Officers)</h3>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h3>D. Underwriting & Actuarial (Lead Actuaries / Underwriters)</h3>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+---
+
+<h2>4. Agent Assignments & Interaction Mechanics</h2>
+
+<p>${lines[i]}</p>
+
+</code>`<code>
+<p>${lines[i]}</p>
+<table>
+    <thead>
+        <tr>
+            <th>${p}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+        </tr>
+
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+
+    </tbody>
+</table>
++-----------------------------------------------------------------------+
+</code>`<code>
+
+<h3>How We Assign Agents</h3>
+<ol>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+</ol>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h3>How Users Interact with Their Agents</h3>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+---
+
+<h2>5. Phased Sandbox Rollout Proposal</h2>
+
+<p>${lines[i]}</p>
+
+</code>`<code>
+<p>${lines[i]}</p>
+</code>`<code>
+
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+</div>
 
                 <h2>3. Job Code Testing Targets</h2>
                 <ul>
@@ -817,229 +1259,459 @@
 
             <!-- Full-Stack Audit Document -->
             <div id="gap-audit" class="doc-section">
-                <p>Full-Stack Production Reality Audit benchmarking the current state of our architecture against the 13 required layers for commercial launch.</p>
 
-                <h2>1. Architectural Layer Assessment</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Layer</th>
-                            <th>Hardening Level</th>
-                            <th>Status in Codebase</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>1. Frontend UI</strong></td>
-                            <td>100%</td>
-                            <td>High-fidelity portal with KISS/Expert toggle and onboarding wizard active.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>2. APIs & Backend</strong></td>
-                            <td>100%</td>
-                            <td>Hardened Express backend with dynamic live geocoding routed to Google Maps.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>3. DB & Storage</strong></td>
-                            <td>100%</td>
-                            <td>Firestore schemas locked down. File size and type validations active.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>4. Security & RLS</strong></td>
-                            <td>100%</td>
-                            <td>Firestore Security Rules locked down. Document-level ABAC active.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>5. Rate Limiting</strong></td>
-                            <td>100%</td>
-                            <td>Rate-limiting middleware active, preventing brute force API sweeps.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>6. Error logs & APM</strong></td>
-                            <td>100%</td>
-                            <td>Centralized structured JSON logs containing <code>X-Request-ID</code> context routing to Sentry.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>1. Full-Stack Progress Dashboard</h2>
+
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+</code>`<code>
+
+<p>${lines[i]}</p>
+
+<h2>2. Layer-by-Layer Detailed Assessment</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>${p}</th>
+            <th>${p}</th>
+            <th>${p}</th>
+            <th>${p}</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>${lines[i]}</p>
+
+<h2>3. Overall Score & Summary</h2>
+
+<div class="alert-block ${alertClass}">
+    <span class="alert-title">${type}</span>
+    <p class="alert-content">${cleanContent}</p>
+</div>
+
+<p>${lines[i]}</p>
+
+<h2>4. Key Actions to Bridge the Gap</h2>
+
+<ol>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ol>
+</div>
 
             <!-- Product Owner L&D Guide -->
             <div id="po-guide" class="doc-section">
-                <p><em>A Learning & Development (L&D) Onboarding Manual for Product Visionaries.</em></p>
-                
-                <h2>1. Welcome to Chainmail!</h2>
-                <p>Hello and welcome! If you are reading this, you are taking on the role of a <strong>Product Owner</strong> within the Chainmail Ecosystem. Don't worry if you aren't deeply technical—this guide is written specifically to help you understand the "why" and "what" of our system without getting bogged down in code.</p>
-                <p>As a Product Owner, your job is to maximize the value of the Chainmail product. You are the visionary. You decide <em>what</em> needs to be built next to serve our mission.</p>
-                
-                <h2>2. Our Core Philosophy</h2>
-                <p>Before we talk about software, let's talk about our heart. Traditional insurance companies often look for any excuse to deny a claim. <strong>We do the exact opposite.</strong></p>
-                <p>Our philosophy is to <strong>embrace risk</strong>. We want to cover people in high-risk coastal and wildfire zones. Through our <strong>BallPark Initiative</strong>, our goal is to be a pillar of community support, ensuring that when disaster strikes, families get paid instantly. Your job is to make sure every feature we build aligns with this mission.</p>
-                
-                <h2>3. The Chainmail Ecosystem (The Big Picture)</h2>
-                <p>Think of Chainmail not as one app, but as a small city with five distinct neighborhoods:</p>
-                <ul>
-                    <li><strong>The Customer App:</strong> The storefront. Where users buy policies, view maps, and check coverage.</li>
-                    <li><strong>The Enterprise Dashboard:</strong> The command center. Where you and the administrators watch the system run.</li>
-                    <li><strong>The Nexus Core (Underwriting):</strong> The bouncer. Decides who gets a policy and for how much.</li>
-                    <li><strong>The Quant Brain (Finance):</strong> The vault manager. Makes sure we have enough money to pay claims.</li>
-                    <li><strong>The Vigilance Grid (Sensors):</strong> The weather station. Listens to IoT sensors to detect disasters.</li>
-                </ul>
 
-                <h2>4. Meet Your AI Workforce</h2>
-                <p>You aren't just managing human developers; you are managing four **AI Agents** that run the company day and night:</p>
-                <ul>
-                    <li><strong>The Underwriting Agent:</strong> Evaluates risk. If a customer lives in an extreme danger zone, it doesn't reject them! Instead, it offers them an "IoT Baseline" policy ($2,500 payout cap) to get their sensor data active.</li>
-                    <li><strong>The Claims Adjuster Agent:</strong> Reviews satellite and telemetry data. programmatically executes payouts instantly on proof, and routes anomalies to humans. It cannot autonomously deny a claim.</li>
-                    <li><strong>The Vigilance Oracle Agent:</strong> Watches global telemetry and readies banking rails to pay people before they even ask during severe storms.</li>
-                    <li><strong>The Quant Brain Actuary Agent:</strong> Monitors solvency, purchasing "reinsurance" automatically to protect cash pools.</li>
-                </ul>
-            </div>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>Welcome to Chainmail!</h2>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>Our Core Philosophy</h2>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>The Chainmail Ecosystem (The Big Picture)</h2>
+<p>${lines[i]}</p>
+
+<ol>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ol>
+<h2>Meet Your AI Workforce</h2>
+<p>${lines[i]}</p>
+
+<ol>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ol>
+<h2>Your Day-to-Day Responsibilities</h2>
+<p>${lines[i]}</p>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+You don't need to know how to code the AI. You just need to know what the AI *should* be doing to help our customers. Welcome to the team!
+
+</div>
 
             <!-- Product Manager L&D Guide -->
             <div id="pm-guide" class="doc-section">
-                <p><em>A Learning & Development (L&D) Operations Manual for Managers and Captains.</em></p>
-                
-                <h2>1. Welcome to the Engine Room!</h2>
-                <p>Welcome! As a <strong>Product Manager</strong>, you are the bridge between the visionary Product Owner and the engineering teams (and AI agents!) that actually build the system. If the Product Owner decides <em>where</em> the ship is going, you are the captain deciding <em>how</em> we get there safely and efficiently.</p>
-                
-                <h2>2. Understanding the Machine</h2>
-                <p>You don't need to write code, but you do need to understand how our five core components fit together:</p>
-                <ul>
-                    <li><strong>Customer App:</strong> The front door. It must look premium (Steel & Glass aesthetic) so customers trust us.</li>
-                    <li><strong>Enterprise Dashboard:</strong> Your primary tool. This is where you monitor the health of the system.</li>
-                    <li><strong>Nexus Core:</strong> This handles incoming customers and contains our Underwriting AI.</li>
-                    <li><strong>Quant Brain:</strong> This handles our money and contains our Actuary AI.</li>
-                    <li><strong>Vigilance Grid:</strong> This handles the weather data and contains our Oracle AI.</li>
-                </ul>
 
-                <h2>3. Managing the AI Workforce</h2>
-                <p>You manage a team of four autonomous AI Agents. You need to know their operational limits:</p>
-                <ul>
-                    <li><strong>Underwriting Agent:</strong> Evaluates new properties. You can inject "Carrier Rulesets" through the Enterprise dashboard to restrict risk limits in active storm paths.</li>
-                    <li><strong>Claims Verification Agent:</strong> Reviews photos and approves payouts. You monitor its confidence scores. If it routes too many claims to human review, prompt tuning is required.</li>
-                    <li><strong>Vigilance Oracle Agent:</strong> Watches telemetry feeds. You ensure API connections (like NOAA) are online.</li>
-                    <li><strong>Quant Brain Actuary Agent:</strong> Buys reinsurance. You monitor its spending limits.</li>
-                </ul>
+<p>${lines[i]}</p>
 
-                <h2>4. Your Day-to-Day Execution</h2>
-                <ul>
-                    <li><strong>Jira Tracking:</strong> You organize work into Epics (e.g. "automated execution rules", "State Compliance"), breaking them down into tickets for developers.</li>
-                    <li><strong>Audit Logs:</strong> AI agents log every decision and its API cost. You inspect these to ensure safety and budget efficiency.</li>
-                    <li><strong>Protect the Philosophy:</strong> Ensure the system defaults to helping the customer, never blocking them, supporting the BallPark Initiative.</li>
-                </ul>
-            </div>
+<p>${lines[i]}</p>
+
+<h2>Welcome to the Engine Room!</h2>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>Understanding the Machine</h2>
+<p>${lines[i]}</p>
+<ol>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ol>
+<h2>Managing the AI Workforce</h2>
+<p>${lines[i]}</p>
+
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h2>Your Day-to-Day Execution</h2>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+You are the operational glue that holds Chainmail together. Let's get to work!
+
+</div>
 
             <!-- Product User L&D Guide -->
             <div id="pu-guide" class="doc-section">
-                <p><em>A Learning & Development (L&D) Training Manual for Customer Service, Adjusters, and Admins.</em></p>
-                
-                <h2>1. Welcome to the Future of Insurance!</h2>
-                <p>Welcome to Chainmail Solutions! Whether you are a Customer Service Rep, an Enterprise Administrator, or a Claims Reviewer, this guide will show you how to use the Chainmail software. You don't need to be a programmer to use our system. The software does the heavy lifting for you!</p>
-                
-                <h2>2. What is Chainmail?</h2>
-                <p>Traditional insurance is slow. At Chainmail, we use <strong>Parametric Insurance</strong>. This means we have sensors (like weather stations) all over the country. If the sensor says the wind blew 150 MPH, we just pay the customer instantly. No waiting, no arguments. We do this to support our community (the BallPark Initiative).</p>
-                
-                <h2>3. How to Use the System (Your Role)</h2>
-                <h3>If you are an Enterprise Administrator</h3>
-                <p>You will spend your time in the <strong>Enterprise Dashboard</strong>:</p>
-                <ul>
-                    <li><strong>The Map:</strong> Live map of the US. Green dots are safe customers, red dots are customers in storm zones.</li>
-                    <li><strong>The AI Audit Tab:</strong> Watch exactly what the four AI agents are doing in real-time. If you see an anomaly, report it to the Product Manager.</li>
-                </ul>
-                
-                <h3>If you are a Claims Reviewer</h3>
-                <p>Most of the time, the AI Claims Adjuster approves payouts instantly. If it is confused (blurry photos, coordinate mismatch), it routes the claim to your <strong>Review Queue</strong>:</p>
-                <ol>
-                    <li>Log in and view the Review Queue.</li>
-                    <li>Check the AI's notes explaining the routing exception.</li>
-                    <li>Review the evidence. If it is valid, click <strong>Approve</strong>. Remember: we want to find ways to cover customers, not deny them.</li>
-                </ol>
-                
-                <h3>The "IoT Baseline" Feature (For Customer Support)</h3>
-                <p>If a customer calls saying they tried to buy a $500,000 policy but only got offered $2,500:</p>
-                <ul>
-                    <li>Explain that because they are in an **Extreme Risk Zone** (e.g. beachfront), our Underwriting AI cannot offer them the full amount immediately.</li>
-                    <li>Explain that we offered the **IoT Baseline Policy** instead ($2,500 of emergency cash) to get a weather sensor installed, gathering data to protect their neighborhood and qualify them for higher limits.</li>
-                </ul>
-            </div>
+
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>Welcome to the Future of Insurance!</h2>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>What is Chainmail?</h2>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>How to Use the System (Your Role)</h2>
+
+<h3>If you are an Enterprise Administrator</h3>
+<p>${lines[i]}</p>
+<ol>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ol>
+<h3>If you are a Claims Reviewer</h3>
+<p>${lines[i]}</p>
+<ol>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ol>
+<h3>The "IoT Baseline" Feature (For Customer Support)</h3>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h2>Need Help?</h2>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+</div>
 
             <!-- API Security & Key Rotation Guide -->
             <div id="api-security" class="doc-section">
-                <p>Because we are deploying the Chainmail Oracle using a <strong>Client-Side Execution Architecture</strong> (Path A) to maintain a $0 Bootstrapped Spend, your Google Gemini API key is embedded directly into the Intranet HTML widget.</p>
-                <p>Since this Intranet is restricted to just the 7 executives on your team, the risk is minimal. However, as a precaution, you must secure the API key inside the Google Cloud Console to prevent anyone from copying the key and using it elsewhere.</p>
-                
-                <h2>1. How to Secure the Oracle API Key</h2>
-                <ol>
-                    <li><strong>Navigate to Google Cloud Console:</strong> Go to <code>console.cloud.google.com</code> and select your project (e.g., <code>chainmail-enterprise</code>).</li>
-                    <li><strong>Access API & Services:</strong> In the left-hand navigation, click <strong>"APIs & Services"</strong> &rarr; <strong>"Credentials"</strong>.</li>
-                    <li><strong>Locate the Key:</strong> Click on the API key you generated for the Oracle (it may be named "Generative Language API Key").</li>
-                    <li><strong>Set Application Restrictions:</strong> Under "Application restrictions", select <strong>"HTTP referrers (web sites)"</strong>.</li>
-                    <li><strong>Whitelist the Intranet:</strong> Under "Website restrictions", click <strong>ADD</strong>. Enter the exact URL of your Google Sites Intranet page. <em>Example: <code>https://sites.google.com/view/chainmail-intranet/*</code></em></li>
-                    <li><strong>Set API Restrictions (Crucial):</strong> Under "API restrictions", click <strong>"Restrict key"</strong>. Check the box for <strong>"Generative Language API"</strong>. This ensures the key cannot be used to spin up massive Google Cloud servers even if stolen.</li>
-                    <li><strong>Save.</strong></li>
-                </ol>
 
-                <div class="alert-block">
-                    <span class="alert-title">Why we do this:</span>
-                    <p class="alert-content">If an executive accidentally leaks the Intranet source code, the API key is completely useless. Google will automatically block any requests made using that key unless they originate directly from your specific <code>sites.google.com</code> URL. This guarantees your $0 Operational Spend mandate remains perfectly intact.</p>
-                </div>
+
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h3>How to Secure the Oracle API Key</h3>
+
+<ol>
+    <li>${content}</li>
+</ol>
+    Go to <code>console.cloud.google.com</code> and select your project (e.g., <code>chainmail-enterprise</code>).
+<ol>
+    <li>${content}</li>
+</ol>
+    In the left-hand navigation, click <strong>"APIs & Services"</strong> -> <strong>"Credentials"</strong>.
+<ol>
+    <li>${content}</li>
+</ol>
+    Click on the API key you generated for the Oracle (it may be named "Generative Language API Key").
+<ol>
+    <li>${content}</li>
+</ol>
+    Under "Application restrictions", select <strong>"HTTP referrers (web sites)"</strong>.
+<ol>
+    <li>${content}</li>
+</ol>
+    Under "Website restrictions", click <strong>ADD</strong>.
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<ol>
+    <li>${content}</li>
+</ol>
+    Under "API restrictions", click <strong>"Restrict key"</strong>. 
+<p>${lines[i]}</p>
+<ol>
+    <li>${content}</li>
+
+</ol>
+<h3>Why we do this:</h3>
+<p>${lines[i]}</p>
+
+</div>
             </div>
 
             <!-- App Store Release Roadmap -->
             <div id="release-roadmap" class="doc-section">
-                <p>To successfully launch the Chainmail Customer App on the iOS App Store and Google Play Store without delays, we must adhere to strict platform guidelines, particularly regarding financial services, Secure Distributed integration (Secure L2 Ledger L3, USD-denominated digital settlement assets), and user data privacy.</p>
-                
-                <h2>1. Timeline & Milestone Mapping</h2>
-                <p>To avoid being blindsided, the app store submission process must begin <strong>at least 6-8 weeks</strong> prior to the target public launch date listed in the Whitepaper.</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Milestone</th>
-                            <th>Timeframe</th>
-                            <th>Objective</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Alpha Optimization</strong></td>
-                            <td>T-8 Weeks</td>
-                            <td>Finalize mobile responsive CSS and cross-platform framework wrapper (e.g., React Native / Flutter / PWA to Native).</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Compliance Audit</strong></td>
-                            <td>T-6 Weeks</td>
-                            <td>Implement data deletion protocols, privacy policy, and EULA.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Developer Accounts</strong></td>
-                            <td>T-5 Weeks</td>
-                            <td>Register Apple Developer Program ($99/yr) and Google Play Console ($25). Require D-U-N-S number for corporate verification.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>TestFlight / Internal Testing</strong></td>
-                            <td>T-4 Weeks</td>
-                            <td>Release to internal stakeholders via Apple TestFlight and Google Play Internal Testing.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Store Submission</strong></td>
-                            <td>T-2 Weeks</td>
-                            <td>Submit to Apple App Review and Google Play App Review. (Buffer time for initial rejection and resubmission).</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Public Launch</strong></td>
-                            <td>T-0</td>
-                            <td>App is live, indexed, and available for download.</td>
-                        </tr>
-                    </tbody>
-                </table>
 
-                <h2>2. Critical Apple App Store Requirements (iOS)</h2>
-                <p>Apple is notoriously strict regarding financial and insurance applications. To pass the App Review Board, we must guarantee the following:</p>
-                
-                <div class="alert-block">
-                    <span class="alert-title">Digital Settlement & Financial Regulations (Guideline 3.1.5)</span>
-                    <p class="alert-content">Because Chainmail utilizes automated execution rules on Secure L2 Ledger L3 for payouts using $USD-denominated digital settlement assets, the app <em>must</em> be submitted by a legal entity (not an individual developer) that is registered as a financial institution or has the appropriate licenses in the regions it operates. <br><strong>Action Item:</strong> Ensure our corporate D-U-N-S number is used for the Apple Developer Account, and our legal entity name exactly matches the app publisher name.</p>
-                </div>
+
+<p>${lines[i]}</p>
+
+<h2>1. Timeline & Milestone Mapping</h2>
+<p>${lines[i]}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>${p}</th>
+            <th>${p}</th>
+            <th>${p}</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>${lines[i]}</p>
+
+<h2>2. Critical Apple App Store Requirements (iOS)</h2>
+
+<p>${lines[i]}</p>
+
+<div class="alert-block ${alertClass}">
+    <span class="alert-title">${type}</span>
+    <p class="alert-content">${cleanContent}</p>
+</div>
+
+<div class="alert-block ${alertClass}">
+    <span class="alert-title">${type}</span>
+    <p class="alert-content">${cleanContent}</p>
+</div>
+
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+---
+
+<h2>3. Critical Google Play Requirements (Android)</h2>
+
+<p>${lines[i]}</p>
+
+<div class="alert-block ${alertClass}">
+    <span class="alert-title">${type}</span>
+    <p class="alert-content">${cleanContent}</p>
+</div>
+
+<div class="alert-block ${alertClass}">
+    <span class="alert-title">${type}</span>
+    <p class="alert-content">${cleanContent}</p>
+</div>
+
+<ul>
+    <li>${content}</li>
+
+</ul>
+---
+
+<h2>4. Next Steps for the Development Team</h2>
+
+<p>${lines[i]}</p>
+<ol>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ol>
+</div>
 
                 <div class="alert-block alert-green">
                     <span class="alert-title">Data Privacy & Account Deletion (Guideline 5.1.1)</span>
@@ -1078,219 +1750,331 @@
 
             <!-- Treasury Budget & Grant Plans -->
             <div id="budget-plans" class="doc-section">
-                <p>This section combines our active cloud spending analysis and the migration roadmap to fully exploit the <strong>Microsoft Startups Founders Hub Grant</strong> (representing up to <strong>$150,000 in Azure Cloud credits</strong> and <strong>$2,500 in OpenAI credits</strong>) to reduce cash burn to absolute zero.</p>
-                
-                <h2>1. Active Operational Run Rate</h2>
-                <p>Following the conclusion of our trial periods, we have updated our active cloud ledger to reflect commercial operational costs. Our monthly operational burn rate is now <strong>$1,090.00</strong> for active geospatial imagery, fraud auditing, server compute, and ledger gas.</p>
-                
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Infrastructure / Service</th>
-                            <th>Vendor</th>
-                            <th>Current Monthly Cost</th>
-                            <th>Funding Phase Strategy</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Intranet & Web Hosting</strong></td>
-                            <td>Vercel (Free Tier)</td>
-                            <td>$0.00</td>
-                            <td>Upgrade to Vercel Pro ($20/mo) post-funding for team access.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Database & Scaling</strong></td>
-                            <td>GCP Firestore / Blaze Plan</td>
-                            <td>$100.00</td>
-                            <td>Scales dynamically; covers production compute and database queries.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Object Storage (Media/PII)</strong></td>
-                            <td>Cloudflare R2</td>
-                            <td>$0.00</td>
-                            <td>Selected specifically to eliminate AWS/GCP data egress fees.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Geospatial & Convective Mapping</strong></td>
-                            <td>XWeather API & Vexcel Imagery</td>
-                            <td>$750.00</td>
-                            <td>Commercial subscription for severe convective storm mapping and high-res post-storm imagery.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Core AI Routing & HITL</strong></td>
-                            <td>Google Gemini 1.5 & Pro</td>
-                            <td>$65.00</td>
-                            <td>Production Gemini API tokens for IoT routing and human-in-the-loop validation.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Claims Fraud Audit</strong></td>
-                            <td>ISO Verisk ClaimSearch</td>
-                            <td>$150.00</td>
-                            <td>Active double-claim checking API subscription.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Secure Registry & Contracts</strong></td>
-                            <td>Secure L2 Ledger Mainnet</td>
-                            <td>$25.00</td>
-                            <td>Sponsored gas for transaction settlement.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Version Control</strong></td>
-                            <td>GitHub (Free Tier)</td>
-                            <td>$0.00</td>
-                            <td>Upgrade to GitHub Team ($4/user) when engineering team expands.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Total Monthly Burn</strong></td>
-                            <td></td>
-                            <td><strong>$1,090.00</strong></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
 
-                <h2>2. Microsoft Grant Migration Architecture</h2>
-                <p>By mapping GCP services to Azure equivalents, we migrate our active workloads to Microsoft's sponsored grant platform:</p>
-                
-                <table>
-                    <thead>
-                        <tr>
-                            <th>GCP Component</th>
-                            <th>Azure Grant Equivalent</th>
-                            <th>Sponsorship / Grant Method</th>
-                            <th>Value & Cash Savings</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Vertex AI (Gemini 2.5)</strong></td>
-                            <td>Azure OpenAI Service (GPT-4o & mini)</td>
-                            <td>OpenAI Credit Portal</td>
-                            <td>Replaces Gemini calls with GPT-4o-mini for claims validation.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>BigQuery (Telemetry)</strong></td>
-                            <td>Azure Data Lake + Azure Synapse</td>
-                            <td>Azure Grant Credits</td>
-                            <td>Stores signed local IoT weather telemetry history.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Firestore (Metadata & Audits)</strong></td>
-                            <td>Azure Cosmos DB (Mongo API)</td>
-                            <td>Azure Grant Credits</td>
-                            <td>Houses risk scores, FL Bar Numbers, and audit trails.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Cloud Run (Microservices)</strong></td>
-                            <td>Azure Container Apps (ACA) / AKS</td>
-                            <td>Azure Grant Credits</td>
-                            <td>Hosts the Quant Brain Rust sandbox and Vigilance Grid servers.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Cloud PubSub (Ingestion)</strong></td>
-                            <td>Azure Event Hubs</td>
-                            <td>Azure Grant Credits</td>
-                            <td>Receives telemetry payloads from Sentinel weather gateways.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Google Maps / Geospatial</strong></td>
-                            <td>Azure Maps SDK + Esri ArcGIS</td>
-                            <td>Azure Grant Credits</td>
-                            <td>Renders threat boundaries and rooftop structural details.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>GitHub Private Seats</strong></td>
-                            <td>GitHub Enterprise</td>
-                            <td>20 Free Seats for 1 Year</td>
-                            <td>Saves ~$5,000/year in private organization licenses.</td>
-                        </tr>
-                    </tbody>
-                </table>
 
-                <h2>3. Step-by-Step Migration Plan</h2>
-                <ul>
-                    <li><strong>Phase 1 (Immediate):</strong> Claim GitHub Enterprise seats; setup branch protections and Actions runners on Azure VMs.</li>
-                    <li><strong>Phase 2 (Telemetry Ingest):</strong> Deploy Azure Event Hubs; reconfigure the NodeJS <code>Chainmail-Vigilance-Grid</code> to ingest data on Azure ACA.</li>
-                    <li><strong>Phase 3 (Actuarial Engine):</strong> Migrate metadata to serverless Cosmos DB; containerize the Rust Quant Brain; shift LLM calls to Azure OpenAI.</li>
-                    <li><strong>Phase 4 (State Reporting):</strong> Setup Azure Functions on timer triggers to automate QUASR/PCLR reports.</li>
-                </ul>
-            </div>
+<strong>Date:</strong> June 8, 2026  
+<strong>Status:</strong> Active Run-Rate (Trials Concluded)  
+
+<p>${lines[i]}</p>
+
+<h2>Current Monthly Run Rate (Active Operational Phase)</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>${p}</th>
+            <th>${p}</th>
+            <th>${p}</th>
+            <th>${p}</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Future Capital Expenditure (Post-Funding)</h2>
+
+<p>${lines[i]}</p>
+
+<ol>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ol>
+</div>
 
             <!-- Actuarial Risk & Underwriting Memorandum -->
             <div id="actuarial-memo" class="doc-section">
-                <p><em>Filing Type: Form, Rate, and Market Conduct Authorization (Parametric Catastrophe & Web3 Nexus) submitted to the Florida Office of Insurance Regulation (OIR).</em></p>
-                
-                <h2>1. Covered Hazards & System Taxonomy</h2>
-                <p>The Chainmail Ecosystem Protocol calculates catastrophe risk, pools capital reserves, and automates claims payouts under five minutes from trigger events, covering:</p>
-                <ul>
-                    <li><strong>Physical Perils:</strong> High-velocity wind events (Anemometry), storm surge/flooding (Hydrology), and barometric pressure anomalies mapped to property boundaries.</li>
-                    <li><strong>Technical Perils:</strong> Smart contract exploits, Oracle transaction failure/telemetry corruption, and cross-chain messaging latency.</li>
-                </ul>
 
-                <h2>2. Actuarial Variables & Live Metrics</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Actuarial Variable</th>
-                            <th>Metric Definition</th>
-                            <th>Chainmail Live Data</th>
-                            <th>Regulatory Purpose</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Total Value Locked (TVL)</strong></td>
-                            <td>Total Capital Base At Risk</td>
-                            <td><strong>$42,500,000 USDC</strong></td>
-                            <td>Defines maximum exposure limits and capital reserves for solvency testing.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Mesh Security Correlation (&alpha;<sub>i</sub>)</strong></td>
-                            <td>Interdependence of collateral assets across connected chains</td>
-                            <td><strong>&alpha; = 0.12 (Low Contagion)</strong></td>
-                            <td>Proves a vulnerability on Chain A will not drain liquidity on Chain B.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Audit Cadence / Re-evaluation</strong></td>
-                            <td>Frequency of code integrity reviews</td>
-                            <td><strong>Continuous (Every 24 hours)</strong></td>
-                            <td>Fulfills "Dynamic Risk Monitoring" to prevent stale risk exposure.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Telemetry Data Streams</strong></td>
-                            <td>Automated physical/technical metrics</td>
-                            <td><strong>Real-time CDRs & Gas trends</strong></td>
-                            <td>Establishes untampered logs to baseline parametric trigger pricing.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Wind Speed Trigger Threshold</strong></td>
-                            <td>Parametric boundary for payouts</td>
-                            <td><strong>Property-specific (90 mph)</strong></td>
-                            <td>Acts as the objective, non-adjustable claims trigger, bypassing human bias.</td>
-                        </tr>
-                    </tbody>
-                </table>
 
-                <h2>3. Pricing Formula</h2>
-                <p>The premium charged ($P$) is computed as:</p>
-                <p><code>P = (P<sub>cat</sub> &times; Coverage Limit) + (P<sub>e</sub> &times; TVL &times; (1 + &alpha;)) + &lambda;</code></p>
-                <p>Where <code>P<sub>cat</sub></code> is the Parametric Event Probability, <code>P<sub>e</sub></code> is the Smart Contract Exploit Probability, <code>&alpha;</code> is the Mesh Security Correlation, and <code>&lambda;</code> is the administrative loading factor.</p>
+<strong>FILING TYPE:</strong> Form, Rate, and Market Conduct Authorization (Parametric Catastrophe & Web3 Nexus)  
+<strong>SUBMITTED TO:</strong> Florida Office of Insurance Regulation (OIR) / NAIC Digital Assets Review Working Group  
+<strong>REGISTRANT:</strong> Chainmail Ecosystem Protocol (as a Risk Financing Entity)  
+<strong>DATE OF FILING:</strong> June 2, 2026  
+<strong>DOCUMENT STATUS:</strong> Final Submission Draft  
 
-                <h2>4. NAIC Compliance & Safety Auditing</h2>
-                <ul>
-                    <li><strong>Explainability & Transparency:</strong> Underwriting algorithms provide an audit trail for every quote, referencing local NOAA GRIB2 grids, structural profiling, and local sensor health.</li>
-                    <li><strong>Algorithmic Bias Mitigation:</strong> Pricing runs on physical risk factors (soil liquefaction, elevation, wind resistance) and excludes demographic proxies.</li>
-                    <li><strong>Human-in-the-Loop Oversight:</strong> Appointed Casualty Actuary (FCAS) reviews pricing curves quarterly. If anomalies occur, an emergency circuit breaker halts quotes for manual verification.</li>
-                </ul>
+<p>${lines[i]}</p>
 
-                <h2>5. Asset Adequacy & AG 53 Stress Testing</h2>
-                <ul>
-                    <li><strong>Systemic Liquidation (75% Asset Crash):</strong> Core pool remains fully liquid due to over-collateralization requirements (minimum 150% threshold).</li>
-                    <li><strong>Decoupling Event (Stablecoin Peg at $0.90):</strong> Payouts route dynamically to alternative stablecoins (USDT/USDe) to protect policyholder value.</li>
-                    <li><strong>Conforming Peril Clustered CAT:</strong> The mesh security correlation coefficient (&alpha; = 0.12) guarantees capital solvency even if 45% of policies trigger payouts within a 48-hour hurricane window.</li>
-                </ul>
-            </div>
+<h2>Section I: Executive Summary & System Taxonomy</h2>
+
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h3>1. Covered Hazards</h3>
+<p>${lines[i]}</p>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h3>2. Level of Implementation</h3>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>Section II: Actuarial Data & Pricing Modeling</h2>
+
+<p>${lines[i]}</p>
+
+<h3>1. Actuarial Variables & Live Metrics</h3>
+<p>${lines[i]}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>${p}</th>
+            <th>${p}</th>
+            <th>${p}</th>
+            <th>${p}</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>2. The Pricing Formula</h3>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>Section III: Algorithmic Verification & NAIC Compliance</h2>
+
+<p>${lines[i]}</p>
+
+<h3>1. Explainability and Transparency</h3>
+<p>${lines[i]}</p>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+Regulators can verify these parameters at any time via public, on-chain execution logs, eliminating hidden model assumptions.
+
+<h3>2. Algorithmic Bias and Discrimination Mitigation</h3>
+<p>${lines[i]}</p>
+
+<h3>3. Human-in-the-Loop (HITL) Actuarial Oversight</h3>
+<p>${lines[i]}</p>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+---
+
+<h2>Section IV: Asset Adequacy & Stress Testing (AG 53 Compliance)</h2>
+
+<p>${lines[i]}</p>
+
+<h3>1. Sensitivity Analysis Parameters</h3>
+<p>${lines[i]}</p>
+
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h3>2. Reserves Adequacy Certification</h3>
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+
+<h2>Section V: The Three-Tier Data Taxonomy</h2>
+
+<p>${lines[i]}</p>
+
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+    
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+    
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+    
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+<p>${lines[i]}</p>
+</code>``
+
+<h3>1. Exhaust Data (Passive Telemetry)</h3>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h3>2. Digital Content Data (Ledger & Code History)</h3>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h3>3. Sensing Data (Real-time Telemetry)</h3>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+---
+
+<h2>Section VI: Commercial Protection & Replicability</h2>
+
+<p>${lines[i]}</p>
+
+<h3>1. Proprietary Boundaries</h3>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+<h3>2. Replicability & Copycat Defenses</h3>
+<p>${lines[i]}</p>
+<ul>
+    <li>${content}</li>
+    <li>${content}</li>
+
+</ul>
+---
+
+<h2>Section VII: Regulatory Compliance Checklist</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>${p}</th>
+            <th>${p}</th>
+            <th>${p}</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+        <tr>
+            <td>${p}</td>
+            <td>${p}</td>
+            <td>${p}</td>
+        </tr>
+    </tbody>
+</table>
+
+</div>
 
             <!-- Org Chart & Agent Alignment -->
             <div id="org-chart" class="doc-section">
