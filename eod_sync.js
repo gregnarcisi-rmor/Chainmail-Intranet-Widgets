@@ -270,17 +270,27 @@ async function runSync() {
     }
   }
 
+  // 5.5 Compile PDFs using Playwright
+  try {
+    console.log('[Sync] Running automated PDF compiler...');
+    execSync('node "C:\\Users\\greg_\\OneDrive\\Documents\\Antigravity Save Folder\\Chainmail-Customer-App-Interface\\export_docs_to_pdf.js"', {
+      stdio: 'inherit'
+    });
+  } catch (err) {
+    console.error('[Sync] Error during PDF compilation:', err.message);
+  }
+
   // 6. Git commit and push to Vercel/GitHub
   try {
     console.log('[Sync] Running git commands to commit and push changes...');
-    execSync('git add *.html', { cwd: WIDGETS_DIR });
+    execSync('git add *.html Compiled_PDFs/*.pdf', { cwd: WIDGETS_DIR });
     
     // Check if there are changes staged for commit
     const diff = execSync('git diff --cached --name-only', { cwd: WIDGETS_DIR }).toString().trim();
     if (diff) {
-      execSync('git commit -m "chore: automated EOD widgets sync (Jira and Google Sheets)"', { cwd: WIDGETS_DIR });
+      execSync('git commit -m "chore: automated EOD widgets and PDF sync"', { cwd: WIDGETS_DIR });
       execSync('git push origin master', { cwd: WIDGETS_DIR });
-      console.log('[Sync] Successfully committed and pushed widget changes to origin/master.');
+      console.log('[Sync] Successfully committed and pushed widget and PDF changes to origin/master.');
     } else {
       console.log('[Sync] No changes detected to commit.');
     }
