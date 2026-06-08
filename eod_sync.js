@@ -179,12 +179,12 @@ async function runSync() {
 
   // 4. Update intranet_operations_timeline.html
   const timelineWidgetPath = path.join(WIDGETS_DIR, 'intranet_operations_timeline.html');
+  const existingHashes = new Set();
   if (fs.existsSync(timelineWidgetPath)) {
     let html = fs.readFileSync(timelineWidgetPath, 'utf8');
     
     // Parse existing completed hashes in HTML
     const hashRegex = /<td class="hash">([A-Z0-9-]+)<\/td>/g;
-    const existingHashes = new Set();
     let match;
     while ((match = hashRegex.exec(html)) !== null) {
       existingHashes.add(match[1]);
@@ -239,14 +239,7 @@ async function runSync() {
   if (fs.existsSync(mainWidgetPath)) {
     let html = fs.readFileSync(mainWidgetPath, 'utf8');
     
-    // Check for new tickets to insert in the feed
-    const hashRegex = /<td class="hash">([A-Z0-9-]+)<\/td>/g;
-    const existingHashes = new Set();
-    const originalHtml = fs.readFileSync(timelineWidgetPath, 'utf8');
-    while ((match = hashRegex.exec(originalHtml)) !== null) {
-      existingHashes.add(match[1]);
-    }
-    
+    // Check for new tickets to insert in the feed (using original hashes from step 4)
     const newCompletedForFeed = doneTickets.filter(t => !existingHashes.has(t.id));
     
     if (newCompletedForFeed.length > 0) {
@@ -283,7 +276,7 @@ async function runSync() {
   // 6. Git commit and push to Vercel/GitHub
   try {
     console.log('[Sync] Running git commands to commit and push changes...');
-    execSync('git add *.html Compiled_PDFs/*.pdf', { cwd: WIDGETS_DIR });
+    execSync('git add *.html Compiled_PDFs/*.pdf doctrine/*.html', { cwd: WIDGETS_DIR });
     
     // Check if there are changes staged for commit
     const diff = execSync('git diff --cached --name-only', { cwd: WIDGETS_DIR }).toString().trim();
