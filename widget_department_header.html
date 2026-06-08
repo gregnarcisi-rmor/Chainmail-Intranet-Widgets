@@ -67,7 +67,7 @@
             <div class="pulse-ring"></div>
             <div class="agent-details">
                 <span class="agent-title">Agentic Co-Pilot Assigned</span>
-                <span class="agent-name">Antigravity (DeepMind Architecture)</span>
+                <span class="agent-name">Intranet Manager Agent</span>
             </div>
         </div>
     </div>
@@ -79,19 +79,33 @@
         if (role) {
             const titleEl = document.querySelector('.dept-title');
             const leadEl = document.querySelector('.human-lead');
+            const agentEl = document.querySelector('.agent-name');
+            const roleKey = role.toLowerCase();
             
-            if (role.toLowerCase() === 'cto') {
+            if (roleKey === 'cto') {
                 titleEl.textContent = 'Technology (CTO)';
-                leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: J. Benedick';
-            } else if (role.toLowerCase() === 'cfo') {
+                leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: S. Parajuli';
+                agentEl.textContent = 'Hardware Oracle Wrangler';
+            } else if (roleKey === 'cfo') {
                 titleEl.textContent = 'Finance (CFO)';
-                leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: G. Narcisi';
-            } else if (role.toLowerCase() === 'cio') {
-                titleEl.textContent = 'Information (CIO)';
+                leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: S. McKinney';
+                agentEl.textContent = 'Budget Automator';
+            } else if (roleKey === 'cmo' || roleKey === 'cio') {
+                titleEl.textContent = 'Marketing & Sales (CMO)';
                 leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: J. Metts';
-            } else if (role.toLowerCase() === 'coo') {
+                agentEl.textContent = 'LOI Converter';
+            } else if (roleKey === 'coo') {
                 titleEl.textContent = 'Operations (COO)';
                 leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: G. Narcisi';
+                agentEl.textContent = 'Intranet Manager Agent';
+            } else if (roleKey === 'coi') {
+                titleEl.textContent = 'Insurance & Claims (COI)';
+                leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: M. Barnett';
+                agentEl.textContent = 'Vigilance Shield';
+            } else if (roleKey === 'chro') {
+                titleEl.textContent = 'Human Resources (CHRO)';
+                leadEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> HUMAN LEAD: C. Settles';
+                agentEl.textContent = 'Identity_Access_Manager';
             }
         }
     </script>
