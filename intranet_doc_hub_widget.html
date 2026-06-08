@@ -342,6 +342,166 @@
             color: #E2E8F0;
         }
 
+        /* Org Chart Styling */
+        .org-section-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--gold);
+            margin-top: 24px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .org-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .org-card {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .org-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .org-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .org-name {
+            font-size: 16px;
+            font-weight: 800;
+            color: #FFF;
+            margin: 0;
+        }
+        .org-role {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+        .org-dept-badge {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .org-contact {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .org-rationale {
+            font-size: 12px;
+            color: #CBD5E1;
+            line-height: 1.5;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px;
+            border-radius: 4px;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        .agent-alignment {
+            margin-top: auto;
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 6px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .agent-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #FFF;
+        }
+        .agent-desc {
+            font-size: 11px;
+            color: #A7F3D0;
+            line-height: 1.4;
+        }
+        .agent-output {
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+            margin-top: 4px;
+            padding-top: 4px;
+            border-top: 1px dashed rgba(16, 185, 129, 0.2);
+        }
+
+        @media print {
+            .org-card {
+                background: #F8FAFC !important;
+                border: 1px solid #E2E8F0 !important;
+                color: #000 !important;
+            }
+            .org-name {
+                color: #000 !important;
+            }
+            .org-role {
+                color: #475569 !important;
+            }
+            .org-dept-badge {
+                background: #F1F5F9 !important;
+                color: #475569 !important;
+                border: 1px solid #CBD5E1 !important;
+            }
+            .org-contact {
+                color: #475569 !important;
+            }
+            .org-rationale {
+                background: #FFF !important;
+                border-left: 2px solid #CBD5E1 !important;
+                color: #334155 !important;
+            }
+            .agent-alignment {
+                background: #F0FDF4 !important;
+                border: 1px solid #BBF7D0 !important;
+                color: #000 !important;
+            }
+            .agent-header {
+                color: #166534 !important;
+            }
+            .agent-name {
+                color: #000 !important;
+            }
+            .agent-desc {
+                color: #1E293B !important;
+            }
+            .agent-output {
+                color: #475569 !important;
+                border-top: 1px dashed #BBF7D0 !important;
+            }
+        }
+
         /* Print Media Styles */
         @media print {
             body, html {
@@ -457,6 +617,26 @@
             <li class="doc-item" onclick="showDoc('pu-guide', 'Product User Guide', 'June 8, 2026')">
                 <svg class="doc-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 Product User Guide
+            </li>
+            <li class="doc-item" onclick="showDoc('api-security', 'API Security Guide', 'June 8, 2026')">
+                <svg class="doc-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                API Security Guide
+            </li>
+            <li class="doc-item" onclick="showDoc('release-roadmap', 'App Store Roadmap', 'June 8, 2026')">
+                <svg class="doc-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 15 15"></polyline></svg>
+                App Store Roadmap
+            </li>
+            <li class="doc-item" onclick="showDoc('budget-plans', 'Budget & Grant Plans', 'June 8, 2026')">
+                <svg class="doc-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="12" y1="2" x2="12" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line></svg>
+                Budget & Grant Plans
+            </li>
+            <li class="doc-item" onclick="showDoc('actuarial-memo', 'Actuarial Risk Memo', 'June 8, 2026')">
+                <svg class="doc-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                Actuarial Risk Memo
+            </li>
+            <li class="doc-item" onclick="showDoc('org-chart', 'Org Chart & AI Agents', 'June 8, 2026')">
+                <svg class="doc-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                Org Chart & AI Agents
             </li>
         </ul>
     </div>
@@ -781,6 +961,793 @@
                     <li>Explain that because they are in an **Extreme Risk Zone** (e.g. beachfront), our Underwriting AI cannot offer them the full amount immediately.</li>
                     <li>Explain that we offered the **IoT Baseline Policy** instead ($2,500 of emergency cash) to get a weather sensor installed, gathering data to protect their neighborhood and qualify them for higher limits.</li>
                 </ul>
+            </div>
+
+            <!-- API Security & Key Rotation Guide -->
+            <div id="api-security" class="doc-section">
+                <p>Because we are deploying the Chainmail Oracle using a <strong>Client-Side Execution Architecture</strong> (Path A) to maintain a $0 Bootstrapped Spend, your Google Gemini API key is embedded directly into the Intranet HTML widget.</p>
+                <p>Since this Intranet is restricted to just the 7 executives on your team, the risk is minimal. However, as a precaution, you must secure the API key inside the Google Cloud Console to prevent anyone from copying the key and using it elsewhere.</p>
+                
+                <h2>1. How to Secure the Oracle API Key</h2>
+                <ol>
+                    <li><strong>Navigate to Google Cloud Console:</strong> Go to <code>console.cloud.google.com</code> and select your project (e.g., <code>chainmail-enterprise</code>).</li>
+                    <li><strong>Access API & Services:</strong> In the left-hand navigation, click <strong>"APIs & Services"</strong> &rarr; <strong>"Credentials"</strong>.</li>
+                    <li><strong>Locate the Key:</strong> Click on the API key you generated for the Oracle (it may be named "Generative Language API Key").</li>
+                    <li><strong>Set Application Restrictions:</strong> Under "Application restrictions", select <strong>"HTTP referrers (web sites)"</strong>.</li>
+                    <li><strong>Whitelist the Intranet:</strong> Under "Website restrictions", click <strong>ADD</strong>. Enter the exact URL of your Google Sites Intranet page. <em>Example: <code>https://sites.google.com/view/chainmail-intranet/*</code></em></li>
+                    <li><strong>Set API Restrictions (Crucial):</strong> Under "API restrictions", click <strong>"Restrict key"</strong>. Check the box for <strong>"Generative Language API"</strong>. This ensures the key cannot be used to spin up massive Google Cloud servers even if stolen.</li>
+                    <li><strong>Save.</strong></li>
+                </ol>
+
+                <div class="alert-block">
+                    <span class="alert-title">Why we do this:</span>
+                    <p class="alert-content">If an executive accidentally leaks the Intranet source code, the API key is completely useless. Google will automatically block any requests made using that key unless they originate directly from your specific <code>sites.google.com</code> URL. This guarantees your $0 Operational Spend mandate remains perfectly intact.</p>
+                </div>
+            </div>
+
+            <!-- App Store Release Roadmap -->
+            <div id="release-roadmap" class="doc-section">
+                <p>To successfully launch the Chainmail Customer App on the iOS App Store and Google Play Store without delays, we must adhere to strict platform guidelines, particularly regarding financial services, Secure Distributed integration (Secure L2 Ledger L3, USD-denominated digital settlement assets), and user data privacy.</p>
+                
+                <h2>1. Timeline & Milestone Mapping</h2>
+                <p>To avoid being blindsided, the app store submission process must begin <strong>at least 6-8 weeks</strong> prior to the target public launch date listed in the Whitepaper.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Milestone</th>
+                            <th>Timeframe</th>
+                            <th>Objective</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Alpha Optimization</strong></td>
+                            <td>T-8 Weeks</td>
+                            <td>Finalize mobile responsive CSS and cross-platform framework wrapper (e.g., React Native / Flutter / PWA to Native).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Compliance Audit</strong></td>
+                            <td>T-6 Weeks</td>
+                            <td>Implement data deletion protocols, privacy policy, and EULA.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Developer Accounts</strong></td>
+                            <td>T-5 Weeks</td>
+                            <td>Register Apple Developer Program ($99/yr) and Google Play Console ($25). Require D-U-N-S number for corporate verification.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TestFlight / Internal Testing</strong></td>
+                            <td>T-4 Weeks</td>
+                            <td>Release to internal stakeholders via Apple TestFlight and Google Play Internal Testing.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Store Submission</strong></td>
+                            <td>T-2 Weeks</td>
+                            <td>Submit to Apple App Review and Google Play App Review. (Buffer time for initial rejection and resubmission).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Public Launch</strong></td>
+                            <td>T-0</td>
+                            <td>App is live, indexed, and available for download.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>2. Critical Apple App Store Requirements (iOS)</h2>
+                <p>Apple is notoriously strict regarding financial and insurance applications. To pass the App Review Board, we must guarantee the following:</p>
+                
+                <div class="alert-block">
+                    <span class="alert-title">Digital Settlement & Financial Regulations (Guideline 3.1.5)</span>
+                    <p class="alert-content">Because Chainmail utilizes automated execution rules on Secure L2 Ledger L3 for payouts using $USD-denominated digital settlement assets, the app <em>must</em> be submitted by a legal entity (not an individual developer) that is registered as a financial institution or has the appropriate licenses in the regions it operates. <br><strong>Action Item:</strong> Ensure our corporate D-U-N-S number is used for the Apple Developer Account, and our legal entity name exactly matches the app publisher name.</p>
+                </div>
+
+                <div class="alert-block alert-green">
+                    <span class="alert-title">Data Privacy & Account Deletion (Guideline 5.1.1)</span>
+                    <p class="alert-content">Apple absolutely mandates that any app allowing account creation <em>must</em> also provide an in-app option to completely delete the account and all associated data. <br><strong>Action Item:</strong> Build an automated "Delete Account" API route in the Vercel backend.</p>
+                </div>
+
+                <ul>
+                    <li><strong>App Tracking Transparency (ATT):</strong> If we use analytics that track across third-party apps, we must implement the ATT prompt.</li>
+                    <li><strong>Minimum Functionality:</strong> The app cannot just be a "wrapped website" (Guideline 4.2). It must utilize native iOS features (e.g., Push Notifications, FaceID/TouchID for secure login, local caching).</li>
+                </ul>
+
+                <h2>3. Critical Google Play Requirements (Android)</h2>
+                <p>Google Play has recently tightened restrictions on testing and financial apps.</p>
+                
+                <div class="alert-block">
+                    <span class="alert-title">20-Tester Rule</span>
+                    <p class="alert-content">New Google Play developer accounts must run a closed test with a minimum of 20 opted-in testers for at least 14 continuous days before you can apply for production access. <br><strong>Action Item:</strong> We must recruit 20 beta testers internally or via the Vigilance Grid network well before launch.</p>
+                </div>
+
+                <div class="alert-block alert-green">
+                    <span class="alert-title">Financial Features Policy</span>
+                    <p class="alert-content">Google requires a prominent "Financial Features Declaration" during submission. If the app facilitates insurance or digital settlement payouts, we must provide links to our regulatory compliance documentation and operating licenses in our Google Play Console declaration.</p>
+                </div>
+
+                <ul>
+                    <li><strong>Data Safety Section:</strong> We must accurately declare exactly what data is collected (e.g., location data from Vigilance Grid IoT integration, financial info) and whether it is encrypted in transit.</li>
+                </ul>
+
+                <h2>4. Next Steps for the Development Team</h2>
+                <ol>
+                    <li><strong>Architecture:</strong> We must decide whether to wrap the Vercel app using a framework like Capacitor/Ionic, or rebuild the frontend natively using React Native.</li>
+                    <li><strong>Privacy Policy URL:</strong> A live, hosted Privacy Policy must be created on the public-facing website.</li>
+                    <li><strong>Support URL:</strong> A dedicated support and contact page must be established for user inquiries.</li>
+                </ol>
+            </div>
+
+            <!-- Treasury Budget & Grant Plans -->
+            <div id="budget-plans" class="doc-section">
+                <p>This section combines our active cloud spending analysis and the migration roadmap to fully exploit the <strong>Microsoft Startups Founders Hub Grant</strong> (representing up to <strong>$150,000 in Azure Cloud credits</strong> and <strong>$2,500 in OpenAI credits</strong>) to reduce cash burn to absolute zero.</p>
+                
+                <h2>1. Active Operational Run Rate</h2>
+                <p>Following the conclusion of our trial periods, we have updated our active cloud ledger to reflect commercial operational costs. Our monthly operational burn rate is now <strong>$1,090.00</strong> for active geospatial imagery, fraud auditing, server compute, and ledger gas.</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Infrastructure / Service</th>
+                            <th>Vendor</th>
+                            <th>Current Monthly Cost</th>
+                            <th>Funding Phase Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Intranet & Web Hosting</strong></td>
+                            <td>Vercel (Free Tier)</td>
+                            <td>$0.00</td>
+                            <td>Upgrade to Vercel Pro ($20/mo) post-funding for team access.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Database & Scaling</strong></td>
+                            <td>GCP Firestore / Blaze Plan</td>
+                            <td>$100.00</td>
+                            <td>Scales dynamically; covers production compute and database queries.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Object Storage (Media/PII)</strong></td>
+                            <td>Cloudflare R2</td>
+                            <td>$0.00</td>
+                            <td>Selected specifically to eliminate AWS/GCP data egress fees.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Geospatial & Convective Mapping</strong></td>
+                            <td>XWeather API & Vexcel Imagery</td>
+                            <td>$750.00</td>
+                            <td>Commercial subscription for severe convective storm mapping and high-res post-storm imagery.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Core AI Routing & HITL</strong></td>
+                            <td>Google Gemini 1.5 & Pro</td>
+                            <td>$65.00</td>
+                            <td>Production Gemini API tokens for IoT routing and human-in-the-loop validation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Claims Fraud Audit</strong></td>
+                            <td>ISO Verisk ClaimSearch</td>
+                            <td>$150.00</td>
+                            <td>Active double-claim checking API subscription.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Secure Registry & Contracts</strong></td>
+                            <td>Secure L2 Ledger Mainnet</td>
+                            <td>$25.00</td>
+                            <td>Sponsored gas for transaction settlement.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Version Control</strong></td>
+                            <td>GitHub (Free Tier)</td>
+                            <td>$0.00</td>
+                            <td>Upgrade to GitHub Team ($4/user) when engineering team expands.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Monthly Burn</strong></td>
+                            <td></td>
+                            <td><strong>$1,090.00</strong></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>2. Microsoft Grant Migration Architecture</h2>
+                <p>By mapping GCP services to Azure equivalents, we migrate our active workloads to Microsoft's sponsored grant platform:</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>GCP Component</th>
+                            <th>Azure Grant Equivalent</th>
+                            <th>Sponsorship / Grant Method</th>
+                            <th>Value & Cash Savings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Vertex AI (Gemini 2.5)</strong></td>
+                            <td>Azure OpenAI Service (GPT-4o & mini)</td>
+                            <td>OpenAI Credit Portal</td>
+                            <td>Replaces Gemini calls with GPT-4o-mini for claims validation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BigQuery (Telemetry)</strong></td>
+                            <td>Azure Data Lake + Azure Synapse</td>
+                            <td>Azure Grant Credits</td>
+                            <td>Stores signed local IoT weather telemetry history.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Firestore (Metadata & Audits)</strong></td>
+                            <td>Azure Cosmos DB (Mongo API)</td>
+                            <td>Azure Grant Credits</td>
+                            <td>Houses risk scores, FL Bar Numbers, and audit trails.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cloud Run (Microservices)</strong></td>
+                            <td>Azure Container Apps (ACA) / AKS</td>
+                            <td>Azure Grant Credits</td>
+                            <td>Hosts the Quant Brain Rust sandbox and Vigilance Grid servers.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cloud PubSub (Ingestion)</strong></td>
+                            <td>Azure Event Hubs</td>
+                            <td>Azure Grant Credits</td>
+                            <td>Receives telemetry payloads from Sentinel weather gateways.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Google Maps / Geospatial</strong></td>
+                            <td>Azure Maps SDK + Esri ArcGIS</td>
+                            <td>Azure Grant Credits</td>
+                            <td>Renders threat boundaries and rooftop structural details.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>GitHub Private Seats</strong></td>
+                            <td>GitHub Enterprise</td>
+                            <td>20 Free Seats for 1 Year</td>
+                            <td>Saves ~$5,000/year in private organization licenses.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>3. Step-by-Step Migration Plan</h2>
+                <ul>
+                    <li><strong>Phase 1 (Immediate):</strong> Claim GitHub Enterprise seats; setup branch protections and Actions runners on Azure VMs.</li>
+                    <li><strong>Phase 2 (Telemetry Ingest):</strong> Deploy Azure Event Hubs; reconfigure the NodeJS <code>Chainmail-Vigilance-Grid</code> to ingest data on Azure ACA.</li>
+                    <li><strong>Phase 3 (Actuarial Engine):</strong> Migrate metadata to serverless Cosmos DB; containerize the Rust Quant Brain; shift LLM calls to Azure OpenAI.</li>
+                    <li><strong>Phase 4 (State Reporting):</strong> Setup Azure Functions on timer triggers to automate QUASR/PCLR reports.</li>
+                </ul>
+            </div>
+
+            <!-- Actuarial Risk & Underwriting Memorandum -->
+            <div id="actuarial-memo" class="doc-section">
+                <p><em>Filing Type: Form, Rate, and Market Conduct Authorization (Parametric Catastrophe & Web3 Nexus) submitted to the Florida Office of Insurance Regulation (OIR).</em></p>
+                
+                <h2>1. Covered Hazards & System Taxonomy</h2>
+                <p>The Chainmail Ecosystem Protocol calculates catastrophe risk, pools capital reserves, and automates claims payouts under five minutes from trigger events, covering:</p>
+                <ul>
+                    <li><strong>Physical Perils:</strong> High-velocity wind events (Anemometry), storm surge/flooding (Hydrology), and barometric pressure anomalies mapped to property boundaries.</li>
+                    <li><strong>Technical Perils:</strong> Smart contract exploits, Oracle transaction failure/telemetry corruption, and cross-chain messaging latency.</li>
+                </ul>
+
+                <h2>2. Actuarial Variables & Live Metrics</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Actuarial Variable</th>
+                            <th>Metric Definition</th>
+                            <th>Chainmail Live Data</th>
+                            <th>Regulatory Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Total Value Locked (TVL)</strong></td>
+                            <td>Total Capital Base At Risk</td>
+                            <td><strong>$42,500,000 USDC</strong></td>
+                            <td>Defines maximum exposure limits and capital reserves for solvency testing.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mesh Security Correlation (&alpha;<sub>i</sub>)</strong></td>
+                            <td>Interdependence of collateral assets across connected chains</td>
+                            <td><strong>&alpha; = 0.12 (Low Contagion)</strong></td>
+                            <td>Proves a vulnerability on Chain A will not drain liquidity on Chain B.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Audit Cadence / Re-evaluation</strong></td>
+                            <td>Frequency of code integrity reviews</td>
+                            <td><strong>Continuous (Every 24 hours)</strong></td>
+                            <td>Fulfills "Dynamic Risk Monitoring" to prevent stale risk exposure.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Telemetry Data Streams</strong></td>
+                            <td>Automated physical/technical metrics</td>
+                            <td><strong>Real-time CDRs & Gas trends</strong></td>
+                            <td>Establishes untampered logs to baseline parametric trigger pricing.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Wind Speed Trigger Threshold</strong></td>
+                            <td>Parametric boundary for payouts</td>
+                            <td><strong>Property-specific (90 mph)</strong></td>
+                            <td>Acts as the objective, non-adjustable claims trigger, bypassing human bias.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>3. Pricing Formula</h2>
+                <p>The premium charged ($P$) is computed as:</p>
+                <p><code>P = (P<sub>cat</sub> &times; Coverage Limit) + (P<sub>e</sub> &times; TVL &times; (1 + &alpha;)) + &lambda;</code></p>
+                <p>Where <code>P<sub>cat</sub></code> is the Parametric Event Probability, <code>P<sub>e</sub></code> is the Smart Contract Exploit Probability, <code>&alpha;</code> is the Mesh Security Correlation, and <code>&lambda;</code> is the administrative loading factor.</p>
+
+                <h2>4. NAIC Compliance & Safety Auditing</h2>
+                <ul>
+                    <li><strong>Explainability & Transparency:</strong> Underwriting algorithms provide an audit trail for every quote, referencing local NOAA GRIB2 grids, structural profiling, and local sensor health.</li>
+                    <li><strong>Algorithmic Bias Mitigation:</strong> Pricing runs on physical risk factors (soil liquefaction, elevation, wind resistance) and excludes demographic proxies.</li>
+                    <li><strong>Human-in-the-Loop Oversight:</strong> Appointed Casualty Actuary (FCAS) reviews pricing curves quarterly. If anomalies occur, an emergency circuit breaker halts quotes for manual verification.</li>
+                </ul>
+
+                <h2>5. Asset Adequacy & AG 53 Stress Testing</h2>
+                <ul>
+                    <li><strong>Systemic Liquidation (75% Asset Crash):</strong> Core pool remains fully liquid due to over-collateralization requirements (minimum 150% threshold).</li>
+                    <li><strong>Decoupling Event (Stablecoin Peg at $0.90):</strong> Payouts route dynamically to alternative stablecoins (USDT/USDe) to protect policyholder value.</li>
+                    <li><strong>Conforming Peril Clustered CAT:</strong> The mesh security correlation coefficient (&alpha; = 0.12) guarantees capital solvency even if 45% of policies trigger payouts within a 48-hour hurricane window.</li>
+                </ul>
+            </div>
+
+            <!-- Org Chart & Agent Alignment -->
+            <div id="org-chart" class="doc-section">
+                <p>This organizational chart documents the real personnel roster of the <strong>Chainmail Solutions</strong> team, aligned to their designated job functions, contact information, background rationales, and their custom-tailored <strong>AI Agent Co-Pilots</strong>.</p>
+                
+                <div class="org-section-title">1. Executive Leadership Team</div>
+                <div class="org-grid">
+                    <!-- Jesse Benedick -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Jesse Benedick</h3>
+                                <div class="org-role">Chief Executive Officer (CEO)</div>
+                            </div>
+                            <span class="org-dept-badge">Operations</span>
+                        </div>
+                        <div class="org-contact">
+                            <div>Email: jesse.benedick@chainmailsolutions.ai</div>
+                            <div>Phone: (941) 504-6154</div>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Direct leadership, insurance sector expertise, and blockchain framework alignment.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">Treasury Ledger Agent</div>
+                            <div class="agent-desc">Manages multi-signature payouts, capital reserves, and monitors corporate solvency metrics.</div>
+                            <div class="agent-output">Output: Payout Authorization / Ledger Logs</div>
+                        </div>
+                    </div>
+
+                    <!-- Greg Narcisi -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Greg Narcisi</h3>
+                                <div class="org-role">Chief Operating / Technology Officer (COO/CTO)</div>
+                            </div>
+                            <span class="org-dept-badge">Technology</span>
+                        </div>
+                        <div class="org-contact">
+                            <div>Email: greg.narcisi@chainmailsolutions.ai</div>
+                            <div>Phone: (843) 254-1131</div>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Operations lead overseeing cross-platform code implementation and day-to-day scaling.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">Intranet Manager Agent</div>
+                            <div class="agent-desc">Automates daily corporate briefings, synchronizes developer backlogs, and pushes logs to Google Drive.</div>
+                            <div class="agent-output">Output: Daily 3AM Brief / Jira Synced Board</div>
+                        </div>
+                    </div>
+
+                    <!-- Samantha McKinney -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Samantha McKinney</h3>
+                                <div class="org-role">Chief Financial Officer (CFO)</div>
+                            </div>
+                            <span class="org-dept-badge">Finance</span>
+                        </div>
+                        <div class="org-contact">
+                            <div>Email: samantha.mckinney@chainmailsolutions.ai</div>
+                            <div>Phone: (904) 378-6838</div>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Accounts manager with experience in structured accounts (PGA and Natural Life ledgers).
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">budget_automator</div>
+                            <div class="agent-desc">Monitors cloud hosting/API quotas vs spending limits, keeping operational burn to a minimum.</div>
+                            <div class="agent-output">Output: Budget Alerts / Grant Util Digests</div>
+                        </div>
+                    </div>
+
+                    <!-- Jeremy Metts -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Jeremy Metts</h3>
+                                <div class="org-role">Chief Marketing Officer (CMO)</div>
+                            </div>
+                            <span class="org-dept-badge">Marketing</span>
+                        </div>
+                        <div class="org-contact">
+                            <div>Email: jeremy.metts@chainmailsolutions.ai</div>
+                            <div>Phone: (904) 536-1013</div>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Leads strategic relationship building, agent acquisition, and sales plan development.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">loi_converter</div>
+                            <div class="agent-desc">Converts broker Letters of Intent into onboarding profiles, generating pre-filled contracts.</div>
+                            <div class="agent-output">Output: Onboarded Broker Profiles</div>
+                        </div>
+                    </div>
+
+                    <!-- Michael Barnett -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Michael Barnett</h3>
+                                <div class="org-role">Chief of Insurance & Claims (COI/COO)</div>
+                            </div>
+                            <span class="org-dept-badge">Operations</span>
+                        </div>
+                        <div class="org-contact">
+                            <div>Email: michael.barnett@chainmailsolutions.ai</div>
+                            <div>Phone: (386) 589-2393</div>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Hands-on insurance operations expertise, CAT adjusting, and claims validation models.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">vigilance_shield</div>
+                            <div class="agent-desc">Monitors claims for anomalies, pixel alteration, and geofencing discrepancies. Handles HITL handoffs.</div>
+                            <div class="agent-output">Output: Fraud Flags / Claims Verification Logs</div>
+                        </div>
+                    </div>
+
+                    <!-- Crystal Settles -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Crystal Settles</h3>
+                                <div class="org-role">Chief Human Resources Officer (CHRO)</div>
+                            </div>
+                            <span class="org-dept-badge">Human Resources</span>
+                        </div>
+                        <div class="org-contact">
+                            <div>Email: crystal.settles@chainmailsolutions.ai</div>
+                            <div>Phone: (941) 343-7910</div>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Handles all human resources aspects, organizational growth, and compliance guidelines.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">Identity_Access_Manager</div>
+                            <div class="agent-desc">Authorizes team keys, enforces Role-Based Access Control (RBAC), and manages credentialing.</div>
+                            <div class="agent-output">Output: Active Permissions / Auth Logs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="org-section-title">2. Engineering & Technical Operations</div>
+                <div class="org-grid">
+                    <!-- Sailesh Parajuli -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Sailesh Parajuli</h3>
+                                <div class="org-role">System Architect (CTO)</div>
+                            </div>
+                            <span class="org-dept-badge">Technology</span>
+                        </div>
+                        <div class="org-contact">
+                            <div>Email: sailesh.parajuli@chainmailsolutions.ai</div>
+                            <div>Phone: (850) 559-6589</div>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> System architecture experience with Citizens; Web3 node infrastructure lead.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">Hardware_Oracle_Wrangler</div>
+                            <div class="agent-desc">Validates incoming IoT station packets and manages Ambient Weather / Ecowitt API interfaces.</div>
+                            <div class="agent-output">Output: Live Ingestion Feed Status</div>
+                        </div>
+                    </div>
+
+                    <!-- Jenn Soest -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Jenn Soest</h3>
+                                <div class="org-role">Director of AI, Data & Automation</div>
+                            </div>
+                            <span class="org-dept-badge">Technology</span>
+                        </div>
+                        <div class="org-contact">
+                            <div>Email: jenn.soest@chainmailsolutions.ai</div>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Guides AI agent prompts, model optimization, and data governance standards.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">executive_communications_agent</div>
+                            <div class="agent-desc">Generates summaries, translates operational alerts into board updates, and oversees communications formatting.</div>
+                            <div class="agent-output">Output: Executive Board Reports</div>
+                        </div>
+                    </div>
+
+                    <!-- Ara Aguilar -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Ara Aguilar</h3>
+                                <div class="org-role">ClaimCenter (Guidewire) Integration Owner</div>
+                            </div>
+                            <span class="org-dept-badge">Technology</span>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Technical lead for connecting legacy Guidewire claims systems with our parametric engine.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">Product_Owner_Agent</div>
+                            <div class="agent-desc">Translates integration requirements into standard Jira epics, user stories, and acceptance criteria.</div>
+                            <div class="agent-output">Output: Jira Integration Tickets</div>
+                        </div>
+                    </div>
+
+                    <!-- Nicole Johnson -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Nicole Johnson</h3>
+                                <div class="org-role">Data Manager</div>
+                            </div>
+                            <span class="org-dept-badge">Technology</span>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Technical database analyst tracking schema migrations and API telemetry databases.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">adversarial_qa_engineer</div>
+                            <div class="agent-desc">Runs edge-case simulations on database triggers to ensure code limits are enforced correctly under stress.</div>
+                            <div class="agent-output">Output: Test Coverage Reports</div>
+                        </div>
+                    </div>
+
+                    <!-- Nishee Johnson -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Nishee Johnson</h3>
+                                <div class="org-role">Technology Infrastructure Lead</div>
+                            </div>
+                            <span class="org-dept-badge">Technology</span>
+                        </div>
+                        <div class="org-contact">
+                            <div>Phone: (765) 532-0986</div>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Specializes in bare-metal setups, hardware diagnosis, and dev environment reliability.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">browser-automation</div>
+                            <div class="agent-desc">Automates environment health checks, end-to-end user flows, and prints status reports.</div>
+                            <div class="agent-output">Output: Status Logs</div>
+                        </div>
+                    </div>
+
+                    <!-- Dean Savage -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Dean Savage</h3>
+                                <div class="org-role">Equipment Logistics Lead</div>
+                            </div>
+                            <span class="org-dept-badge">Technology</span>
+                        </div>
+                        <div class="org-contact">
+                            <div>Phone: (904) 537-6487</div>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Coordinates the physical procurement and deployment of weather station arrays.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">browser-automation</div>
+                            <div class="agent-desc">Queries hardware vendor shipments to verify delivery timelines for Sentinel boxed arrays.</div>
+                            <div class="agent-output">Output: Delivery Status Reports</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="org-section-title">3. Operations & Support Staff</div>
+                <div class="org-grid">
+                    <!-- Rose Mazard -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Rose Mazard</h3>
+                                <div class="org-role">Claims & Experience Lead</div>
+                            </div>
+                            <span class="org-dept-badge">Operations</span>
+                        </div>
+                        <div class="org-contact">
+                            <div>Phone: (786) 748-1652</div>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Claims administration, customer service triage, and adjuster dashboard reviews.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">Product_User_Agent</div>
+                            <div class="agent-desc">Simulates support desk interactions to test portal clarity and user guides.</div>
+                            <div class="agent-output">Output: UX Optimization Tickets</div>
+                        </div>
+                    </div>
+
+                    <!-- Trent McKinney -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Trent McKinney</h3>
+                                <div class="org-role">Head of Agency</div>
+                            </div>
+                            <span class="org-dept-badge">Marketing</span>
+                        </div>
+                        <div class="org-contact">
+                            <div>Phone: (850) 322-9543</div>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Builds agent networks, driving marketing plans and parametric endorsement integrations.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">Product_Manager_Agent</div>
+                            <div class="agent-desc">Drafts distribution guides and coordinates agent training events.</div>
+                            <div class="agent-output">Output: Agent Training Bulletins</div>
+                        </div>
+                    </div>
+
+                    <!-- Beth Stake -->
+                    <div class="org-card">
+                        <div class="org-card-header">
+                            <div>
+                                <h3 class="org-name">Beth Stake</h3>
+                                <div class="org-role">L&D Specialist</div>
+                            </div>
+                            <span class="org-dept-badge">Human Resources</span>
+                        </div>
+                        <div class="org-contact">
+                            <div>Phone: (904) 707-8877</div>
+                        </div>
+                        <div class="org-rationale">
+                            <strong>Rationale:</strong> Leads training curriculum design and caseworker onboarding.
+                        </div>
+                        <div class="agent-alignment">
+                            <div class="agent-header">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Co-Pilot Agent
+                            </div>
+                            <div class="agent-name">Product_User_Agent</div>
+                            <div class="agent-desc">Translates complex system specifications into readable training playbooks.</div>
+                            <div class="agent-output">Output: Onboarding Documentation</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="org-section-title">4. Advisory Board</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Target Domain</th>
+                            <th>Strategic Alignment / Background</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Barry Gilway</strong></td>
+                            <td>Insurance Strategy</td>
+                            <td>Former CEO of Citizens Property Insurance Corp (CPIC); industry titan advising on FL regulatory filings.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bobby Ayers</strong></td>
+                            <td>Claims & Mediation</td>
+                            <td>Appraisal, claims adjustments, and litigation resolution manager.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Heath Clark</strong></td>
+                            <td>CAT Management</td>
+                            <td>Former CAT Manager, current AVP of claims operations.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mike Guerra</strong></td>
+                            <td>Insurance Governance</td>
+                            <td>Former Governance Director with 40 years of industry oversight experience.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vivek Prasannan</strong></td>
+                            <td>Blockchain Architect</td>
+                            <td>Advising on token launch models and cross-chain Mesh Security staking.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bryan Rodvold</strong></td>
+                            <td>Community Operations</td>
+                            <td>Community building, Discord moderation, and Web3 marketing.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dale Brassfield</strong></td>
+                            <td>Business Strategy</td>
+                            <td>Independent agency and firm owner advising on retail distribution.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Curtis Pilot</strong></td>
+                            <td>Business Strategy</td>
+                            <td>Adjudication firm owner advising on large-scale CAT operations.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
