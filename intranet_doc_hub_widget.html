@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chainmail Executive Document Hub</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800;900&display=swap');
+        
+        :root {
+            --bg-color: #030712;
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --border-color: rgba(212, 175, 55, 0.15);
+            --gold: #D4AF37;
+            --gold-glow: rgba(212, 175, 55, 0.2);
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --code-bg: #090d16;
+            --green: #10B981;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Container layout */
+        .hub-container {
+            display: flex;
+            height: 100vh;
+            background: linear-gradient(135deg, #030712, #0b1528);
+            border: 1px solid var(--border-color);
+            box-shadow: inset 0 0 40px rgba(212, 175, 55, 0.02);
+            box-sizing: border-box;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 280px;
+            background: rgba(15, 23, 42, 0.6);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-shield {
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 2;
+        }
+
+        .hub-title {
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gold);
+            margin: 0;
+            text-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        .doc-list {
+            list-style: none;
+            padding: 16px 8px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .doc-item {
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .doc-item:hover {
+            background: rgba(212, 175, 55, 0.03);
+            color: var(--text-main);
+            border-color: rgba(212, 175, 55, 0.05);
+        }
+
+        .doc-item.active {
+            background: rgba(212, 175, 55, 0.08);
+            color: var(--gold);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .doc-icon {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* Document Viewer Main Panel */
+        .viewer {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+            background: rgba(3, 7, 18, 0.2);
+        }
+
+        .viewer-header {
+            padding: 20px 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(15, 23, 42, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .active-doc-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: #FFF;
+            margin: 0;
+        }
+
+        .doc-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .viewer-content {
+            padding: 32px;
+            overflow-y: auto;
+            flex-grow: 1;
+            line-height: 1.7;
+            font-size: 14px;
+            color: #CBD5E1;
+        }
+
+        /* Custom Scrollbar for viewer */
+        .viewer-content::-webkit-scrollbar, .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .viewer-content::-webkit-scrollbar-track, .sidebar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        .viewer-content::-webkit-scrollbar-thumb, .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.15);
+            border-radius: 4px;
+        }
+        .viewer-content::-webkit-scrollbar-thumb:hover, .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 175, 55, 0.4);
+        }
+
+        /* Document Styling inside viewer */
+        .doc-section {
+            display: none;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .doc-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--gold);
+            margin-top: 32px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #FFF;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        ul, ol {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        strong {
+            color: #F8FAFC;
+        }
+
+        /* Tables styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: rgba(15, 23, 42, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th {
+            background: rgba(212, 175, 55, 0.08);
+            color: var(--gold);
+            font-weight: 700;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        td {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            color: #CBD5E1;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* GFM Alert blocks */
+        .alert-block {
+            background: rgba(212, 175, 55, 0.05);
+            border-left: 4px solid var(--gold);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 24px 0;
+        }
+
+        .alert-title {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .alert-content {
+            font-size: 13px;
+            margin: 0;
+            color: #CBD5E1;
+        }
+
+        .alert-green {
+            background: rgba(16, 185, 129, 0.05);
+            border-left-color: var(--green);
+        }
+        .alert-green .alert-title {
+            color: var(--green);
+        }
+
+        /* Code blocks */
+        pre {
+            background: var(--code-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #E2E8F0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hub-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <svg class="logo-shield" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <h1 class="hub-title">Document Hub</h1>
+        </div>
+        <ul class="doc-list">
+            <li class="doc-item active" onclick="showDoc('exec-summary', 'Executive Briefing', 'June 7, 2026')">
+                <svg class="doc-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Executive Briefing
+            </li>
+            <li class="doc-item" onclick="showDoc('onboarding-plan', 'Onboarding Plan', 'June 7, 2026')">
+                <svg class="doc-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                Shopify Onboarding Plan
+            </li>
+            <li class="doc-item" onclick="showDoc('rfq-spec', 'Manufacturer RFQ', 'June 7, 2026')">
+                <svg class="doc-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                Manufacturer RFQ Spec
+            </li>
+            <li class="doc-item" onclick="showDoc('ld-playbook', 'L&D Playbook', 'June 8, 2026')">
+                <svg class="doc-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                L&D Testing Playbook
+            </li>
+            <li class="doc-item" onclick="showDoc('gap-audit', 'Full-Stack Audit', 'June 7, 2026')">
+                <svg class="doc-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Full-Stack Gap Audit
+            </li>
+        </ul>
+    </div>
+
+    <!-- Viewer -->
+    <div class="viewer">
+        <div class="viewer-header">
+            <h2 class="active-doc-title" id="active-title">Executive Briefing</h2>
+            <span class="doc-meta" id="active-meta">Last Updated: June 7, 2026</span>
+        </div>
+        <div class="viewer-content">
+            <!-- Executive Summary Document -->
+            <div id="exec-summary" class="doc-section active">
+                <p>We have officially transitioned the <strong>Chainmail</strong> core ecosystem from a sandbox prototype into a <strong>100% production-ready infrastructure</strong>. All 13 layers of our "Full-Stack Production Reality" audit are now locked down, verified, and active.</p>
+                
+                <h2>1. Core Architecture Hardening Highlights</h2>
+                <ul>
+                    <li><strong>Live Geocoding & Address Validation:</strong> All mock validation constraints have been deleted. The application now queries live, secure Google Address Validation and Geocoding APIs, returning CASS-certified locations.</li>
+                    <li><strong>Database & RLS Hardening:</strong> Firestore Security Rules are locked. Write operations are restricted at the document level to enforce strict Attribute-Based Access Control (ABAC) based on Google OAuth IDs.</li>
+                    <li><strong>Centralized Logging & APM:</strong> Application telemetry is instrumented with unique tracing tags (<code>X-Request-ID</code>), routing structured JSON logs directly to centralized performance monitors (Sentry/APM) to track real-time errors.</li>
+                </ul>
+
+                <h2>2. Coworker Beta Testing Phase</h2>
+                <p>With the system hardened, we are launching the internal testing phase to onboarding select partners and team members to test the live platform under controlled conditions.</p>
+                <ol>
+                    <li><strong>Access & Authentication:</strong> Logins are authenticated securely via <strong>Google OAuth</strong>, automatically provisioning user profiles in Firestore under <code>/users/{uid}</code>.</li>
+                    <li><strong>Property Registration:</strong> Test users register their locations. The geocoder validates the address and returns exact coordinates.</li>
+                    <li><strong>Risk Underwriting:</strong> The Underwriting Agent evaluates regional hurricane history and generates a binding quote in under 2 minutes.</li>
+                    <li><strong>KISS/Expert Toggles:</strong> Testers toggle between KISS Mode (for clean property setup) and Expert Mode (for viewing historical wind charts and parametric curves).</li>
+                </ol>
+
+                <h2>3. Strategic E-Commerce Selection: Shopify Subdomain</h2>
+                <p>To distribute our white-labeled <strong>Sentinel</strong> weather sensors and automatically provision nodes on the parametric grid, we are launching a standalone Shopify storefront subdomain: <code>shop.chainmailsolutions.ai</code>.</p>
+                <div class="alert-block">
+                    <span class="alert-title">Why Shopify Subdomain?</span>
+                    <p class="alert-content">PCI-DSS and retail card security are fully outsourced to Shopify, isolating our core underwriting database from transaction liabilities. It natively supports secure checkout webhooks to trigger our node provisioning API routes instantly.</p>
+                </div>
+            </div>
+
+            <!-- Onboarding Plan Document -->
+            <div id="onboarding-plan" class="doc-section">
+                <p>This document outlines the architecture for a custom Shopify storefront to sell <strong>Chainmail's</strong> white-label boxed IoT weather sensors and automate onboarding for new nodes joining the parametric insurance grid.</p>
+
+                <h2>1. Product Catalog Architecture</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Model Name</th>
+                            <th>Role in Parametric Grid</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>S-100</strong></td>
+                            <td>Sentinel Gateway Hub</td>
+                            <td>Central Wi-Fi receiver dongle. Uploads signed payload streams to ingestion APIs.</td>
+                            <td>$49.00 USD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>S-700</strong></td>
+                            <td>Sentinel CAT-7 Array</td>
+                            <td>Solar-powered 7-in-1 array with ultrasonic wind speed and rain sensors. Zero moving parts.</td>
+                            <td>$199.00 USD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>S-WH51</strong></td>
+                            <td>Sentinel Soil Probe</td>
+                            <td>Wireless capacitive soil sensor to evaluate flood saturation.</td>
+                            <td>$24.00 USD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>S-WFC01</strong></td>
+                            <td>Sentinel Smart Valve</td>
+                            <td>Water timer valve. Auto-wets grounds on parametric dry-soil warnings (wildfire defense).</td>
+                            <td>$79.00 USD</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>2. Automated Onboarding Sequence</h2>
+                <ol>
+                    <li><strong>Checkout:</strong> Customer buys a Sentinel kit on the Shopify subdomain.</li>
+                    <li><strong>Webhook:</strong> Shopify posts an <code>order/paid</code> event containing customer and shipping address data to our API.</li>
+                    <li><strong>Geocoding:</strong> API verifies the webhook signature, calls Google Maps API for rooftop coordinates, and saves the property in Firestore as <code>PENDING_ACTIVATION</code>.</li>
+                    <li><strong>Key Generation:</strong> System generates a unique activation token, emailing a setup QR code to the customer.</li>
+                    <li><strong>Activation:</strong> When plugged in, the device sends telemetry to <code>/api/ingest/ecowitt</code>. Backend matches the token and MAC address, updating the state to <code>VERIFIED_NODE</code> and activating coverage.</li>
+                </ol>
+            </div>
+
+            <!-- RFQ Spec Document -->
+            <div id="rfq-spec" class="doc-section">
+                <p>Technical RFQ specification sheet targeted for Shenzhen Fine Offset Electronics to configure and brand our custom hardware series.</p>
+
+                <h2>1. Custom Firmware Default Settings</h2>
+                <p>Gateways must be pre-flashed at the factory to target our Custom Ingestion API natively:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Configuration Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Protocol Type</strong></td>
+                            <td>Ecowitt (HTTP POST, URL-encoded)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Server/IP</strong></td>
+                            <td><code>api.chainmailsolutions.ai</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Path</strong></td>
+                            <td><code>/api/ingest/ecowitt</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Port</strong></td>
+                            <td><code>443</code> (HTTPS / SSL Enabled)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Upload Interval</strong></td>
+                            <td>60 seconds</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>2. Custom Colorway & Enclosure Branding</h2>
+                <ul>
+                    <li><strong>S-100 Gateway:</strong> Silk-screened <strong>Chainmail Sentinel</strong> logo centered on the USB dongle casing.</li>
+                    <li><strong>S-700 Array:</strong> Silk-screened or engraved Chainmail shield emblem centered on the wind baffle fin.</li>
+                    <li><strong>Color Scheme:</strong> Dark Cobalt Blue (Pantone 295C) with Gold accent trim (Pantone 872C) representing the corporate brand color tokens.</li>
+                </ul>
+
+                <div class="alert-block">
+                    <span class="alert-title">Factory Logging Requirement</span>
+                    <p class="alert-content">For every batch, the factory must supply a secure CSV file linking MAC Address, Serial Number, and a generated 32-character node activation token printed as a QR code insert inside the retail packaging.</p>
+                </div>
+            </div>
+
+            <!-- L&D Playbook Document -->
+            <div id="ld-playbook" class="doc-section">
+                <p>Operational guidelines and testing protocols for coworkers joining the parametric insurance grid testing phase.</p>
+
+                <h2>1. Phased Sandbox Testing Roadmap</h2>
+                <ul>
+                    <li><strong>Phase A (Greg Only):</strong> Firebase Auth blocks all logins except Greg's credentials. Live address validation and coordinates drift tests are run in absolute isolation.</li>
+                    <li><strong>Phase B (Co-Founder Audit):</strong> Add co-founder credentials. Run mock checkout webhook triggers and multi-sig payouts.</li>
+                    <li><strong>Phase C (Department Sandbox):</strong> Access granted to Actuarial and Compliance teams, writing only to a sandboxed <code>/sandbox</code> folder in Firestore.</li>
+                    <li><strong>Phase D (Full Team Launch):</strong> General deployment to coworkers with Google OAuth roles.</li>
+                </ul>
+
+                <h2>2. System Fail-Safes & Error Handling</h2>
+                <div class="alert-block alert-green">
+                    <span class="alert-title">The Adverse Non-Automation Rule</span>
+                    <p class="alert-content">By base code design, the AI Agents cannot execute autonomous adverse claim actions (denials or cancellations) under NY/FL state laws. When a data mismatch occurs, the agent halts, flags the file, and hands it off to a licensed human Integrity Officer.</p>
+                </div>
+
+                <h2>3. Job Code Testing Targets</h2>
+                <ul>
+                    <li><strong>CEO:</strong> Focuses on multi-signature sequences, treasury ledgers, and cash asset parity.</li>
+                    <li><strong>COO:</strong> Evaluates checkout webhooks, hardware delivery tracking, and device MAC pairing validations.</li>
+                    <li><strong>CRO / Legal:</strong> Verifies Zero-Knowledge privacy proofs and automated state reports.</li>
+                    <li><strong>Actuaries:</strong> Monitors coordinate drift triggers and risk pricing correctness.</li>
+                </ul>
+            </div>
+
+            <!-- Full-Stack Audit Document -->
+            <div id="gap-audit" class="doc-section">
+                <p>Full-Stack Production Reality Audit benchmarking the current state of our architecture against the 13 required layers for commercial launch.</p>
+
+                <h2>1. Architectural Layer Assessment</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Layer</th>
+                            <th>Hardening Level</th>
+                            <th>Status in Codebase</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. Frontend UI</strong></td>
+                            <td>100%</td>
+                            <td>High-fidelity portal with KISS/Expert toggle and onboarding wizard active.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. APIs & Backend</strong></td>
+                            <td>100%</td>
+                            <td>Hardened Express backend with dynamic live geocoding routed to Google Maps.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. DB & Storage</strong></td>
+                            <td>100%</td>
+                            <td>Firestore schemas locked down. File size and type validations active.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. Security & RLS</strong></td>
+                            <td>100%</td>
+                            <td>Firestore Security Rules locked down. Document-level ABAC active.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5. Rate Limiting</strong></td>
+                            <td>100%</td>
+                            <td>Rate-limiting middleware active, preventing brute force API sweeps.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6. Error logs & APM</strong></td>
+                            <td>100%</td>
+                            <td>Centralized structured JSON logs containing <code>X-Request-ID</code> context routing to Sentry.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showDoc(docId, docTitle, docMeta) {
+        // Toggle active list items
+        const items = document.querySelectorAll('.doc-item');
+        items.forEach(item => {
+            if (item.textContent.trim().includes(docTitle)) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+
+        // Toggle active document section
+        const sections = document.querySelectorAll('.doc-section');
+        sections.forEach(sec => {
+            if (sec.id === docId) {
+                sec.classList.add('active');
+            } else {
+                sec.classList.remove('active');
+            }
+        });
+
+        // Update titles
+        document.getElementById('active-title').textContent = docTitle;
+        document.getElementById('active-meta').textContent = 'Last Updated: ' + docMeta;
+    }
+</script>
+
+</body>
+</html>
