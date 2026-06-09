@@ -156,7 +156,7 @@ function markdownToHtml(mdText) {
   html = html.replace(/^>\s+\[!([A-Z]+)\]\s*\n((?:>\s+.*\n?)+)/gm, (match, type, content) => {
     const cleanContent = content.replace(/^>\s*/gm, '').trim();
     const alertClass = type.toLowerCase() === 'tip' || type.toLowerCase() === 'note' ? 'alert-green' : '';
-    return `<div class="alert-block \${alertClass}">\n    <span class="alert-title">\${type}</span>\n    <p class="alert-content">\${cleanContent}</p>\n</div>\n`;
+    return '<div class="alert-block ' + alertClass + '">\n    <span class="alert-title">' + type + '</span>\n    <p class="alert-content">' + cleanContent + '</p>\n</div>\n';
   });
   
   const lines = html.split('\n');
@@ -175,7 +175,7 @@ function markdownToHtml(mdText) {
         prefix = '<ul>\n';
         inList = true;
       }
-      lines[i] = prefix + `    <li>\${content}</li>`;
+      lines[i] = prefix + '    <li>' + content + '</li>';
     } else if (inList && !line.startsWith('* ') && !line.startsWith('- ') && line !== '') {
       lines[i] = '</ul>\n' + lines[i];
       inList = false;
@@ -190,7 +190,7 @@ function markdownToHtml(mdText) {
         prefix = '<ol>\n';
         inOrderedList = true;
       }
-      lines[i] = prefix + `    <li>\${content}</li>`;
+      lines[i] = prefix + '    <li>' + content + '</li>';
     } else if (inOrderedList && !line.match(/^\d+\.\s+/) && line !== '') {
       lines[i] = '</ol>\n' + lines[i];
       inOrderedList = false;
@@ -201,11 +201,11 @@ function markdownToHtml(mdText) {
       const parts = line.split('|').map(p => p.trim()).filter((_, idx, arr) => idx > 0 && idx < arr.length - 1);
       if (!inTable) {
         inTable = true;
-        lines[i] = '<table>\n    <thead>\n        <tr>\n' + parts.map(p => `            <th>\${p}</th>`).join('\n') + '\n        </tr>\n    </thead>\n    <tbody>';
+        lines[i] = '<table>\n    <thead>\n        <tr>\n' + parts.map(p => '            <th>' + p + '</th>').join('\n') + '\n        </tr>\n    </thead>\n    <tbody>';
       } else if (line.includes('---')) {
         lines[i] = '';
       } else {
-        lines[i] = '        <tr>\n' + parts.map(p => `            <td>\${p}</td>`).join('\n') + '\n        </tr>';
+        lines[i] = '        <tr>\n' + parts.map(p => '            <td>' + p + '</td>').join('\n') + '\n        </tr>';
       }
     } else if (inTable && !line.startsWith('|')) {
       lines[i] = '    </tbody>\n</table>\n' + lines[i];
@@ -220,7 +220,7 @@ function markdownToHtml(mdText) {
         !lines[i].trim().startsWith('</ol>') && 
         !lines[i].trim().startsWith('</table>') &&
         !lines[i].trim().startsWith('</div>')) {
-      lines[i] = `<p>\${lines[i]}</p>`;
+      lines[i] = '<p>' + lines[i] + '</p>';
     }
   }
   
