@@ -40,6 +40,42 @@
             box-sizing: border-box;
         }
 
+        /* Embed Mode overrides for Google Sites */
+        body.embed-mode {
+            background-color: transparent !important;
+            background: transparent !important;
+            height: auto !important;
+            overflow: auto !important;
+        }
+
+        body.embed-mode .hub-container {
+            height: auto !important;
+            min-height: 100vh;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        body.embed-mode .sidebar {
+            display: none !important;
+        }
+
+        body.embed-mode .viewer-header {
+            display: none !important;
+        }
+
+        body.embed-mode .viewer {
+            background: transparent !important;
+            height: auto !important;
+            overflow: auto !important;
+        }
+
+        body.embed-mode .viewer-content {
+            padding: 16px !important;
+            overflow-y: visible !important;
+            height: auto !important;
+        }
+
         /* Sidebar styling */
         .sidebar {
             width: 280px;
@@ -862,6 +898,140 @@
 
 </ul>
             </div>
+<!-- END onboarding-plan -->4.00 USD</li>
+
+<ol>
+    <li><strong>Sentinel Smart Valve Actuator (Model S-WFC01)</strong></li>
+</ol>
+<ul>
+    <li>*Based on Ecowitt WFC01*</li>
+    <li>Smart water timer valve designed to mitigate localized wildfire threat by auto-wetting property grounds when dry soil moisture thresholds trigger parametric alarm states.</li>
+    <li><strong>Price:</strong> $79.00 USD</li>
+
+</ul>
+---
+
+<h2>2. Automated Network Onboarding Workflow</h2>
+
+<p>The Shopify purchase acts as the initial transaction in the node onboarding lifecycle.</p>
+
+<p>``<code>mermaid</p>
+<p>sequenceDiagram</p>
+<p>    autonumber</p>
+<p>    actor User as Policyholder / Buyer</p>
+<p>    participant Shop as Shopify Storefront</p>
+<p>    participant Webhook as Shopify Webhook Worker</p>
+<p>    participant API as Chainmail API Server</p>
+<p>    participant DB as Firestore Database</p>
+<p>    participant Device as IoT Sentinel Device</p>
+
+<p>    User->>Shop: Purchase Sentinel Kit (S-100 + S-700)</p>
+<p>    Shop-->>User: Order Confirmation & Shipping Label Generated</p>
+<p>    Shop->>Webhook: Event: order/paid (Payload contains email, address)</p>
+<p>    Webhook->>API: POST /api/onboarding/provision</p>
+<p>    activate API</p>
+<p>    API->>API: Generate secure device key & pre-provision propertyId</p>
+<p>    API->>DB: Write property & pre-provisioned sensors as PENDING_ACTIVATION</p>
+<p>    API-->>Webhook: Provisioning Success</p>
+<p>    deactivate API</p>
+<p>    Webhook-->>User: Onboarding Email with Device Credentials & Claim QR Code</p>
+<p>    User->>Device: Mount hardware & connect to home Wi-Fi</p>
+<p>    Device->>API: POST /api/ingest/ecowitt (First Telemetry Ping)</p>
+<p>    activate API</p>
+<p>    API->>API: Authenticate device with secure pre-provisioned key</p>
+<p>    API->>DB: Update status to VERIFIED_NODE & Activate Parametric Coverage</p>
+<p>    API-->>Device: Acknowledge (HTTP 200)</p>
+<p>    deactivate API</p>
+<p>    API->>User: App Push Notification: "Node Active. Coverage Live!"</p>
+</code>`<code>
+
+<p>---</p>
+
+<h2>3. API Provisioning Endpoint Specifications</h2>
+
+<p>When a checkout completes, Shopify sends an </code>order/paid<code> webhook to our backend API server:</p>
+
+<h3>Endpoint: </code>POST /api/onboarding/provision<code></h3>
+<strong>Access Control:</strong> HMAC Signature verified using Shopify API Webhook Shared Secret.
+
+<p>#### Request Payload (from Shopify):</p>
+</code>`<code>json
+<p>{</p>
+<p>  "order_id": 987654321,</p>
+<p>  "email": "customer@example.com",</p>
+<p>  "shipping_address": {</p>
+<p>    "address1": "12665 Julington Oaks Dr",</p>
+<p>    "city": "Jacksonville",</p>
+<p>    "province": "FL",</p>
+<p>    "zip": "32223",</p>
+<p>    "country": "US"</p>
+<p>  },</p>
+<p>  "line_items": [</p>
+<p>    {</p>
+<p>      "sku": "SENTINEL-KIT-A",</p>
+<p>      "quantity": 1,</p>
+<p>      "name": "Sentinel Gateway & Wittboy Array"</p>
+<p>    }</p>
+<p>  ]</p>
+<p>}</p>
+</code>`<code>
+
+<p>#### Provisioning Logic:</p>
+<ol>
+    <li><strong>Address Validation:</strong> Call Google Address Validation API to verify CASS status and retrieve exact rooftop coordinates (</code>lat<code> / </code>lng<code>).</li>
+    <li><strong>Database Record Creation:</strong></li>
+</ol>
+<ul>
+    <li>Create a new document in </code>/properties<code>:</li>
+</ul>
+     </code>`<code>typescript
+<p>     {</p>
+<p>       ownerEmail: "customer@example.com",</p>
+<p>       address: "12665 Julington Oaks Dr, Jacksonville, FL 32223",</p>
+<p>       lat: 30.1421936,</p>
+<p>       lng: -81.6157784,</p>
+<p>       riskScore: 72.4, // Calculated by Underwriting Agent based on coordinates</p>
+<p>       status: "PENDING_ACTIVATION",</p>
+<p>       createdAt: serverTimestamp()</p>
+<p>     }</p>
+     </code>`<code>
+<ul>
+    <li>Create a document in </code>/properties/{propertyId}/sensors/Anemometry<code>:</li>
+</ul>
+     </code>`<code>typescript
+<p>     {</p>
+<p>       type: "Anemometry",</p>
+<p>       verificationStatus: "UNVERIFIED",</p>
+<p>       hardwareType: "Ecowitt",</p>
+<p>       value: 0</p>
+<p>     }</p>
+     </code>`<code>
+<ol>
+    <li><strong>Secret Generation:</strong> Generate a unique password/secret token for the gateway and email it as a QR code to the user.</li>
+
+</ol>
+---
+
+<h2>4. UI/UX Storefront Integration</h2>
+
+<p>The Shopify storefront theme will match Chainmail's core brand design system: <strong>Cobalt & Gold / Slate & Gold</strong>.</p>
+
+<h3>Theme Design System</h3>
+<ul>
+    <li><strong>Primary Background:</strong> </code>#030712<code> (Slate Black)</li>
+    <li><strong>Secondary Cards:</strong> </code>rgba(17, 24, 39, 0.7)<code> (Translucent Dark Blue)</li>
+    <li><strong>Accents:</strong> </code>#D4AF37<code> (Metallic Gold)</li>
+    <li><strong>Fonts:</strong> </code>Outfit<code> (Headings) and </code>Inter<code> (Body)</li>
+
+</ul>
+<h3>Custom Liquid Elements</h3>
+<ul>
+    <li><strong>Network Node Counter:</strong> A live ticker in the header showing: </code>ACTIVE_NODES: 1,482 | TOTAL_COVERAGE_LOCKED: $34,891,000`.</li>
+    <li><strong>Map Twin Preview:</strong> An interactive WebGL globe on the landing page showing glowing gold dots representing active coverage sensors in real time.</li>
+    <li><strong>onboarding-tab widget:</strong> Built-in section on the product page showing the simple "Plug, Scan, Insure" 3-step setup guide.</li>
+
+</ul>
+            </div>
 <!-- END onboarding-plan -->
 
             <!-- RFQ Spec Document -->
@@ -1472,6 +1642,23 @@
 You don't need to know how to code the AI. You just need to know what the AI *should* be doing to help our customers. Welcome to the team!
 
             </div>
+<!-- END po-guide -->,500 payout cap) just so we can get their sensor data and help protect the community.</li>
+    <li><strong>The Claims Adjuster Agent:</strong> When a disaster hits, this AI looks at satellite photos to verify the damage. If it's confident, it pays the customer instantly. If it isn't sure, it sends the claim to a human to review—it is strictly programmed *never* to automatically deny a claim.</li>
+    <li><strong>The Vigilance Oracle Agent:</strong> This AI constantly watches the weather channel. If it sees a Category 5 hurricane coming, it flags the map and readies our bank accounts to pay people before they even ask.</li>
+    <li><strong>The Quant Brain Actuary Agent:</strong> This AI watches our bank account. If we take on too much risk in one state, it automatically buys "reinsurance" (backup insurance for us) to keep the company financially safe.</li>
+
+</ol>
+<h2>Your Day-to-Day Responsibilities</h2>
+<p>As a Product Owner, you will:</p>
+<ul>
+    <li><strong>Monitor the Vision:</strong> Look at the Enterprise Dashboard. Are the AI agents making decisions that align with the BallPark Initiative?</li>
+    <li><strong>Prioritize the Backlog:</strong> Work with the Product Manager to decide which neighborhood of our "city" needs improvement next.</li>
+    <li><strong>Understand the Costs:</strong> The Enterprise dashboard shows you exactly how many fractions of a cent the AI is spending to make decisions. You balance the cost of the AI against the value it provides.</li>
+
+</ul>
+You don't need to know how to code the AI. You just need to know what the AI *should* be doing to help our customers. Welcome to the team!
+
+            </div>
 <!-- END po-guide -->
 
             <!-- Product Manager L&D Guide -->
@@ -1556,6 +1743,19 @@ You are the operational glue that holds Chainmail together. Let's get to work!
 </ol>
 <h3>The "IoT Baseline" Feature (For Customer Support)</h3>
 <p>Sometimes, a customer will call and say, *"I tried to buy a $500,000 policy but it only offered me <!-- END pu-guide -->,500."*</p>
+<p>Here is how you handle it:</p>
+<ul>
+    <li>Explain that because their house is in an <strong>Extreme Risk Zone</strong> (like right on the beach), our Underwriting AI cannot offer them half a million dollars right now.</li>
+    <li>However, explain that we *did not reject them*. We offered them the <strong>IoT Baseline Policy</strong>. This gives them <!-- END pu-guide -->,500 of emergency cash, and in return, they install a weather sensor on their house. This helps us gather data to protect the rest of their neighborhood!</li>
+
+</ul>
+<h2>Need Help?</h2>
+<p>If the screen turns white, or the map stops loading, do not panic! Just take a screenshot and send it to your Product Manager with the Jira ticket label <code>UI-BUG</code>. </p>
+
+<p>Welcome to Chainmail! We are glad you're here.</p>
+
+            </div>
+<!-- END pu-guide -->,500."*</p>
 <p>Here is how you handle it:</p>
 <ul>
     <li>Explain that because their house is in an <strong>Extreme Risk Zone</strong> (like right on the beach), our Underwriting AI cannot offer them half a million dollars right now.</li>
@@ -1737,6 +1937,92 @@ You are the operational glue that holds Chainmail together. Let's get to work!
 
 </ol>
             </div>
+<!-- END release-roadmap -->5). Require D-U-N-S number for corporate verification.</td>
+        </tr>
+        <tr>
+            <td><strong>TestFlight / Internal Testing</strong></td>
+            <td>T-4 Weeks</td>
+            <td>Release to internal stakeholders via Apple TestFlight and Google Play Internal Testing.</td>
+        </tr>
+        <tr>
+            <td><strong>Store Submission</strong></td>
+            <td>T-2 Weeks</td>
+            <td>Submit to Apple App Review and Google Play App Review. (Buffer time for initial rejection and resubmission).</td>
+        </tr>
+        <tr>
+            <td><strong>Public Launch</strong></td>
+            <td>T-0</td>
+            <td>App is live, indexed, and available for download.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>---</p>
+
+<h2>2. Critical Apple App Store Requirements (iOS)</h2>
+
+<p>Apple is notoriously strict regarding financial and insurance applications. To pass the App Review Board, we must guarantee the following:</p>
+
+<div class="alert-block ">
+    <span class="alert-title">WARNING</span>
+    <p class="alert-content"><strong>digital settlement & Financial Regulations (Guideline 3.1.5)</strong>
+<p>Because Chainmail utilizes automated execution rules on Secure L2 Ledger L3 for payouts using $USD-denominated digital settlement assets, the app *must* be submitted by a legal entity (not an individual developer) that is registered as a financial institution or has the appropriate licenses in the regions it operates. </p>
+<ul>
+    <li><strong>Action Item:</strong> Ensure our corporate D-U-N-S number is used for the Apple Developer Account, and our legal entity name exactly matches the app publisher name.</p></li>
+</ul>
+</div>
+
+<div class="alert-block ">
+    <span class="alert-title">IMPORTANT</span>
+    <p class="alert-content"><strong>Data Privacy & Account Deletion (Guideline 5.1.1)</strong>
+<p>Apple absolutely mandates that any app allowing account creation *must* also provide an in-app option to completely delete the account and all associated data.</p>
+<ul>
+    <li><strong>Action Item:</strong> Build an automated "Delete Account" API route in the Vercel backend.</p></li>
+</ul>
+</div>
+
+<ul>
+    <li>  <strong>App Tracking Transparency (ATT):</strong> If we use analytics that track across third-party apps, we must implement the ATT prompt.</li>
+    <li>  <strong>Minimum Functionality:</strong> The app cannot just be a "wrapped website" (Guideline 4.2). It must utilize native iOS features (e.g., Push Notifications, FaceID/TouchID for secure login, local caching).</li>
+
+</ul>
+---
+
+<h2>3. Critical Google Play Requirements (Android)</h2>
+
+<p>Google Play has recently tightened restrictions on testing and financial apps.</p>
+
+<div class="alert-block ">
+    <span class="alert-title">WARNING</span>
+    <p class="alert-content"><strong>20-Tester Rule</strong>
+<p>New Google Play developer accounts must run a closed test with a minimum of 20 opted-in testers for at least 14 continuous days before you can apply for production access.</p>
+<ul>
+    <li><strong>Action Item:</strong> We must recruit 20 beta testers internally or via the Vigilance Grid network well before launch.</p></li>
+</ul>
+</div>
+
+<div class="alert-block ">
+    <span class="alert-title">IMPORTANT</span>
+    <p class="alert-content"><strong>Financial Features Policy</strong>
+<p>Google requires a prominent "Financial Features Declaration" during submission. If the app facilitates insurance or digital settlement payouts, we must provide links to our regulatory compliance documentation and operating licenses in our Google Play Console declaration.</p></p>
+</div>
+
+<ul>
+    <li>  <strong>Data Safety Section:</strong> We must accurately declare exactly what data is collected (e.g., location data from Vigilance Grid IoT integration, financial info) and whether it is encrypted in transit.</li>
+
+</ul>
+---
+
+<h2>4. Next Steps for the Development Team</h2>
+
+<p>To transition our current Vercel web app into a compliant Native App:</p>
+<ol>
+    <li><strong>Architecture:</strong> We must decide whether to wrap the Vercel app using a framework like Capacitor/Ionic, or rebuild the frontend natively using React Native.</li>
+    <li><strong>Privacy Policy URL:</strong> A live, hosted Privacy Policy must be created on the public-facing website.</li>
+    <li><strong>Support URL:</strong> A dedicated support and contact page must be established for user inquiries.</li>
+
+</ol>
+            </div>
 <!-- END release-roadmap -->
 
             <!-- Treasury Budget & Grant Plans -->
@@ -1767,6 +2053,76 @@ You are the operational glue that holds Chainmail together. Let's get to work!
             <td>Vercel (Free Tier)</td>
             <td>$0.00</td>
             <td>Upgrade to Vercel Pro (<!-- END budget-plans -->0/mo) post-funding for team access.</td>
+        </tr>
+        <tr>
+            <td><strong>Database & Scaling</strong></td>
+            <td>GCP Firestore / Blaze Plan</td>
+            <td><!-- START budget-plans -->00.00</td>
+            <td>Scales dynamically; covers production compute and database queries.</td>
+        </tr>
+        <tr>
+            <td><strong>Object Storage (Media/PII)</strong></td>
+            <td>Cloudflare R2</td>
+            <td>$0.00</td>
+            <td>Selected specifically to eliminate AWS/GCP data egress fees.</td>
+        </tr>
+        <tr>
+            <td><strong>Geospatial & Convective Mapping</strong></td>
+            <td>XWeather API & Vexcel Imagery</td>
+            <td>$750.00</td>
+            <td>Commercial subscription for severe convective storm mapping and high-res post-storm imagery.</td>
+        </tr>
+        <tr>
+            <td><strong>Core AI Routing & HITL Verification</strong></td>
+            <td>Google Gemini 1.5 Flash & 3.1 Pro</td>
+            <td>$65.00</td>
+            <td>Production Gemini API tokens for IoT routing and human-in-the-loop validation.</td>
+        </tr>
+        <tr>
+            <td><strong>Claims Fraud Audit</strong></td>
+            <td>ISO Verisk ClaimSearch</td>
+            <td><!-- START budget-plans -->50.00</td>
+            <td>Active double-claim checking API subscription.</td>
+        </tr>
+        <tr>
+            <td><strong>Secure Registry & Smart Contract execution</strong></td>
+            <td>Secure L2 Ledger Mainnet</td>
+            <td><!-- END budget-plans -->5.00</td>
+            <td>Sponsored gas for transaction settlement.</td>
+        </tr>
+        <tr>
+            <td><strong>Version Control</strong></td>
+            <td>GitHub (Free Tier)</td>
+            <td>$0.00</td>
+            <td>Upgrade to GitHub Team ($4/user) when engineering team expands.</td>
+        </tr>
+        <tr>
+            <td><strong>Executive Compensation</strong></td>
+            <td>COO Phase 1 (1099)</td>
+            <td>$0.00 (Equity/$RMOR only)</td>
+            <td>Transition to Full-Time Phase 1 (Salary + 8% Match) post-funding.</td>
+        </tr>
+        <tr>
+            <td><strong>Total Monthly Burn</strong></td>
+            <td></td>
+            <td><strong><!-- START budget-plans -->,090.00</strong></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Future Capital Expenditure (Post-Funding)</h2>
+
+<p>Once institutional seed funding is secured, the following immediate upgrades will be unlocked to mature the ecosystem:</p>
+
+<ol>
+    <li><strong>CFAN Proprietary Licensing:</strong> We will deprecate our reliance on open-source NWS/NCEP data and execute a commercial licensing agreement with the <strong>Climate Forecast Applications Network (CFAN)</strong>. This will drop our 5-day track error to ~131 miles, providing institutional credibility to reinsurers. *(Estimated: Negotiated Enterprise Contract)*</li>
+    <li><strong>Amazon IP Accelerator:</strong> We will abandon the standard USPTO pending application process and utilize Amazon's vetted legal firms to fast-track our Sentinel IoT hardware Trademark and Brand Registry. *(Estimated: <!-- START budget-plans -->,500 - $3,000)*</li>
+    <li><strong>DVN Node Infrastructure:</strong> Funding the initial liquidity pools on Secure L2 Ledger to incentivize legacy Third-Party Vendors (TPVs) to transition into distributed Validator Network (DVN) node operators.</li>
+
+</ol>
+            </div>
+<!-- END budget-plans -->0/mo) post-funding for team access.</td>
         </tr>
         <tr>
             <td><strong>Database & Scaling</strong></td>
@@ -2583,6 +2939,64 @@ Regulators can verify these parameters at any time via public, on-chain executio
                             <td>Adjudication firm owner advising on large-scale CAT operations.</td>
                         </tr>
                     </tbody>
+                            <div class="agent-name">Product_User_Agent</div>
+                            <div class="agent-desc">Translates complex system specifications into readable training playbooks.</div>
+                            <div class="agent-output">Output: Onboarding Documentation</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="org-section-title">4. Advisory Board</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Target Domain</th>
+                            <th>Strategic Alignment / Background</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Barry Gilway</strong></td>
+                            <td>Insurance Strategy</td>
+                            <td>Former CEO of Citizens Property Insurance Corp (CPIC); industry titan advising on FL regulatory filings.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bobby Ayers</strong></td>
+                            <td>Claims & Mediation</td>
+                            <td>Appraisal, claims adjustments, and litigation resolution manager.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Heath Clark</strong></td>
+                            <td>CAT Management</td>
+                            <td>Former CAT Manager, current AVP of claims operations.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mike Guerra</strong></td>
+                            <td>Insurance Governance</td>
+                            <td>Former Governance Director with 40 years of industry oversight experience.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vivek Prasannan</strong></td>
+                            <td>Blockchain Architect</td>
+                            <td>Advising on token launch models and cross-chain Mesh Security staking.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bryan Rodvold</strong></td>
+                            <td>Community Operations</td>
+                            <td>Community building, Discord moderation, and Web3 marketing.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dale Brassfield</strong></td>
+                            <td>Business Strategy</td>
+                            <td>Independent agency and firm owner advising on retail distribution.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Curtis Pilot</strong></td>
+                            <td>Business Strategy</td>
+                            <td>Adjudication firm owner advising on large-scale CAT operations.</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -2613,13 +3027,44 @@ Regulators can verify these parameters at any time via public, on-chain executio
         });
 
         // Update titles
-        document.getElementById('active-title').textContent = docTitle;
-        document.getElementById('active-meta').textContent = 'Last Updated: ' + docMeta;
+        const titleEl = document.getElementById('active-title');
+        const metaEl = document.getElementById('active-meta');
+        if (titleEl) titleEl.textContent = docTitle;
+        if (metaEl) metaEl.textContent = 'Last Updated: ' + docMeta;
     }
 
     function printDoc() {
         window.print();
     }
+
+    // Auto-embed and routing handling
+    (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const docParam = urlParams.get('doc');
+        const embedParam = urlParams.get('embed');
+
+        if (embedParam === 'true') {
+            document.body.classList.add('embed-mode');
+        }
+
+        if (docParam) {
+            // Find in sidebar document list
+            const docItem = Array.from(document.querySelectorAll('.doc-item')).find(item => {
+                const onclickAttr = item.getAttribute('onclick') || '';
+                return onclickAttr.includes(`'${docParam}'`);
+            });
+
+            if (docItem) {
+                const onclickAttr = docItem.getAttribute('onclick');
+                const match = onclickAttr.match(/showDoc\('([^']+)',\s*'([^']+)',\s*'([^']+)'\)/);
+                if (match) {
+                    showDoc(match[1], match[2], match[3]);
+                }
+            } else if (docParam === 'org-chart') {
+                showDoc('org-chart', 'Org Chart & Agent Alignment', 'June 8, 2026');
+            }
+        }
+    })();
 </script>
 
 </body>
