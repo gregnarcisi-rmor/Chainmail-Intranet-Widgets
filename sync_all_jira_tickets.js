@@ -3,7 +3,7 @@ const path = require('path');
 const https = require('https');
 
 const domain = 'chainmailsolutions.atlassian.net';
-const email = 'greg.narcisi@chainmailsolutions.com';
+const email = 'greg.narcisi@chainmailsolutions.ai';
 const apiToken = process.env.JIRA_API_TOKEN || '';
 const auth = Buffer.from(`${email}:${apiToken}`).toString('base64');
 
@@ -88,7 +88,7 @@ async function syncTicket(ticket) {
   
   let searchResult;
   try {
-    searchResult = await makeRequest('/rest/api/3/search', 'POST', searchQuery);
+    searchResult = await makeRequest('/rest/api/3/search/jql', 'POST', searchQuery);
   } catch (err) {
     console.error(`[Jira Sync] Search request failed for ${ticket.id}:`, err.message);
     return;
