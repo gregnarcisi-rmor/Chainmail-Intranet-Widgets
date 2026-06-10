@@ -1032,6 +1032,140 @@
 
 </ul>
             </div>
+<!-- END onboarding-plan -->4.00 USD</li>
+
+<ol>
+    <li><strong>Sentinel Smart Valve Actuator (Model S-WFC01)</strong></li>
+</ol>
+<ul>
+    <li>*Based on Ecowitt WFC01*</li>
+    <li>Smart water timer valve designed to mitigate localized wildfire threat by auto-wetting property grounds when dry soil moisture thresholds trigger parametric alarm states.</li>
+    <li><strong>Price:</strong> $79.00 USD</li>
+
+</ul>
+---
+
+<h2>2. Automated Network Onboarding Workflow</h2>
+
+<p>The Shopify purchase acts as the initial transaction in the node onboarding lifecycle.</p>
+
+<p>``<code>mermaid</p>
+<p>sequenceDiagram</p>
+<p>    autonumber</p>
+<p>    actor User as Policyholder / Buyer</p>
+<p>    participant Shop as Shopify Storefront</p>
+<p>    participant Webhook as Shopify Webhook Worker</p>
+<p>    participant API as Chainmail API Server</p>
+<p>    participant DB as Firestore Database</p>
+<p>    participant Device as IoT Sentinel Device</p>
+
+<p>    User->>Shop: Purchase Sentinel Kit (S-100 + S-700)</p>
+<p>    Shop-->>User: Order Confirmation & Shipping Label Generated</p>
+<p>    Shop->>Webhook: Event: order/paid (Payload contains email, address)</p>
+<p>    Webhook->>API: POST /api/onboarding/provision</p>
+<p>    activate API</p>
+<p>    API->>API: Generate secure device key & pre-provision propertyId</p>
+<p>    API->>DB: Write property & pre-provisioned sensors as PENDING_ACTIVATION</p>
+<p>    API-->>Webhook: Provisioning Success</p>
+<p>    deactivate API</p>
+<p>    Webhook-->>User: Onboarding Email with Device Credentials & Claim QR Code</p>
+<p>    User->>Device: Mount hardware & connect to home Wi-Fi</p>
+<p>    Device->>API: POST /api/ingest/ecowitt (First Telemetry Ping)</p>
+<p>    activate API</p>
+<p>    API->>API: Authenticate device with secure pre-provisioned key</p>
+<p>    API->>DB: Update status to VERIFIED_NODE & Activate Parametric Coverage</p>
+<p>    API-->>Device: Acknowledge (HTTP 200)</p>
+<p>    deactivate API</p>
+<p>    API->>User: App Push Notification: "Node Active. Coverage Live!"</p>
+</code>`<code>
+
+<p>---</p>
+
+<h2>3. API Provisioning Endpoint Specifications</h2>
+
+<p>When a checkout completes, Shopify sends an </code>order/paid<code> webhook to our backend API server:</p>
+
+<h3>Endpoint: </code>POST /api/onboarding/provision<code></h3>
+<strong>Access Control:</strong> HMAC Signature verified using Shopify API Webhook Shared Secret.
+
+<p>#### Request Payload (from Shopify):</p>
+</code>`<code>json
+<p>{</p>
+<p>  "order_id": 987654321,</p>
+<p>  "email": "customer@example.com",</p>
+<p>  "shipping_address": {</p>
+<p>    "address1": "12665 Julington Oaks Dr",</p>
+<p>    "city": "Jacksonville",</p>
+<p>    "province": "FL",</p>
+<p>    "zip": "32223",</p>
+<p>    "country": "US"</p>
+<p>  },</p>
+<p>  "line_items": [</p>
+<p>    {</p>
+<p>      "sku": "SENTINEL-KIT-A",</p>
+<p>      "quantity": 1,</p>
+<p>      "name": "Sentinel Gateway & Wittboy Array"</p>
+<p>    }</p>
+<p>  ]</p>
+<p>}</p>
+</code>`<code>
+
+<p>#### Provisioning Logic:</p>
+<ol>
+    <li><strong>Address Validation:</strong> Call Google Address Validation API to verify CASS status and retrieve exact rooftop coordinates (</code>lat<code> / </code>lng<code>).</li>
+    <li><strong>Database Record Creation:</strong></li>
+</ol>
+<ul>
+    <li>Create a new document in </code>/properties<code>:</li>
+</ul>
+     </code>`<code>typescript
+<p>     {</p>
+<p>       ownerEmail: "customer@example.com",</p>
+<p>       address: "12665 Julington Oaks Dr, Jacksonville, FL 32223",</p>
+<p>       lat: 30.1421936,</p>
+<p>       lng: -81.6157784,</p>
+<p>       riskScore: 72.4, // Calculated by Underwriting Agent based on coordinates</p>
+<p>       status: "PENDING_ACTIVATION",</p>
+<p>       createdAt: serverTimestamp()</p>
+<p>     }</p>
+     </code>`<code>
+<ul>
+    <li>Create a document in </code>/properties/{propertyId}/sensors/Anemometry<code>:</li>
+</ul>
+     </code>`<code>typescript
+<p>     {</p>
+<p>       type: "Anemometry",</p>
+<p>       verificationStatus: "UNVERIFIED",</p>
+<p>       hardwareType: "Ecowitt",</p>
+<p>       value: 0</p>
+<p>     }</p>
+     </code>`<code>
+<ol>
+    <li><strong>Secret Generation:</strong> Generate a unique password/secret token for the gateway and email it as a QR code to the user.</li>
+
+</ol>
+---
+
+<h2>4. UI/UX Storefront Integration</h2>
+
+<p>The Shopify storefront theme will match Chainmail's core brand design system: <strong>Cobalt & Gold / Slate & Gold</strong>.</p>
+
+<h3>Theme Design System</h3>
+<ul>
+    <li><strong>Primary Background:</strong> </code>#030712<code> (Slate Black)</li>
+    <li><strong>Secondary Cards:</strong> </code>rgba(17, 24, 39, 0.7)<code> (Translucent Dark Blue)</li>
+    <li><strong>Accents:</strong> </code>#D4AF37<code> (Metallic Gold)</li>
+    <li><strong>Fonts:</strong> </code>Outfit<code> (Headings) and </code>Inter<code> (Body)</li>
+
+</ul>
+<h3>Custom Liquid Elements</h3>
+<ul>
+    <li><strong>Network Node Counter:</strong> A live ticker in the header showing: </code>ACTIVE_NODES: 1,482 | TOTAL_COVERAGE_LOCKED: $34,891,000`.</li>
+    <li><strong>Map Twin Preview:</strong> An interactive WebGL globe on the landing page showing glowing gold dots representing active coverage sensors in real time.</li>
+    <li><strong>onboarding-tab widget:</strong> Built-in section on the product page showing the simple "Plug, Scan, Insure" 3-step setup guide.</li>
+
+</ul>
+            </div>
 <!-- END onboarding-plan -->
 
             <!-- RFQ Spec Document -->
@@ -1290,10 +1424,10 @@
 
 <h3>A. Executive Level (CEO / Strategic Oversight)</h3>
 <ul>
-    <li>  <strong>Target Domain:</strong> Domain 4 (Treasury & Cryptographic Governance).</li>
+    <li>  <strong>Target Domain:</strong> Domain 4 (Treasury & Financial Governance).</li>
     <li>  <strong>Testing Focus:</strong></li>
-    <li>  Verify the 3-of-5 multi-signature threshold sequence for capital reserve tranches.</li>
-    <li>  Verify Bitcoin treasury hedging triggers and check the USD-denominated digital reserve asset conversion ledgers.</li>
+    <li>  Verify the multi-party approval process for capital reserve tranches.</li>
+    <li>  Verify reserve treasury hedging triggers and check the USD reserve asset ledgers.</li>
     <li>  Review high-level Intranet budget burn widgets for accuracy.</li>
 
 </ul>
@@ -1310,7 +1444,7 @@
 <ul>
     <li>  <strong>Target Domain:</strong> Domain 6 (Regulatory Compliance & Zero-Knowledge Privacy).</li>
     <li>  <strong>Testing Focus:</strong></li>
-    <li>  Verify Zero-Knowledge proving outputs ($\pi$) to ensure no personally identifiable information (PII) or raw geocoded coordinates leak on public ledgers.</li>
+    <li>  Verify Zero-Knowledge proving outputs ($\pi$) to ensure no personally identifiable information (PII) or raw geocoded coordinates leak on public records.</li>
     <li>  Test state compliance automated reports (e.g., FL OIR-B1-2222 metrics for timing constraints).</li>
     <li>  Audit the human-override adjuster panel to confirm the Adverse Non-Automation rule holds.</li>
 
@@ -1532,7 +1666,7 @@
             <td><strong>8. Security & RLS</strong></td>
             <td><strong>100%</strong></td>
             <td>Firestore rules locked down. Zero-knowledge cryptographic claims validation parameters checked.</td>
-            <td>Completed. CapitalWaterfall smart contracts audited.</td>
+            <td>Completed. Automated payout systems audited.</td>
         </tr>
         <tr>
             <td><strong>9. Rate Limiting</strong></td>
@@ -1626,6 +1760,23 @@
 
 <ol>
     <li><strong>The Underwriting Agent:</strong> When a customer applies, this AI checks their risk. If they live in an extreme danger zone, it doesn't reject them! Instead, it offers them an "IoT Baseline" policy (a <!-- END po-guide -->,500 payout cap) just so we can get their sensor data and help protect the community.</li>
+    <li><strong>The Claims Adjuster Agent:</strong> When a disaster hits, this AI looks at satellite photos to verify the damage. If it's confident, it pays the customer instantly. If it isn't sure, it sends the claim to a human to review—it is strictly programmed *never* to automatically deny a claim.</li>
+    <li><strong>The Vigilance Oracle Agent:</strong> This AI constantly watches the weather channel. If it sees a Category 5 hurricane coming, it flags the map and readies our bank accounts to pay people before they even ask.</li>
+    <li><strong>The Quant Brain Actuary Agent:</strong> This AI watches our bank account. If we take on too much risk in one state, it automatically buys "reinsurance" (backup insurance for us) to keep the company financially safe.</li>
+
+</ol>
+<h2>Your Day-to-Day Responsibilities</h2>
+<p>As a Product Owner, you will:</p>
+<ul>
+    <li><strong>Monitor the Vision:</strong> Look at the Enterprise Dashboard. Are the AI agents making decisions that align with the BallPark Initiative?</li>
+    <li><strong>Prioritize the Backlog:</strong> Work with the Product Manager to decide which neighborhood of our "city" needs improvement next.</li>
+    <li><strong>Understand the Costs:</strong> The Enterprise dashboard shows you exactly how many fractions of a cent the AI is spending to make decisions. You balance the cost of the AI against the value it provides.</li>
+
+</ul>
+You don't need to know how to code the AI. You just need to know what the AI *should* be doing to help our customers. Welcome to the team!
+
+            </div>
+<!-- END po-guide -->,500 payout cap) just so we can get their sensor data and help protect the community.</li>
     <li><strong>The Claims Adjuster Agent:</strong> When a disaster hits, this AI looks at satellite photos to verify the damage. If it's confident, it pays the customer instantly. If it isn't sure, it sends the claim to a human to review—it is strictly programmed *never* to automatically deny a claim.</li>
     <li><strong>The Vigilance Oracle Agent:</strong> This AI constantly watches the weather channel. If it sees a Category 5 hurricane coming, it flags the map and readies our bank accounts to pay people before they even ask.</li>
     <li><strong>The Quant Brain Actuary Agent:</strong> This AI watches our bank account. If we take on too much risk in one state, it automatically buys "reinsurance" (backup insurance for us) to keep the company financially safe.</li>
@@ -1768,6 +1919,19 @@ You are the operational glue that holds Chainmail together. Let's get to work!
 <p>Welcome to Chainmail! We are glad you're here.</p>
 
             </div>
+<!-- END pu-guide -->,500."*</p>
+<p>Here is how you handle it:</p>
+<ul>
+    <li>Explain that because their house is in an <strong>Extreme Risk Zone</strong> (like right on the beach), our Underwriting AI cannot offer them half a million dollars right now.</li>
+    <li>However, explain that we *did not reject them*. We offered them the <strong>IoT Baseline Policy</strong>. This gives them <!-- END pu-guide -->,500 of emergency cash, and in return, they install a weather sensor on their house. This helps us gather data to protect the rest of their neighborhood!</li>
+
+</ul>
+<h2>Need Help?</h2>
+<p>If the screen turns white, or the map stops loading, do not panic! Just take a screenshot and send it to your Product Manager with the Jira ticket label <code>UI-BUG</code>. </p>
+
+<p>Welcome to Chainmail! We are glad you're here.</p>
+
+            </div>
 <!-- END pu-guide -->
 
             <!-- API Security & Key Rotation Guide -->
@@ -1823,7 +1987,7 @@ You are the operational glue that holds Chainmail together. Let's get to work!
             <div id="release-roadmap" class="doc-section">
 
 
-<p>To successfully launch the Chainmail Customer App on the iOS App Store and Google Play Store without delays, we must adhere to strict platform guidelines, particularly regarding financial services, Secure Distributed integration (Secure L2 Ledger L3, USD-denominated digital settlement assets), and user data privacy.</p>
+<p>To successfully launch the Chainmail Customer App on the iOS App Store and Google Play Store without delays, we must adhere to strict platform guidelines, particularly regarding financial services, automated instant payment rails (Stripe Visa Direct, RTP, FedNow), and user data privacy.</p>
 
 <h2>1. Timeline & Milestone Mapping</h2>
 <p>To avoid being blindsided, the app store submission process must begin <strong>at least 6-8 weeks</strong> prior to the target public launch date listed in the Whitepaper.</p>
@@ -1852,6 +2016,92 @@ You are the operational glue that holds Chainmail together. Let's get to work!
             <td><strong>Developer Accounts</strong></td>
             <td>T-5 Weeks</td>
             <td>Register Apple Developer Program ($99/yr) and Google Play Console (<!-- END release-roadmap -->5). Require D-U-N-S number for corporate verification.</td>
+        </tr>
+        <tr>
+            <td><strong>TestFlight / Internal Testing</strong></td>
+            <td>T-4 Weeks</td>
+            <td>Release to internal stakeholders via Apple TestFlight and Google Play Internal Testing.</td>
+        </tr>
+        <tr>
+            <td><strong>Store Submission</strong></td>
+            <td>T-2 Weeks</td>
+            <td>Submit to Apple App Review and Google Play App Review. (Buffer time for initial rejection and resubmission).</td>
+        </tr>
+        <tr>
+            <td><strong>Public Launch</strong></td>
+            <td>T-0</td>
+            <td>App is live, indexed, and available for download.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>---</p>
+
+<h2>2. Critical Apple App Store Requirements (iOS)</h2>
+
+<p>Apple is notoriously strict regarding financial and insurance applications. To pass the App Review Board, we must guarantee the following:</p>
+
+<div class="alert-block ">
+    <span class="alert-title">WARNING</span>
+    <p class="alert-content"><strong>digital payment & Financial Regulations (Guideline 3.1.5)</strong>
+<p>Because Chainmail utilizes automated execution rules for payouts using instant fiat rails (Visa Direct, RTP, FedNow), the app *must* be submitted by a legal entity (not an individual developer) that is registered as a financial institution or has the appropriate licenses in the regions it operates. </p>
+<ul>
+    <li><strong>Action Item:</strong> Ensure our corporate D-U-N-S number is used for the Apple Developer Account, and our legal entity name exactly matches the app publisher name.</p></li>
+</ul>
+</div>
+
+<div class="alert-block ">
+    <span class="alert-title">IMPORTANT</span>
+    <p class="alert-content"><strong>Data Privacy & Account Deletion (Guideline 5.1.1)</strong>
+<p>Apple absolutely mandates that any app allowing account creation *must* also provide an in-app option to completely delete the account and all associated data.</p>
+<ul>
+    <li><strong>Action Item:</strong> Build an automated "Delete Account" API route in the Vercel backend.</p></li>
+</ul>
+</div>
+
+<ul>
+    <li>  <strong>App Tracking Transparency (ATT):</strong> If we use analytics that track across third-party apps, we must implement the ATT prompt.</li>
+    <li>  <strong>Minimum Functionality:</strong> The app cannot just be a "wrapped website" (Guideline 4.2). It must utilize native iOS features (e.g., Push Notifications, FaceID/TouchID for secure login, local caching).</li>
+
+</ul>
+---
+
+<h2>3. Critical Google Play Requirements (Android)</h2>
+
+<p>Google Play has recently tightened restrictions on testing and financial apps.</p>
+
+<div class="alert-block ">
+    <span class="alert-title">WARNING</span>
+    <p class="alert-content"><strong>20-Tester Rule</strong>
+<p>New Google Play developer accounts must run a closed test with a minimum of 20 opted-in testers for at least 14 continuous days before you can apply for production access.</p>
+<ul>
+    <li><strong>Action Item:</strong> We must recruit 20 beta testers internally or via the Vigilance Grid network well before launch.</p></li>
+</ul>
+</div>
+
+<div class="alert-block ">
+    <span class="alert-title">IMPORTANT</span>
+    <p class="alert-content"><strong>Financial Features Policy</strong>
+<p>Google requires a prominent "Financial Features Declaration" during submission. If the app facilitates insurance or automated payouts, we must provide links to our regulatory compliance documentation and operating licenses in our Google Play Console declaration.</p></p>
+</div>
+
+<ul>
+    <li>  <strong>Data Safety Section:</strong> We must accurately declare exactly what data is collected (e.g., location data from Vigilance Grid IoT integration, financial info) and whether it is encrypted in transit.</li>
+
+</ul>
+---
+
+<h2>4. Next Steps for the Development Team</h2>
+
+<p>To transition our current Vercel web app into a compliant Native App:</p>
+<ol>
+    <li><strong>Architecture:</strong> We must decide whether to wrap the Vercel app using a framework like Capacitor/Ionic, or rebuild the frontend natively using React Native.</li>
+    <li><strong>Privacy Policy URL:</strong> A live, hosted Privacy Policy must be created on the public-facing website.</li>
+    <li><strong>Support URL:</strong> A dedicated support and contact page must be established for user inquiries.</li>
+
+</ol>
+            </div>
+<!-- END release-roadmap -->5). Require D-U-N-S number for corporate verification.</td>
         </tr>
         <tr>
             <td><strong>TestFlight / Internal Testing</strong></td>
@@ -2033,7 +2283,7 @@ You are the operational glue that holds Chainmail together. Let's get to work!
 <strong>Date:</strong> June 8, 2026  
 <strong>Status:</strong> Active Run-Rate (Trials Concluded)  
 
-<p>Following the conclusion of our trial periods, we have updated our active cloud ledger to reflect commercial operational costs. Our monthly operational burn rate is now <strong><!-- START budget-plans -->,090.00</strong> for active geospatial imagery, fraud auditing, server compute, and ledger gas.</p>
+<p>Following the conclusion of our trial periods, we have updated our active cloud ledger to reflect commercial operational costs. Our monthly operational burn rate is now <strong><!-- START budget-plans -->,090.00</strong> for active geospatial imagery, fraud auditing, server compute, and instant payment transaction routing.</p>
 
 <h2>Current Monthly Run Rate (Active Operational Phase)</h2>
 
@@ -2053,6 +2303,76 @@ You are the operational glue that holds Chainmail together. Let's get to work!
             <td>Vercel (Free Tier)</td>
             <td>$0.00</td>
             <td>Upgrade to Vercel Pro (<!-- END budget-plans -->0/mo) post-funding for team access.</td>
+        </tr>
+        <tr>
+            <td><strong>Database & Scaling</strong></td>
+            <td>GCP Firestore / Blaze Plan</td>
+            <td><!-- START budget-plans -->00.00</td>
+            <td>Scales dynamically; covers production compute and database queries.</td>
+        </tr>
+        <tr>
+            <td><strong>Object Storage (Media/PII)</strong></td>
+            <td>Cloudflare R2</td>
+            <td>$0.00</td>
+            <td>Selected specifically to eliminate AWS/GCP data egress fees.</td>
+        </tr>
+        <tr>
+            <td><strong>Geospatial & Convective Mapping</strong></td>
+            <td>XWeather API & Vexcel Imagery</td>
+            <td>$750.00</td>
+            <td>Commercial subscription for severe convective storm mapping and high-res post-storm imagery.</td>
+        </tr>
+        <tr>
+            <td><strong>Core AI Routing & HITL Verification</strong></td>
+            <td>Google Gemini 1.5 Flash & 3.1 Pro</td>
+            <td>$65.00</td>
+            <td>Production Gemini API tokens for IoT routing and human-in-the-loop validation.</td>
+        </tr>
+        <tr>
+            <td><strong>Claims Fraud Audit</strong></td>
+            <td>ISO Verisk ClaimSearch</td>
+            <td><!-- START budget-plans -->50.00</td>
+            <td>Active double-claim checking API subscription.</td>
+        </tr>
+        <tr>
+            <td><strong>Instant Fiat Payment Rails</strong></td>
+            <td>Stripe Visa Direct / RTP / FedNow</td>
+            <td><!-- END budget-plans -->5.00</td>
+            <td>Transaction fees for instant payout routing.</td>
+        </tr>
+        <tr>
+            <td><strong>Version Control</strong></td>
+            <td>GitHub (Free Tier)</td>
+            <td>$0.00</td>
+            <td>Upgrade to GitHub Team ($4/user) when engineering team expands.</td>
+        </tr>
+        <tr>
+            <td><strong>Executive Compensation</strong></td>
+            <td>COO Phase 1 (1099)</td>
+            <td>$0.00 (Equity/$RMOR only)</td>
+            <td>Transition to Full-Time Phase 1 (Salary + 8% Match) post-funding.</td>
+        </tr>
+        <tr>
+            <td><strong>Total Monthly Burn</strong></td>
+            <td></td>
+            <td><strong><!-- START budget-plans -->,090.00</strong></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Future Capital Expenditure (Post-Funding)</h2>
+
+<p>Once institutional seed funding is secured, the following immediate upgrades will be unlocked to mature the ecosystem:</p>
+
+<ol>
+    <li><strong>CFAN Proprietary Licensing:</strong> We will deprecate our reliance on open-source NWS/NCEP data and execute a commercial licensing agreement with the <strong>Climate Forecast Applications Network (CFAN)</strong>. This will drop our 5-day track error to ~131 miles, providing institutional credibility to reinsurers. *(Estimated: Negotiated Enterprise Contract)*</li>
+    <li><strong>Amazon IP Accelerator:</strong> We will abandon the standard USPTO pending application process and utilize Amazon's vetted legal firms to fast-track our Sentinel IoT hardware Trademark and Brand Registry. *(Estimated: <!-- START budget-plans -->,500 - $3,000)*</li>
+    <li><strong>Auditor Integration Fees:</strong> Funding integrations with legacy Third-Party Vendors (TPVs) to establish automated verification APIs.</li>
+
+</ol>
+            </div>
+<!-- END budget-plans -->0/mo) post-funding for team access.</td>
         </tr>
         <tr>
             <td><strong>Database & Scaling</strong></td>
@@ -2199,7 +2519,7 @@ You are the operational glue that holds Chainmail together. Let's get to work!
             <div id="actuarial-memo" class="doc-section">
 
 
-<strong>FILING TYPE:</strong> Form, Rate, and Market Conduct Authorization (Parametric Catastrophe & Web3 Nexus)  
+<strong>FILING TYPE:</strong> Form, Rate, and Market Conduct Authorization (Parametric Catastrophe & TradFi Ingestion)  
 <strong>SUBMITTED TO:</strong> Florida Office of Insurance Regulation (OIR) / NAIC Digital Assets Review Working Group  
 <strong>REGISTRANT:</strong> Chainmail Ecosystem Protocol (as a Risk Financing Entity)  
 <strong>DATE OF FILING:</strong> June 2, 2026  
@@ -2209,7 +2529,7 @@ You are the operational glue that holds Chainmail together. Let's get to work!
 
 <h2>Section I: Executive Summary & System Taxonomy</h2>
 
-<p>This memorandum establishes the actuarial framework, pricing algorithms, and algorithmic risk mitigation controls for the <strong>Chainmail Ecosystem Protocol</strong>. Chainmail operates as a decentralized parametric risk-transfer system designed to cover physical property and concurrent network risks without traditional human adjusters. </p>
+<p>This memorandum establishes the actuarial framework, pricing algorithms, and algorithmic risk mitigation controls for the <strong>Chainmail Ecosystem Protocol</strong>. Chainmail operates as an automated parametric risk-transfer system designed to cover physical property and concurrent network risks without traditional human adjusters. </p>
 
 <p>By utilizing real-time Internet of Things (IoT) sensors, Evolution telemetry, and public meteorological data, Chainmail calculates catastrophe (CAT) risk, pools capital reserves, and automates claims payouts under five minutes from trigger events.</p>
 
@@ -2217,17 +2537,17 @@ You are the operational glue that holds Chainmail together. Let's get to work!
 <p>Chainmail uses a multi-hazard parametric underwriting matrix:</p>
 <ul>
     <li>  <strong>Physical Perils</strong>: High-velocity wind events (Anemometry), storm surge/flooding (Hydrology), and barometric pressure anomalies (Barometric) mapped to specific property boundaries.</li>
-    <li>  <strong>Technical Perils</strong>: Smart contract code exploits ($P_e$), Oracle transaction failure or telemetry corruption, and cross-chain messaging latency.</li>
+    <li>  <strong>Technical Perils</strong>: Ingestion API exploits ($P_e$), Gateway transaction failure or telemetry corruption, and processing network latency.</li>
 
 </ul>
 <h3>2. Level of Implementation</h3>
-<p>Risk pooling and settlement are fully decentralized at the smart contract level, backed by a cross-chain "Mesh Security" staking mechanism. Collateral is denominated in stablecoins (USDC) and L2 native digital settlement assets, managed via automated, non-custodial capital pools.</p>
+<p>Risk pooling and settlement are automated at the database level, backed by secure commercial bank cash reserves. Collateral is denominated in USD cash deposits, managed via automated secure escrow accounts.</p>
 
 <p>---</p>
 
 <h2>Section II: Actuarial Data & Pricing Modeling</h2>
 
-<p>Traditional property insurance pricing relies on decades of historical claims databases (e.g., ISO Verisk). Because Chainmail covers web3 parametric risks and real-time physical telemetry, the protocol establishes a dynamic actuarial table based on continuous software audit cadences and physical sensor grids.</p>
+<p>Traditional property insurance pricing relies on decades of historical claims databases (e.g., ISO Verisk). Because Chainmail covers automated parametric risks and real-time physical telemetry, the protocol establishes a dynamic actuarial table based on continuous software audit cadences and physical sensor grids.</p>
 
 <h3>1. Actuarial Variables & Live Metrics</h3>
 <p>The table below represents the exact structural state of Chainmail’s metrics as formatted for regulatory evaluation:</p>
@@ -2246,14 +2566,14 @@ You are the operational glue that holds Chainmail together. Let's get to work!
         <tr>
             <td><strong>Total Value Locked (TVL)</strong></td>
             <td>Total Capital Base At Risk</td>
-            <td><strong>$42,500,000 USDC</strong></td>
+            <td><strong>$42,500,000 USD</strong></td>
             <td>Defines the maximum exposure limits and capital reserves for solvency testing.</td>
         </tr>
         <tr>
-            <td><strong>Mesh Security Correlation ($\alpha_i$)</strong></td>
-            <td>Interdependence of collateral assets across connected chains</td>
-            <td><strong>$\alpha = 0.12$ (Low Cross-Chain Contagion)</strong></td>
-            <td>Proves to the DOI that a vulnerability or exploit on Chain A will not trigger a correlated liquidity drain on Chain B.</td>
+            <td><strong>RTP Routing Correlation ($\alpha_i$)</strong></td>
+            <td>Interdependence of payment rails across banks</td>
+            <td><strong>$\alpha = 0.12$ (Low Systemic Rail Outage)</strong></td>
+            <td>Proves to the DOI that a vulnerability or exploit on Bank A will not trigger a correlated liquidity drain on Bank B.</td>
         </tr>
         <tr>
             <td><strong>Audit Cadence / Re-evaluation Speed</strong></td>
@@ -2264,7 +2584,7 @@ You are the operational glue that holds Chainmail together. Let's get to work!
         <tr>
             <td><strong>Telemetry Data Streams</strong></td>
             <td>Automated physical and technical metrics mapped to pricing models</td>
-            <td><strong>Real-time Call Detail Records (CDRs) / Gas optimization trends</strong></td>
+            <td><strong>Real-time Call Detail Records (CDRs) / API load optimization trends</strong></td>
             <td>Establishes objective, untampered historical logs to baseline parametric trigger pricing.</td>
         </tr>
         <tr>
@@ -2277,7 +2597,7 @@ You are the operational glue that holds Chainmail together. Let's get to work!
 </table>
 
 <h3>2. The Pricing Formula</h3>
-<p>The premium charged to policyholders ($P$) is a function of the Parametric Event Probability ($P_{cat}$), the Smart Contract Exploit Probability ($P_e$), the Mesh Security Correlation ($\alpha$), and an administrative loading factor ($\lambda$):</p>
+<p>The premium charged to policyholders ($P$) is a function of the Parametric Event Probability ($P_{cat}$), the API Service Exploit Probability ($P_e$), the RTP Routing Correlation ($\alpha$), and an administrative loading factor ($\lambda$):</p>
 
 <p>$P = \left( P_{cat} \times \text{Coverage Limit} \right) + \left( P_e \times \text{TVL} \times (1 + \alpha) \right) + \lambda$</p>
 
@@ -2295,7 +2615,7 @@ You are the operational glue that holds Chainmail together. Let's get to work!
     <li>  Live local IoT sensor health status.</li>
 
 </ul>
-Regulators can verify these parameters at any time via public, on-chain execution logs, eliminating hidden model assumptions.
+Regulators can verify these parameters at any time via automated compliance logs, eliminating hidden model assumptions.
 
 <h3>2. Algorithmic Bias and Discrimination Mitigation</h3>
 <p>Our algorithms utilize strictly non-discriminatory inputs (geospatial coordinates, sensor metrics, and code statistics). Underwriting grades ($A+, A, B$) are determined using physical risk assessments (soil liquefaction, elevation, wind resistance) and do not incorporate demographic, socioeconomic, or zip-code proxies.</p>
@@ -2311,15 +2631,15 @@ Regulators can verify these parameters at any time via public, on-chain executio
 
 <h2>Section IV: Asset Adequacy & Stress Testing (AG 53 Compliance)</h2>
 
-<p>Under <strong>NAIC Actuarial Guideline 53 (AG 53)</strong>, insurance entities holding digital assets or complex collateral must demonstrate capital sufficiency under stress conditions.</p>
+<p>Under <strong>NAIC Actuarial Guideline 53 (AG 53)</strong>, insurance entities holding complex collateral must demonstrate capital sufficiency under stress conditions.</p>
 
 <h3>1. Sensitivity Analysis Parameters</h3>
 <p>Chainmail conducts automated stress-testing simulations daily across three severe scenarios:</p>
 
 <ul>
-    <li>  <strong>Systemic Liquidation Event (Crypto Collateral Crash)</strong>: A simulated <strong>75% drop</strong> in secondary collateral value within 24 hours. The model demonstrates that the $42,500,000 USDC core pool remains fully liquid and isolated from secondary market volatility due to over-collateralization requirements (min 150%).</li>
-    <li>  <strong>Decoupling Event</strong>: A simulated de-pegging of the primary stablecoin collateral (USDC drops to $0.90). The protocol’s smart contracts automatically route settlement reserves to alternative stablecoin pools (e.g., USDe/USDT) to guarantee payout values.</li>
-    <li>  <strong>Conforming Peril Clustered CAT (Florida Hurricane Strike)</strong>: A simulated Level 4 hurricane striking multiple insured properties simultaneously. Since our Mesh Security Correlation coefficient is low ($\alpha = 0.12$), the capital backstop pools remain solvent even if 45% of active parametric contracts trigger payouts within the same 48-hour window.</li>
+    <li>  <strong>Systemic Liquidation Event</strong>: A simulated <strong>75% drop</strong> in secondary reserve yields within 24 hours. The model demonstrates that the $42,500,000 USD core pool remains fully liquid and isolated from secondary market volatility due to reserve ratio requirements.</li>
+    <li>  <strong>Decoupling Event</strong>: A simulated delay in a specific RTP payment rail. The protocol's ingestion engine automatically routes settlement reserves to alternative payment rails (e.g., FedNow/Stripe Visa Direct) to guarantee payout values.</li>
+    <li>  <strong>Conforming Peril Clustered CAT (Florida Hurricane Strike)</strong>: A simulated Level 4 hurricane striking multiple insured properties simultaneously. Since our RTP Routing Correlation coefficient is low ($\alpha = 0.12$), the capital backstop pools remain solvent even if 45% of active parametric contracts trigger payouts within the same 48-hour window.</li>
 
 </ul>
 <h3>2. Reserves Adequacy Certification</h3>
@@ -2337,34 +2657,34 @@ Regulators can verify these parameters at any time via public, on-chain executio
 <p>    Data --> Digital[Digital Content Data]</p>
 <p>    Data --> Sensing[Sensing Data]</p>
     
-<p>    Exhaust --> E1[Gas Fee Trends]</p>
+<p>    Exhaust --> E1[API Response Time Trends]</p>
 <p>    Exhaust --> E2[Transaction Latencies]</p>
-<p>    Exhaust --> E3[Smart Contract Execution Volumes]</p>
+<p>    Exhaust --> E3[Automated Payout Execution Volumes]</p>
     
-<p>    Digital --> D1[On-Chain Ledger History]</p>
+<p>    Digital --> D1[Compliance API Registry History]</p>
 <p>    Digital --> D2[GitHub Commits / Code Modifications]</p>
 <p>    Digital --> D3[Audit Trail Registry Logs]</p>
     
 <p>    Sensing --> S1[IoT Wind Sensors]</p>
 <p>    Sensing --> S2[Barometric Oracles]</p>
-<p>    Sensing --> S3[Chainlink Proof of Reserve Feeds]</p>
+<p>    Sensing --> S3[Plaid Proof of Reserve Integration]</p>
 </code>``
 
 <h3>1. Exhaust Data (Passive Telemetry)</h3>
 <ul>
-    <li>  <strong>Definition</strong>: Passive metadata generated through smart contract interactions and gas consumptions.</li>
-    <li>  <strong>Actuarial Use</strong>: Spikes in execution latencies or gas consumption are analyzed in real-time to flag possible front-running or transaction re-entrancy attacks before they compromise the pool.</li>
+    <li>  <strong>Definition</strong>: Passive metadata generated through API requests and computing resources.</li>
+    <li>  <strong>Actuarial Use</strong>: Spikes in execution latencies or API error rates are analyzed in real-time to flag possible DDoS or injection attacks before they compromise the system.</li>
 
 </ul>
 <h3>2. Digital Content Data (Ledger & Code History)</h3>
 <ul>
-    <li>  <strong>Definition</strong>: Public blockchain transaction history, audit logs, and code commits.</li>
+    <li>  <strong>Definition</strong>: Public database transaction history, audit logs, and code commits.</li>
     <li>  <strong>Actuarial Use</strong>: Tracks compiler versions, library dependencies, and security patches. Each code commit triggers an automated dry-run validation of the pricing rules.</li>
 
 </ul>
 <h3>3. Sensing Data (Real-time Telemetry)</h3>
 <ul>
-    <li>  <strong>Definition</strong>: Active inputs fetched from the physical IoT sensor network and decentralized weather oracles.</li>
+    <li>  <strong>Definition</strong>: Active inputs fetched from the physical IoT sensor network and automated weather databases.</li>
     <li>  <strong>Actuarial Use</strong>: Determines whether the trigger wind speed or barometric threshold has been breached at a specific property location.</li>
 
 </ul>
@@ -2376,7 +2696,7 @@ Regulators can verify these parameters at any time via public, on-chain executio
 
 <h3>1. Proprietary Boundaries</h3>
 <ul>
-    <li>  <strong>Open-Source Layer</strong>: The parametric settlement rules, token contract code, and RLS rules are fully open-source on GitHub to ensure complete trust, transparency, and public auditability.</li>
+    <li>  <strong>Open-Source Layer</strong>: The parametric settlement rules, API integration code, and security access rules are fully open-source on GitHub to ensure complete trust, transparency, and public auditability.</li>
     <li>  <strong>Proprietary IP Layer</strong>: The internal risk scoring engines, historical CAT regression models, and sentiment-based fraud-detection nodes remain closed-source and are secured within corporate repositories.</li>
 
 </ul>
@@ -2384,7 +2704,7 @@ Regulators can verify these parameters at any time via public, on-chain executio
 <p>To prevent adversarial copycats from duplicating our actuarial calculations to drain pool liquidity:</p>
 <ul>
     <li>  Every parametric contract is cryptographically signed using a unique physical hardware security module (HSM) oracle key.</li>
-    <li>  Pricing updates require authorized multisig state adjustments, ensuring that a duplicated smart contract cannot replicate our settlement triggers without our validated data feeds.</li>
+    <li>  Pricing updates require authorized multi-party validation state adjustments, ensuring that a duplicated system cannot replicate our settlement triggers without our validated data feeds.</li>
 
 </ul>
 ---
@@ -2407,13 +2727,13 @@ Regulators can verify these parameters at any time via public, on-chain executio
             <td>Appointed Actuary (FCAS certified)</td>
         </tr>
         <tr>
-            <td><strong>Certified Smart Contract Audits</strong></td>
+            <td><strong>Certified API Code Audits</strong></td>
             <td>Validates code security against malicious exploits.</td>
-            <td>Independent Web3 Security Firm</td>
+            <td>Independent Cybersecurity Firm</td>
         </tr>
         <tr>
             <td><strong>AG 53 Asset Suitability Analysis</strong></td>
-            <td>Proves the digital asset reserves can survive a severe market crash.</td>
+            <td>Proves the USD reserves can survive a severe market crash.</td>
             <td>Quantitative Risk Advisory Team</td>
         </tr>
         <tr>
