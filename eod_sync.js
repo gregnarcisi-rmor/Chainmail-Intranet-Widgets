@@ -360,10 +360,11 @@ async function runSync() {
         const mdText = fs.readFileSync(mdFilePath, 'utf8');
         const generatedHtml = markdownToHtml(mdText);
         
-        // Match the <div id="[mapping.id]" class="doc-section...">...</div> block
-        const regex = new RegExp(`(<div id="${mapping.id}" class="doc-section[^"]*">)[\\s\\S]*?(</div>)`, 'i');
+        // Match using the START and END comment comments for safety
+        const regex = new RegExp(`(<!-- START ${mapping.id} -->)[\\s\\S]*?(<!-- END ${mapping.id} -->)`, 'i');
         if (regex.test(docHubHtml)) {
-          docHubHtml = docHubHtml.replace(regex, `$1\n${generatedHtml}\n$2`);
+          const activeClass = mapping.id === 'exec-summary' ? ' active' : '';
+          docHubHtml = docHubHtml.replace(regex, `$1\n            <div id="${mapping.id}" class="doc-section${activeClass}">\n${generatedHtml}\n            </div>\n$2`);
           
           // Also update the onclick date in the sidebar:
           // e.g. onclick="showDoc('exec-summary', 'Executive Briefing', 'June 7, 2026')"
