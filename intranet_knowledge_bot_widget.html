@@ -279,7 +279,7 @@
     </div>
 
     <script>
-        const GEMINI_API_KEY = "AIzaSyC1fOvVBOKecu1soSCfvRxa8g4e3HvZJlQ";
+        const GEMINI_API_KEY = localStorage.getItem("GEMINI_API_KEY") || "PASTE_YOUR_GEMINI_API_KEY_HERE";
         
         const MASTER_CONTEXT = `You are the Chainmail Oracle, an internal AI assistant for Chainmail Solutions executives. 
 Always respond in a highly professional, technical tone. Format responses in Markdown.
